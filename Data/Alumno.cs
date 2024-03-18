@@ -2,23 +2,19 @@
 
 namespace BlazorWebAppEFCore.Data
 {
-    public class alumno
+    public class Alumno
     {
-            public int Id_alumno { get; set; }
+            public int Id { get; set; }
 
-            [StringLength(100, ErrorMessage = "")]
-            public int? id_tutor1 { get; set; }
-
-            [StringLength(100, ErrorMessage = "")]
-            public int? id_tutor2 { get; set; }
+            public ICollection<AlumnoTutor> AlumnoTutores { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "")]
-            public string? nombre { get; set; }
+            public string? Nombre { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "")]
-            public string? apellido { get; set; }
+            public string? Apellido { get; set; }
 
             [Required]
             [DataType(DataType.Date, ErrorMessage = "")]

@@ -2,9 +2,10 @@
 
 namespace BlazorWebAppEFCore.Data
 {
-    public class tutor2
+    public class Tutor
     {
-        public int id_tutor2 { get; set; }
+        [Required]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
@@ -23,11 +24,13 @@ namespace BlazorWebAppEFCore.Data
         public string? telefono_personal { get; set; }
 
         [Required]
-        [StringLength(15, ErrorMessage = "")]
+        [Range(0, int.MaxValue, ErrorMessage = "")]
         public int? pago { get; set; }
 
         [Required]
-        [StringLength(15, ErrorMessage = "Phone number cannot exceed 15 digits.")]
         public bool? padrino { get; set; }
+
+        public ICollection<AlumnoTutor> AlumnoTutores { get; set; }
+
     }
 }
