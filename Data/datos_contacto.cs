@@ -4,19 +4,15 @@ namespace BlazorWebAppEFCore.Data
 {
     public class datos_contacto
     {
-        public int id_datos_contacto { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public int? id_tutor1 { get; set; }
+        public int? Id_tutor { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public int? id_tutor2 { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "")]
-        public int? direccion { get; set; }
+        public int? Direccion { get; set; }
 
     }
 }

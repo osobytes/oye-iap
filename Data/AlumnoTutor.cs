@@ -1,4 +1,6 @@
 
+using BlazorWebAppEFCore.Data;
+
 public class AlumnoTutor
 {
     public int AlumnoId { get; set; }

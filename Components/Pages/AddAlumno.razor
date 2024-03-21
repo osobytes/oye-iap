@@ -41,7 +41,7 @@
     // Start with fresh Contact.
     protected override Task OnInitializedAsync()
     {
-        Contact = new();
+        Alumno = new();
         return base.OnInitializedAsync();
     }
 
@@ -68,7 +68,7 @@
         // This just attaches.
         if (Alumno is not null)
         {
-            context.Alumnos?.Add(Alumno);
+            context.Alumnos.Add(Alumno);
         }
 
         try
@@ -77,7 +77,7 @@
             Success = true;
             Error = false;
             // Ready for the next.
-            Contact = new();
+            Alumno = new();
             Busy = false;
         }
         catch (Exception ex)

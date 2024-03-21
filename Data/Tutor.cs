@@ -9,26 +9,27 @@ namespace BlazorWebAppEFCore.Data
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public string? nombre { get; set; }
+        public string Nombre { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public string? apellido { get; set; }
+        public string Apellido { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public int? correo { get; set; }
+        public int Correo { get; set; }
 
         [Required]
-        [StringLength(15, ErrorMessage = "Phone number cannot exceed 15 digits.")]
-        public string? telefono_personal { get; set; }
+        [StringLength(15, ErrorMessage = "")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "")]
+        public string Telefono_personal { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "")]
-        public int? pago { get; set; }
+        [RegularExpression("^[0-9]*$", ErrorMessage = "")]
+        public int Pago { get; set; }
 
-        [Required]
-        public bool? padrino { get; set; }
+        public bool? Padrino { get; set; }
 
         public ICollection<AlumnoTutor> AlumnoTutores { get; set; }
 
