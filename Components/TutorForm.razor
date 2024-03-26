@@ -10,7 +10,7 @@
               OnValidSubmit="(async () => await HandleSubmitAsync(true))">
         <DataAnnotationsValidator />
         <ValidationSummary />
-        <h2>🆔 Identificacion del Tutor</h2>
+        <h2>🆔 Identificacion </h2>
         <p>
             <label>
                 Nombre:
@@ -38,10 +38,17 @@
             </label>
             <label>
                 Telefono:
-                <InputText @bind-Value="Tutor.Telefono_personal" />
+                <InputText @bind-Value="Tutor.Telefono" />
                 <ConcurrencyField Model="Tutor"
                                   DbModel="DbTutor"
-                                  Property="obj => obj?.Telefono_personal" />
+                                  Property="obj => obj?.Telefono" />
+            </label>
+            <label>
+                Direccion:
+                <InputText @bind-Value="Tutor.Direccion" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.Direccion" />
             </label>
         </p>
         <h2>Pago y padrino</h2>
@@ -53,13 +60,12 @@
                                   DbModel="DbTutor"
                                   Property="obj => obj?.Pago" />
             </label>
+
             <label>
-                Padrino
-                <InputCheckbox @bind-Value="Tutor.Padrino" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.Padrino" />
+                <input type="checkbox" name="Padrino" value="true"> Padrino
             </label>
+
+        </p>
         <br />
         <button disabled="@Busy" class="btn btn-warning"
                 @onclick="CancelAsync">

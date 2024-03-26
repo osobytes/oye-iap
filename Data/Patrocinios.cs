@@ -2,17 +2,20 @@
 
 namespace BlazorWebAppEFCore.Data
 {
-    public class datos_contacto
+    public class Patrocinios
     {
         public int Id { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public int? Id_tutor { get; set; }
+        public int IdInstitucion { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public int? Direccion { get; set; }
+        public int IdTutor { get; set; }
+
+        [StringLength(200, ErrorMessage = "")]
+        public string? DetallesAyuda { get; set; }
 
     }
 }

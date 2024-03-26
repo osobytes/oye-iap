@@ -26,39 +26,46 @@
                                   DbModel="DbAlumno"
                                   Property="obj => obj?.Apellido" />
             </label>
+            <label>
+                Direccion:
+                <InputText @bind-Value="Alumno.Direccion" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.Direccion" />
+            </label>
         </p>
         <h2> Fecha </h2>
         <p>
             <label>
                 Fecha de ingreso:
-                <InputText @bind-Value="Alumno.Fecha_ingreso" />
+                <InputText @bind-Value="Alumno.FechaIngreso" />
                 <ConcurrencyField Model="Alumno"
                                   DbModel="DbAlumno"
-                                  Property="obj => obj?.Fecha_ingreso" />
+                                  Property="obj => obj?.FechaIngreso" />
             </label>
         </p>
-        <h2>Aparato o implante</h2>
+        <h2>Uso Aparato o implante</h2>
         <p>
             <label>
-                Usa aparato o implante::
-                <InputText @bind-Value="Alumno.Aparato_o_implante" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.Aparato_o_implante" />
+                <input type="checkbox" name="Implante" value="true"> Aparato
             </label>
+
+            <label>
+                <input type="checkbox" name="Implante" value="true"> Implante </label>
+
             <label>
                 Fecha de implante:
-                <InputText @bind-Value="Alumno.Fecha_implante" />
+                <InputText @bind-Value="Alumno.FechaImplante" />
                 <ConcurrencyField Model="Alumno"
                                   DbModel="DbAlumno"
-                                  Property="obj => obj?.Fecha_implante" />
+                                  Property="obj => obj?.FechaImplante" />
             </label>
             <label>
                 Fecha de aparaato:
-                <InputText @bind-Value="Alumno.Fecha_aparato" />
+                <InputText @bind-Value="Alumno.FechaAparato" />
                 <ConcurrencyField Model="Alumno"
                                   DbModel="DbAlumno"
-                                  Property="obj => obj?.Fecha_aparato" />
+                                  Property="obj => obj?.FechaAparato" />
             </label>
         </p>
         <h2>Comentarios</h2>
@@ -82,10 +89,10 @@
             </label>
             <label>
                 Fecha de egreso:
-                <InputText @bind-Value="Alumno.Fecha_egreso" />
+                <InputText @bind-Value="Alumno.FechaEgreso" />
                 <ConcurrencyField Model="Alumno"
                                   DbModel="DbAlumno"
-                                  Property="obj => obj?.Fecha_egreso" />
+                                  Property="obj => obj?.FechaEgreso" />
             </label>
         </p>
         <br />

@@ -2,7 +2,7 @@
 
 namespace BlazorWebAppEFCore.Data
 {
-    public class Institucion
+    public class Institucion : Patrocinador
     {
         public int Id { get; set; }
 
@@ -11,13 +11,17 @@ namespace BlazorWebAppEFCore.Data
         public String Nombre { get; set; }
 
         [Required]
-        [StringLength(15, ErrorMessage = "Phone number cannot exceed 15 digits.")]
+        [StringLength(15, ErrorMessage = "")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "")]
-        public int Telefono { get; set; }
+        public string Telefono { get; set; }
 
         [Required]
         [StringLength(200, ErrorMessage = "")]
-        public string Desc_institucion { get; set; }
+        public string Descripcion { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "")]
+        public string Correo { get; set; }
 
         [Required]
         [StringLength(200, ErrorMessage = "")]
@@ -29,10 +33,7 @@ namespace BlazorWebAppEFCore.Data
 
         [Required]
         [StringLength(150, ErrorMessage = "")]
-        public string tipo_empresa { get; set; }
-
-        [StringLength(200, ErrorMessage = "")]
-        public string? Desc_ayuda { get; set; }
+        public TipoEmpresa TipoEmpresa { get; set; }
 
     }
 }

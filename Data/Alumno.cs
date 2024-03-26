@@ -10,39 +10,38 @@ public class Alumno
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public string? Nombre { get; set; }
+        public string Nombre { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public string? Apellido { get; set; }
+        public string Apellido { get; set; }
+
+        [Required]
+        [StringLength(150, ErrorMessage = "")]     
+        public string Direccion { get; set; }
 
         [Required]
         [DataType(DataType.Date, ErrorMessage = "")]
-        public DateOnly? Fecha_ingreso { get; set; }
+        public DateOnly FechaIngreso { get; set; }
 
-        [Required]
-        [StringLength(20, ErrorMessage = "")]
-        public string? Aparato_o_implante { get; set; }
-
-        [Required]
-        [DataType(DataType.Date, ErrorMessage = "")]
-        public DateOnly? Fecha_aparato { get; set; }
+        public bool Aparato { get; set; }
+        public bool Implante { get; set; }
 
         [Required]
         [DataType(DataType.Date, ErrorMessage = "")]
-        public DateOnly? Fecha_implante { get; set; }
+        public DateOnly FechaAparato { get; set; }
+
+        [Required]
+        [DataType(DataType.Date, ErrorMessage = "")]
+        public DateOnly FechaImplante { get; set; }
 
         [Required]
         [StringLength(2, ErrorMessage = "")]
-        public string? Activo { get; set; }
+        public string Activo { get; set; }
 
         [DataType(DataType.Date, ErrorMessage = "")]
-        public DateOnly? Fecha_egreso { get; set; }
+        public DateOnly? FechaEgreso { get; set; }
 
         [StringLength(200, ErrorMessage = "")]
         public string? Comentarios { get; set; }
-
-        [Required]
-        [RegularExpression(@"^\d{5}(?:[-\s]\d{4})?$", ErrorMessage = "")]
-        public string? ZipCode { get; set; }
 }
