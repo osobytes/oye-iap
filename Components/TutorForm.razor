@@ -62,7 +62,22 @@
             </label>
 
             <label>
-                <input type="checkbox" name="Padrino" value="true"> Padrino
+                <input type="checkbox" name="PatrocinioActivo" value="true"> PatrocinioActivo
+            </label>
+
+            <label>
+                Donacion:
+                <InputText @bind-Value="Tutor.Donacion" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.Donacion" />
+            </label>
+            <label>
+                Detalles de la donacion:
+                <InputText @bind-Value="Tutor.DetallesAyuda" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.DetallesAyuda" />
             </label>
 
         </p>

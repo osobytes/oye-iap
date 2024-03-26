@@ -32,8 +32,6 @@ namespace BlazorWebAppEFCore.Data
         [Range(0, int.MaxValue, ErrorMessage = "")]
         public int Pago { get; set; }
 
-        public bool? Padrino { get; set; }
-
         public ICollection<AlumnoTutor> AlumnoTutores { get; set; }
 
     }
