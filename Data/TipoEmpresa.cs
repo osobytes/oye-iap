@@ -2,12 +2,12 @@
 {
     public enum TipoEmpresa
     {
-        política,
-        económica,
-        jurídica,
-        laboral,
-        científica,
-        educativa,
-        artística         
+        Politica,
+        Economica,
+        Juridica,
+        Laboral,
+        Cientifica,
+        Educativa,
+        Artistica         
     }
 }

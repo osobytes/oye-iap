@@ -2,7 +2,7 @@
 
 namespace BlazorWebAppEFCore.Data
 {
-    public class Patrocinios
+    public class PatrocinioEmpresa
     {
         public int Id { get; set; }
 
@@ -11,11 +11,7 @@ namespace BlazorWebAppEFCore.Data
         public int IdInstitucion { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "")]
-        public int IdTutor { get; set; }
-
-        [StringLength(200, ErrorMessage = "")]
-        public string? DetallesAyuda { get; set; }
-
+        [DataType(DataType.Date, ErrorMessage = "")]
+        public DateTime Fecha { get; set; }
     }
 }

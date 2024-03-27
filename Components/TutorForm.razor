@@ -44,12 +44,16 @@
                                   Property="obj => obj?.Telefono" />
             </label>
             <label>
+                <input type="checkbox" name="Direccion" value="true"> Misma direccion del Alumno
+            </label>
+            <label>
                 Direccion:
                 <InputText @bind-Value="Tutor.Direccion" />
                 <ConcurrencyField Model="Tutor"
                                   DbModel="DbTutor"
                                   Property="obj => obj?.Direccion" />
             </label>
+
         </p>
         <h2>Pago y padrino</h2>
         <p>
