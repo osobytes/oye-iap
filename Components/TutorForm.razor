@@ -24,7 +24,7 @@
                 <InputText @bind-Value="Tutor.Apellido" />
                 <ConcurrencyField Model="Tutor"
                                   DbModel="DbTutor"
-                                  Property="obj => obj?.Tutor" />
+                                  Property="obj => obj?.Apellido" />
             </label>
         </p>
         <h2> Informacion de contacto </h2>
@@ -59,7 +59,7 @@
         <p>
             <label>
                 Cuanto sera el pago:
-                <InputText @bind-Value="Tutor.Pago" />
+                <InputNumber @bind-Value="Tutor.Pago" />
                 <ConcurrencyField Model="Tutor"
                                   DbModel="DbTutor"
                                   Property="obj => obj?.Pago" />
@@ -71,7 +71,7 @@
 
             <label>
                 Donacion:
-                <InputText @bind-Value="Tutor.Donacion" />
+                <InputNumber @bind-Value="Tutor.Donacion" />
                 <ConcurrencyField Model="Tutor"
                                   DbModel="DbTutor"
                                   Property="obj => obj?.Donacion" />

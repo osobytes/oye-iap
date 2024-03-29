@@ -11,7 +11,7 @@ builder.Services.AddRazorComponents()
 // Register factory and configure the options
 #region snippet1
 builder.Services.AddDbContextFactory<ContactContext>(opt =>
-    opt.UseSqlite($"Data Source={nameof(ContactContext.ContactsDb)}.db"));
+    opt.UseSqlite($"Data Source={nameof(ContactContext.OyeIapDb)}.db"));
 #endregion
 
 // Pager
