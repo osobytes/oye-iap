@@ -24,6 +24,7 @@ public class ContactContext : DbContext
     public DbSet<Contact>? Contacts { get; set; }
     public DbSet<Alumno>? Alumnos { get; set; }
     public DbSet<Tutor>? Tutores { get; set; }
+    public DbSet<Institucion>? Instituciones { get; set; }
 
     // Define the model.
     // modelBuilder: The ModelBuilder.

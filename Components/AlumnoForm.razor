@@ -51,8 +51,9 @@
             </label>
 
             <label>
-                <input type="checkbox" name="Implante" value="true"> Implante </label>
-
+                <input type="checkbox" name="Implante" value="true"> Implante 
+            </label>
+            <br/>
             <label>
                 Fecha de implante:
                 <InputDate @bind-Value="Alumno.FechaImplante" />
@@ -61,7 +62,7 @@
                                   Property="obj => obj?.FechaImplante" />
             </label>
             <label>
-                Fecha de aparaato:
+                Fecha de aparato:
                 <InputDate @bind-Value="Alumno.FechaAparato" />
                 <ConcurrencyField Model="Alumno"
                                   DbModel="DbAlumno"

@@ -8,7 +8,7 @@ namespace BlazorWebAppEFCore.Data
 
         [Required]
         [StringLength(100, ErrorMessage = "")]
-        public String Nombre { get; set; }
+        public string Nombre { get; set; }
 
         [Required]
         [StringLength(15, ErrorMessage = "")]
@@ -33,7 +33,7 @@ namespace BlazorWebAppEFCore.Data
 
         [Required]
         [StringLength(150, ErrorMessage = "")]
-        public TipoEmpresa TipoEmpresa { get; set; }
+        public TipoEmpresa TipoEmpresas { get; set; }
 
     }
 }
