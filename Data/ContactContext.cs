@@ -41,6 +41,9 @@ public class ContactContext : DbContext
         modelBuilder.Entity<Tutor>()
             .Property<byte[]>(RowVersion)
             .IsRowVersion();
+        modelBuilder.Entity<Institucion>()
+            .Property<byte[]>(RowVersion)
+            .IsRowVersion();
 
         modelBuilder.Entity<AlumnoTutor>()
         .HasKey(at => new { at.AlumnoId, at.TutorId });

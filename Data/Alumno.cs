@@ -27,17 +27,14 @@ public class Alumno
         public bool Aparato { get; set; }
         public bool Implante { get; set; }
 
-        [Required]
         [DataType(DataType.Date, ErrorMessage = "")]
         public DateOnly? FechaAparato { get; set; }
 
-        [Required]
         [DataType(DataType.Date, ErrorMessage = "")]
         public DateOnly? FechaImplante { get; set; }
 
         [Required]
-        [StringLength(2, ErrorMessage = "")]
-        public string Activo { get; set; }
+        public bool Activo { get; set; }
 
         [DataType(DataType.Date, ErrorMessage = "")]
         public DateOnly? FechaEgreso { get; set; }

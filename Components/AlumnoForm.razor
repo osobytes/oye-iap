@@ -47,11 +47,11 @@
         <h2>Uso Aparato o implante</h2>
         <p>
             <label>
-                <input type="checkbox" name="Aparato" value="true"> Aparato
+                <input type="checkbox" name="Aparato" value="false"> Aparato
             </label>
 
             <label>
-                <input type="checkbox" name="Implante" value="true"> Implante 
+                <input type="checkbox" name="Implante" value="false"> Implante
             </label>
             <br/>
             <label>
@@ -82,11 +82,7 @@
         <h2> Activo/Fecha de egreso </h2>
         <p>
             <label>
-                Sigue activo:
-                <InputText @bind-Value="Alumno.Activo" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.Activo" />
+                <input type="checkbox" name="Activo" value="false"> Activo
             </label>
             <label>
                 Fecha de egreso:

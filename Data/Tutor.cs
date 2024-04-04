@@ -25,7 +25,7 @@ namespace BlazorWebAppEFCore.Data
 
         [Required]
         [StringLength(15, ErrorMessage = "")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "")]
+        //[RegularExpression("^[0-9]*$", ErrorMessage = "")]
         public string Telefono { get; set; }
 
         [Required]

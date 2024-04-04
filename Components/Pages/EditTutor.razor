@@ -144,7 +144,7 @@ else
 
             EditSuccessState.Success = true;
             // go to view to see the record
-            Navigation.NavigateTo($"/view/{Tutor.Id}");
+            Navigation.NavigateTo($"/view-tutor/{Tutor.Id}");
         }
         catch (DbUpdateConcurrencyException dbex)
         {
@@ -159,7 +159,7 @@ else
             if (dbValues is null)
             {
                 // deleted - show Tutor not found
-                Navigation.NavigateTo($"/view/{Tutor.Id}");
+                Navigation.NavigateTo($"/view-tutor/{Tutor.Id}");
                 return;
             }
 
