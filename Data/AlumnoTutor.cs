@@ -1,5 +1,6 @@
 
 using BlazorWebAppEFCore.Data;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class AlumnoTutor
 {
@@ -9,5 +10,8 @@ public class AlumnoTutor
     public int TutorId { get; set; }
     public Tutor Tutor { get; set; }
 
-    public bool EsPadre { get; set; }
+    [Column(TypeName = "nvarchar(50)")]
+    public Parentesco Parentesco { get; set; }
+
+    public string? Comentarios { get; set; }
 }

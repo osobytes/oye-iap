@@ -5,13 +5,11 @@ namespace BlazorWebAppEFCore.Data
     public class PatrocinioTutor
     {
         public int Id { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "")]
         public int IdTutor { get; set; }
+        public int Donacion { get; set; }
 
-        [Required]
-        [DataType(DataType.Date, ErrorMessage = "")]
+        [Required(ErrorMessage = "El campo Fecha es requerido.")]
+        [DataType(DataType.Date, ErrorMessage = "El campo Fecha debe ser una fecha válida.")]
         public DateTime Fecha { get; set; }
     }
 }
