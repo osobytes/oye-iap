@@ -10,7 +10,7 @@ public class ContactContext : DbContext
     public static readonly string RowVersion = nameof(RowVersion);
 
     // Magic strings.
-    public static readonly string ContactsDb = nameof(ContactsDb).ToLower();
+    public static readonly string OyeIapDb = nameof(OyeIapDb).ToLower();
 
     // Inject options.
     // options: The DbContextOptions{ContactContext} for the context.
@@ -22,6 +22,9 @@ public class ContactContext : DbContext
 
     // List of Contact.
     public DbSet<Contact>? Contacts { get; set; }
+    public DbSet<Alumno>? Alumnos { get; set; }
+    public DbSet<Tutor>? Tutores { get; set; }
+    public DbSet<Institucion>? Instituciones { get; set; }
 
     // Define the model.
     // modelBuilder: The ModelBuilder.
@@ -32,6 +35,28 @@ public class ContactContext : DbContext
         modelBuilder.Entity<Contact>()
             .Property<byte[]>(RowVersion)
             .IsRowVersion();
+        modelBuilder.Entity<Alumno>()
+            .Property<byte[]>(RowVersion)
+            .IsRowVersion();
+        modelBuilder.Entity<Tutor>()
+            .Property<byte[]>(RowVersion)
+            .IsRowVersion();
+        modelBuilder.Entity<Institucion>()
+            .Property<byte[]>(RowVersion)
+            .IsRowVersion();
+
+        modelBuilder.Entity<AlumnoTutor>()
+        .HasKey(at => new { at.AlumnoId, at.TutorId });
+
+    modelBuilder.Entity<AlumnoTutor>()
+        .HasOne(at => at.Alumno)
+        .WithMany(a => a.AlumnoTutores)
+        .HasForeignKey(at => at.AlumnoId);
+
+    modelBuilder.Entity<AlumnoTutor>()
+        .HasOne(at => at.Tutor)
+        .WithMany(t => t.AlumnoTutores)
+        .HasForeignKey(at => at.TutorId);
 
         base.OnModelCreating(modelBuilder);
     }

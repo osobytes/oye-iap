@@ -1,0 +1,147 @@
+@using Microsoft.AspNetCore.Components.Forms;
+
+<h1>@Mode Alumno</h1>
+
+<hr />
+@if (Alumno is not null)
+{
+    <EditForm Model="Alumno"
+              OnInvalidSubmit="(async () => await HandleSubmitAsync(false))"
+              OnValidSubmit="(async () => await HandleSubmitAsync(true))">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <h2>🆔 Identificacion</h2>
+        <p>
+            <label>
+                Nombre:
+                <InputText @bind-Value="Alumno.Nombre" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.Nombre" />
+            </label>
+            <label>
+                Apellido:
+                <InputText @bind-Value="Alumno.Apellido" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.Apellido" />
+            </label>
+            <label>
+                Direccion:
+                <InputText @bind-Value="Alumno.Direccion" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.Direccion" />
+            </label>
+        </p>
+        <h2> Fecha </h2>
+        <p>
+            <label>
+                Fecha de ingreso:
+                <InputDate @bind-Value="Alumno.FechaIngreso" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.FechaIngreso" />
+            </label>
+        </p>
+        <h2>Uso Aparato o implante</h2>
+        <p>
+            <label>
+                <input type="checkbox" name="Aparato" value="false"> Aparato
+            </label>
+
+            <label>
+                <input type="checkbox" name="Implante" value="false"> Implante
+            </label>
+            <br/>
+            <label>
+                Fecha de implante:
+                <InputDate @bind-Value="Alumno.FechaImplante" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.FechaImplante" />
+            </label>
+            <label>
+                Fecha de aparato:
+                <InputDate @bind-Value="Alumno.FechaAparato" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.FechaAparato" />
+            </label>
+        </p>
+        <h2>Comentarios</h2>
+        <p>
+            <label>
+                Comentarios:
+                <InputText @bind-Value="Alumno.Comentarios" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.Comentarios" />
+            </label>
+        </p>
+        <h2> Activo/Fecha de egreso </h2>
+        <p>
+            <label>
+                <input type="checkbox" name="Activo" value="false"> Activo
+            </label>
+            <label>
+                Fecha de egreso:
+                <InputDate @bind-Value="Alumno.FechaEgreso" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.FechaEgreso" />
+            </label>
+        </p>
+        <br />
+        <button disabled="@Busy" class="btn btn-warning"
+                @onclick="CancelAsync">
+            Cancel
+        </button>&nbsp;
+        <button disabled="@Busy" type="submit"
+                class="btn btn-primary">
+            Submit
+        </button>
+    </EditForm>
+}
+
+@code {
+    // Let parent handle result of validation.
+    [Parameter]
+    public EventCallback<bool> ValidationResult { get; set; }
+
+    // Let parent handle what to do on cancel.
+    [Parameter]
+    public EventCallback CancelRequest { get; set; }
+
+    // True if add mode.
+    [Parameter]
+    public bool IsAdd { get; set; }
+
+    // The Contact to upsert.
+    [Parameter]
+    public Alumno? Alumno { get; set; }
+
+    // The database version of Contact if a concurrency issue.
+    [Parameter]
+    public Alumno? DbAlumno { get; set; }
+
+    // Prevent multiple asynchronous operations at the same time.
+    [Parameter]
+    public bool Busy { get; set; }
+
+    // Mode.
+    private string Mode => IsAdd ? "Add" : "Edit";
+
+    // Ask to cancel.
+    private Task CancelAsync()
+    {
+        return CancelRequest.InvokeAsync(null);
+    }
+
+    // Handle form submission request.
+    // isValid: True when field validation passed.
+    private Task HandleSubmitAsync(bool isValid)
+    {
+        return ValidationResult.InvokeAsync(isValid);
+    }
+}
