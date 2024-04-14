@@ -4,7 +4,7 @@
 @using BlazorWebAppEFCore.Grid
 @using BlazorWebAppEFCore.Data
 @implements IDisposable
-@inject IDbContextFactory<ContactContext> DbFactory
+@inject IDbContextFactory<OyeIapDbContext> DbFactory
 @inject NavigationManager Navigation
 @inject IPageHelper PageHelper
 @inject EditSuccess EditSuccessState
@@ -48,9 +48,9 @@ else
     public int InstitucionId { get; set; }
 
     /// <summary>
-    /// The <see cref="ContactContext"/> for database access.
+    /// The <see cref="OyeIapDbContext"/> for database access.
     /// </summary>
-    private ContactContext? Context { get; set; }
+    private OyeIapDbContext? Context { get; set; }
 
     /// <summary>
     /// Contact being edited
