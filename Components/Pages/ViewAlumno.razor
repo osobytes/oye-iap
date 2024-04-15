@@ -3,7 +3,7 @@
 @using BlazorWebAppEFCore.Grid
 @using BlazorWebAppEFCore.Data
 @using Microsoft.EntityFrameworkCore
-@inject IDbContextFactory<ContactContext> DbFactory
+@inject IDbContextFactory<OyeIapDbContext> DbFactory
 @inject IPageHelper PageHelper
 @inject EditSuccess EditSuccessState
 
@@ -19,7 +19,7 @@ else
     }
     else
     {
-        <h1>@Alumno.Apellido, @Alumno.Nombre, @Alumno.Direccion</h1>
+        <h1>@Alumno.ApellidoPaterno, @Alumno.ApellidoMaterno, @Alumno.Nombre, @Alumno.Direccion</h1>
         <br />
         @if (EditSuccess)
         {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BlazorWebAppEFCore.Data;
 
 // Context for the contacts database.
-public class ContactContext : DbContext
+public class OyeIapDbContext : DbContext
 {
     // Magic string.
     public static readonly string RowVersion = nameof(RowVersion);
@@ -14,17 +14,18 @@ public class ContactContext : DbContext
 
     // Inject options.
     // options: The DbContextOptions{ContactContext} for the context.
-    public ContactContext(DbContextOptions<ContactContext> options)
+    public OyeIapDbContext(DbContextOptions<OyeIapDbContext> options)
         : base(options)
-    {
+    {  
         Debug.WriteLine($"{ContextId} context created.");
     }
 
     // List of Contact.
-    public DbSet<Contact>? Contacts { get; set; }
+    public DbSet<Contact>? Contacts { get; set; } // TODO: borrar esta tabla
     public DbSet<Alumno>? Alumnos { get; set; }
     public DbSet<Tutor>? Tutores { get; set; }
     public DbSet<Institucion>? Instituciones { get; set; }
+    public DbSet<AlumnoTutor>? AlumnoTutores { get; set; }
 
     // Define the model.
     // modelBuilder: The ModelBuilder.
@@ -41,21 +42,18 @@ public class ContactContext : DbContext
         modelBuilder.Entity<Tutor>()
             .Property<byte[]>(RowVersion)
             .IsRowVersion();
-        modelBuilder.Entity<Institucion>()
-            .Property<byte[]>(RowVersion)
-            .IsRowVersion();
 
         modelBuilder.Entity<AlumnoTutor>()
         .HasKey(at => new { at.AlumnoId, at.TutorId });
 
     modelBuilder.Entity<AlumnoTutor>()
         .HasOne(at => at.Alumno)
-        .WithMany(a => a.AlumnoTutores)
+        .WithMany(a => a.Tutores)
         .HasForeignKey(at => at.AlumnoId);
 
     modelBuilder.Entity<AlumnoTutor>()
         .HasOne(at => at.Tutor)
-        .WithMany(t => t.AlumnoTutores)
+        .WithMany(t => t.Alumnos)
         .HasForeignKey(at => at.TutorId);
 
         base.OnModelCreating(modelBuilder);
