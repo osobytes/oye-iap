@@ -21,10 +21,14 @@
             </label>
             <label>
                 Apellido:
-                <InputText @bind-Value="Tutor.Apellido" />
+                <InputText @bind-Value="Tutor.ApellidoPaterno" />
                 <ConcurrencyField Model="Tutor"
                                   DbModel="DbTutor"
-                                  Property="obj => obj?.Apellido" />
+                                  Property="obj => obj?.ApellidoPaterno" />
+                <InputText @bind-Value="Tutor.ApellidoMaterno" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.ApellidoMaterno" />
             </label>
         </p>
         <h2> Informacion de contacto </h2>
