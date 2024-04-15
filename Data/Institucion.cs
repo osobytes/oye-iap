@@ -33,7 +33,6 @@ namespace BlazorWebAppEFCore.Data
         public string Direccion { get; set; }
 
         [Required(ErrorMessage = "El campo TipoEmpresas es obligatorio.")]
-        [StringLength(150, ErrorMessage = "El campo TipoEmpresas debe tener como máximo 150 caracteres.")]
         [Column(TypeName = "varchar(50)")]
         public TipoEmpresa TipoEmpresas { get; set; }
     }
