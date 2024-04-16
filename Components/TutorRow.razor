@@ -1,0 +1,124 @@
+﻿BlazorWebAppEFCore.Grid
+@inject IBaseGridControls Filters
+
+@if (CurrentTutor is not null)
+{
+    <div class="row contact-detail">
+        <div class="col-1 text-right">
+            <a title="Edit" href="edit-tutor/@CurrentTutor.Id" style="text-decoration:none">
+                &nbsp;📝&nbsp;
+            </a>
+            @if (CanDelete)
+            {
+                <span @onclick="DeleteRequestAsync"
+                      title="Delete" class="clickable red btn">❌</span>
+            }
+            else
+            {
+                <span>&nbsp;</span>
+            }
+            &nbsp;
+        </div>
+        <div class="col-2">
+            <a href="@ViewLink" alt="View Details"
+               title="View Details">
+                @Name
+            </a>
+        </div>
+        @if (!DeleteConfirmation)
+        {
+            <div class="col-1">@CurrentTutor.Nombre</div>
+            <div class="col-1">@CurrentTutor.ApellidoPaterno</div>
+            <div class="col-1">@CurrentTutor.ApellidoMaterno</div>
+            <div class="col-2">@CurrentTutor.Correo</div>
+            <div class="col-1">@CurrentTutor.Telefono</div>
+            <div class="col-2">@CurrentTutor.Direccion</div>
+            <div class="col-2">@CurrentTutor.Pago</div>
+            <div class="col-2">@CurrentTutor.PatrocinioActivo</div>
+            <div class="col-2">@CurrentTutor.Donacion</div>
+            <div class="col-3">@CurrentTutor.DetallesAyuda</div>
+        }
+        else
+        {
+            <div class="col-9">
+                <DeletePrompt Confirmation="ConfirmAsync" />
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private Tutor _currentTutor = new Tutor();
+
+    // Contact being rendered.
+    [Parameter]
+    public Tutor CurrentTutor
+    {
+        get => _currentTutor;
+        set
+        {
+            if (value is not null && !value.Equals(_currentTutor))
+            {
+                _currentTutor = value;
+                DeleteConfirmation = false;
+            }
+        }
+    }
+
+    // Event to raise when a contact delete is requested.
+    [Parameter]
+    public EventCallback DeleteTutor { get; set; }
+
+    // Overall wrapper of functionality.
+    [CascadingParameter]
+    public GridWrapper? Wrapper { get; set; }
+
+    // Returns True if conditions for delete are met.
+    private bool CanDelete => !DeleteConfirmation &&
+    (Wrapper?.DeleteRequestId == 0 ||
+    Wrapper?.DeleteRequestId == _currentTutor?.Id);
+
+    // Navigate to view.
+    private string ViewLink => $"view-tutor/{CurrentTutor?.Id}";
+
+    // Confirm the delete.
+    private bool DeleteConfirmation { get; set; }
+
+    // Called based on confirmation.
+    // confirmed: True when confirmed.
+    private async Task ConfirmAsync(bool confirmed)
+    {
+        if (confirmed)
+        {
+            await DeleteAsync();
+        }
+        else
+        {
+            DeleteConfirmation = false;
+
+            if (Wrapper is not null)
+            {
+                await Wrapper.DeleteRequested.InvokeAsync(0);
+            }
+        }
+    }
+
+    /// Set delete to true.
+    private async Task DeleteRequestAsync()
+    {
+        if (Wrapper?.DeleteRequestId == 0)
+        {
+            DeleteConfirmation = true;
+            await Wrapper.DeleteRequested.InvokeAsync(CurrentTutor.Id);
+        }
+    }
+
+    // Deletes the Institucion.
+    private Task DeleteAsync()
+    {
+        return DeleteTutor.InvokeAsync(this);
+    }
+
+    /// Correctly formatted name.
+    private string Name => CurrentTutor.Nombre;
+}

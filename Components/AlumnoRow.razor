@@ -1,0 +1,126 @@
+﻿BlazorWebAppEFCore.Grid
+@inject IBaseGridControls Filters
+
+@if (CurrentAlumno is not null)
+{
+    <div class="row contact-detail">
+        <div class="col-1 text-right">
+            <a title="Edit" href="edit-alumno/@CurrentAlumno.Id" style="text-decoration:none">
+                &nbsp;📝&nbsp;
+            </a>
+            @if (CanDelete)
+            {
+                <span @onclick="DeleteRequestAsync"
+                      title="Delete" class="clickable red btn">❌</span>
+            }
+            else
+            {
+                <span>&nbsp;</span>
+            }
+            &nbsp;
+        </div>
+        <div class="col-2">
+            <a href="@ViewLink" alt="View Details"
+               title="View Details">
+                @Name
+            </a>
+        </div>
+        @if (!DeleteConfirmation)
+        {
+            <div class="col-1">@CurrentAlumno.Nombre</div>
+            <div class="col-1">@CurrentAlumno.ApellidoPaterno</div>
+            <div class="col-1">@CurrentAlumno.ApellidoMaterno</div>
+            <div class="col-2">@CurrentAlumno.Direccion</div>
+            <div class="col-1">@CurrentAlumno.FechaIngreso</div>
+            <div class="col-2">@CurrentAlumno.Aparato</div>
+            <div class="col-2">@CurrentAlumno.Implante</div>
+            <div class="col-2">@CurrentAlumno.FechaAparato</div>
+            <div class="col-2">@CurrentAlumno.FechaImplante</div>
+            <div class="col-3">@CurrentAlumno.Comentarios</div>
+            <div class="col-3">@CurrentAlumno.Activo</div>
+            <div class="col-3">@CurrentAlumno.FechaEgreso</div>
+        }
+        else
+        {
+            <div class="col-9">
+                <DeletePrompt Confirmation="ConfirmAsync" />
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private Alumno _currentAlumno = new Alumno();
+
+    // Contact being rendered.
+    [Parameter]
+    public Alumno CurrentAlumno
+    {
+        get => _currentAlumno;
+        set
+        {
+            if (value is not null && !value.Equals(_currentAlumno))
+            {
+                _currentAlumno = value;
+                DeleteConfirmation = false;
+            }
+        }
+    }
+
+    // Event to raise when a contact delete is requested.
+    [Parameter]
+    public EventCallback DeleteAlumno { get; set; }
+
+    // Overall wrapper of functionality.
+    [CascadingParameter]
+    public GridWrapper? Wrapper { get; set; }
+
+    // Returns True if conditions for delete are met.
+    private bool CanDelete => !DeleteConfirmation &&
+    (Wrapper?.DeleteRequestId == 0 ||
+    Wrapper?.DeleteRequestId == _currentAlumno?.Id);
+
+    // Navigate to view.
+    private string ViewLink => $"view-alumno/{CurrentAlumno?.Id}";
+
+    // Confirm the delete.
+    private bool DeleteConfirmation { get; set; }
+
+    // Called based on confirmation.
+    // confirmed: True when confirmed.
+    private async Task ConfirmAsync(bool confirmed)
+    {
+        if (confirmed)
+        {
+            await DeleteAsync();
+        }
+        else
+        {
+            DeleteConfirmation = false;
+
+            if (Wrapper is not null)
+            {
+                await Wrapper.DeleteRequested.InvokeAsync(0);
+            }
+        }
+    }
+
+    /// Set delete to true.
+    private async Task DeleteRequestAsync()
+    {
+        if (Wrapper?.DeleteRequestId == 0)
+        {
+            DeleteConfirmation = true;
+            await Wrapper.DeleteRequested.InvokeAsync(CurrentAlumno.Id);
+        }
+    }
+
+    // Deletes the Institucion.
+    private Task DeleteAsync()
+    {
+        return DeleteAlumno.InvokeAsync(this);
+    }
+
+    /// Correctly formatted name.
+    private string Name => CurrentAlumno.Nombre;
+}
