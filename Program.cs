@@ -2,17 +2,19 @@ using BlazorWebAppEFCore.Components;
 using Microsoft.EntityFrameworkCore;
 using BlazorWebAppEFCore.Data;
 using BlazorWebAppEFCore.Grid;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddFluentUIComponents()
+    .AddDataGridEntityFrameworkAdapter();
+
 // Register factory and configure the options
-#region snippet1
 builder.Services.AddDbContextFactory<OyeIapDbContext>(opt =>
     opt.UseSqlite($"Data Source={nameof(OyeIapDbContext.OyeIapDb)}.db"));
-#endregion
 
 // Pager
 builder.Services.AddScoped<IPageHelper, PageHelper>();
