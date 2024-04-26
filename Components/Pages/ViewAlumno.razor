@@ -6,60 +6,79 @@
 @inject IDbContextFactory<OyeIapDbContext> DbFactory
 @inject IPageHelper PageHelper
 @inject EditSuccess EditSuccessState
+@inject NavigationManager NavigationManager;
 
 @if (NotFound && !Loading)
 {
-    <div class="alert alert-warning">A contact with that id doesn't exist.</div>
+    <FluentMessageBar Title="@Mensajes.AlumnoNotFoundTitle" Intent="@MessageIntent.Warning">
+        @Mensajes.AlumnoNotFoundMessage
+    </FluentMessageBar>
 }
 else
 {
     @if (Alumno is null || Loading)
     {
-        <div class="alert alert-info">Loading...</div>
+        <FluentProgressRing></FluentProgressRing>
     }
     else
     {
-        <h1>@Alumno.ApellidoPaterno, @Alumno.ApellidoMaterno, @Alumno.Nombre, @Alumno.Direccion</h1>
-        <br />
-        @if (EditSuccess)
-        {
-            <div class="alert alert-success">Successfully updated the contact.</div>
-        }
-        <hr />
-        <h2> Fecha </h2>
-        <br />
-        <h3>@Alumno.FechaIngreso</h3>
-        <br />
-        <h2>Aparato o Implante</h2>
-        <br />
-        <h3>@Alumno.Aparato, @Alumno.FechaAparato</h3>
-        <h3>@Alumno.Implante,@Alumno.FechaImplante</h3>
-        <br />
-        <h2>Activo/Fecha de egreso</h2>
-        <h3>@Alumno.Activo, @Alumno.FechaEgreso</h3>
-        <a class="btn btn-primary" title="Go Back" href="@PageHelper.Page">
-            🔙 Back to Grid
-        </a>
-        @if (!Deleted)
-        {
-            <a class="btn btn-primary" href="edit-alumno/@Alumno.Id" title="Edit">Edit</a>
-
-            <span>&nbsp;</span>
-            @if (!ShowConfirmation)
+        <FluentCard>
+            <FluentHeader>@Alumno.ApellidoPaterno @Alumno.ApellidoMaterno @Alumno.Nombre</FluentHeader>
+            <br />
+            @if (EditSuccess)
             {
-                <button class="btn btn-danger" @onclick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</button>
+                <FluentMessageBar Title="@Mensajes.EditMessageTitle" Intent="@MessageIntent.Success">
+                    @Mensajes.EditSuccessMessage
+                </FluentMessageBar>
             }
-            else
-            {
-                <br />
-                <br />
-                <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
-            }
-        }
-        else
-        {
-            <div class="btn btn-danger">🚫 This item has been deleted.</div>
-        }
+            <FluentGrid>
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Detalles de Alumno</FluentLabel>
+                        <FluentLabel>Activo: @(Alumno.Activo ? "Si" : "No")</FluentLabel>
+                        <FluentLabel>Fecha Ingreso: @Alumno.FechaIngreso.ToString("dd-MM-yyyy")</FluentLabel>
+                        @if(Alumno.FechaEgreso.HasValue)
+                        {
+                            <FluentLabel>Fecha Egreso: @Alumno.FechaEgreso.Value.ToString("dd-MM-yyyy")</FluentLabel>
+                        }
+                    </FluentCard>
+                </FluentGridItem>
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Datos de Accesibilidad</FluentLabel>
+                        <FluentLabel>El alumno usa aparato? @(Alumno.Aparato ? "Si" : "No")</FluentLabel>
+                        @if (Alumno.Aparato && Alumno.FechaAparato is DateOnly fechaAparato)
+                        {
+                            <FluentLabel>Fecha de Aparato: @fechaAparato.ToString("dd-MM-yyyy")</FluentLabel>
+                        }
+                        <FluentLabel>El alumno tiene implante? @(Alumno.Implante ? "Si" : "No")</FluentLabel>
+                        @if (Alumno.Implante && Alumno.FechaImplante is DateOnly fechaImplante)
+                        {
+                            <FluentLabel>Fecha de Implante: @fechaImplante.ToString("dd-MM-yyyy")</FluentLabel>
+                        }
+                    </FluentCard>
+                </FluentGridItem>
+            </FluentGrid>
+            <FluentFooter Style="margin-top: 20px;">
+                <FluentButton Style="margin:5px;" Title="Go Back" OnClick="NavigateBack">🔙 Back to Grid</FluentButton>
+                <FluentButton Style="margin:5px;" Title="Edit" OnClick="EditAlumno">Edit</FluentButton>
+                @if (!Deleted)
+                {
+                    @if (!ShowConfirmation)
+                    {
+                        <FluentButton Style="margin:5px;" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</FluentButton>
+                    }
+                    else
+                    {
+                        <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
+                    }
+                }
+                else
+                {
+                    <FluentButton Title="Deleted" Disabled="true">🚫 This item has been deleted.</FluentButton>
+                }
+            </FluentFooter>
+        </FluentCard>
     }
 }
 
@@ -101,6 +120,16 @@ else
             await LoadContactAsync();
         }
         await base.OnParametersSetAsync();
+    }
+
+    private void NavigateBack()
+    {
+        NavigationManager.NavigateTo($"alumnos/{PageHelper.Page}");
+    }
+
+    private void EditAlumno()
+    {
+        NavigationManager.NavigateTo($"edit-alumno/{AlumnoId}");
     }
 
     // Confirm deletion.
@@ -186,5 +215,13 @@ else
             // Show not found.
             await LoadContactAsync();
         }
+    }
+
+    private static class Mensajes
+    {
+        public const string AlumnoNotFoundTitle = "Alumno no encontrado.";
+        public const string AlumnoNotFoundMessage = "El alumno con ese Id no ha sido encontrado en la base de datos.";
+        public const string EditMessageTitle = "Alumno Actualizado";
+        public const string EditSuccessMessage = "El alumno se ha actualizado exitosamente.";
     }
 }
