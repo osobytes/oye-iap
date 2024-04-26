@@ -20,16 +20,13 @@ public class Alumno
     [StringLength(100, ErrorMessage = "El campo ApellidoMaterno debe tener como máximo 100 caracteres.")]
     public string ApellidoMaterno { get; set; }
 
-    [Required]
     [StringLength(100, ErrorMessage = "El campo Correo debe tener como máximo 100 caracteres.")]
     [EmailAddress(ErrorMessage = "El campo Correo debe ser una dirección de correo válida.")]
     public string Correo { get; set; }
 
-    [Required]
     [StringLength(150, ErrorMessage = "El campo Dirección debe tener como máximo 150 caracteres.")]
     public string Direccion { get; set; }
 
-    [Required]
     [StringLength(15, ErrorMessage = "El campo Teléfono debe tener como máximo 15 caracteres.")]
     public string Telefono { get; set; }
 

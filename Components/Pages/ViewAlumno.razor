@@ -3,6 +3,7 @@
 @using BlazorWebAppEFCore.Grid
 @using BlazorWebAppEFCore.Data
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.FluentUI.AspNetCore.Components
 @inject IDbContextFactory<OyeIapDbContext> DbFactory
 @inject IPageHelper PageHelper
 @inject EditSuccess EditSuccessState
@@ -22,47 +23,73 @@ else
     }
     else
     {
-        <h1>@Alumno.ApellidoPaterno, @Alumno.ApellidoMaterno, @Alumno.Nombre, @Alumno.Direccion</h1>
-        <br />
-        @if (EditSuccess)
-        {
-            <div class="alert alert-success">Successfully updated the contact.</div>
-        }
-        <hr />
-        <h2> Fecha </h2>
-        <br />
-        <h3>@Alumno.FechaIngreso</h3>
-        <br />
-        <h2>Aparato o Implante</h2>
-        <br />
-        <h3>@Alumno.Aparato, @Alumno.FechaAparato</h3>
-        <h3>@Alumno.Implante,@Alumno.FechaImplante</h3>
-        <br />
-        <h2>Activo/Fecha de egreso</h2>
-        <h3>@Alumno.Activo, @Alumno.FechaEgreso</h3>
-        <a class="btn btn-primary" title="Go Back" href="@PageHelper.Page">
-            🔙 Back to Grid
-        </a>
-        @if (!Deleted)
-        {
-            <a class="btn btn-primary" href="edit-alumno/@Alumno.Id" title="Edit">Edit</a>
-
-            <span>&nbsp;</span>
-            @if (!ShowConfirmation)
+    <FluentCard>
+            <FluenteHeader>
+                @Alumno.ApellidoPaterno @Alumno.ApellidoMaterno @Alumno.Nombre
+            </FluenteHeader>
+            <br />
+            @if (EditSuccess)
+            {   
+                <FluentMessageBar Title="@Mensajes.EditMessageTitle" Intent="@MessageIntent.Success">
+                    @Mensajes.EditSuccessMessage
+                </FluentMessageBar>
+            }
+        <FluentGrid>
+            <FluentGridItem xs="6" sm="3">
+                <FluentCard>
+                    <FluentLabel Weight="FontWeight.Bold"> Detalles de alumno</FluentLabel>
+                    <FluentLabel>Activo: @(Alumno.Activo ? "Si" : "No")</FluentLabel>
+                    <FluentLabel>Fecha Ingreso: @Alumno.FechaIngreso.ToString("dd-MM-yyyy")</FluentLabel>
+                    @if (Alumno.FechaEgreso.HasValue)
+                    {
+                    <FluentLabel>Fecha Egreso: @Alumno.FechaEgreso.Value.ToString("dd-MM-yyyy")</FluentLabel>
+                    }
+                </FluentCard>
+            </FluentGridItem>
+            <FluentGridItem xs = "6" sm="3">
+                <FluentCard>
+                    <FluentLabel Weight="FontWeight.Bold">Datos sobre el Alumno</FluentLabel>
+                    <FluentLabel>El alumno usa aparato? @(Alumno.Aparato ? "Si" : "No") </FluentLabel>
+                    @if (Alumno.Aparato && Alumno.FechaAparato is DateOnly fechaAparato)
+                    {
+                        <FluentLabel>Fecha de Aparato: @fechaAparato.ToString("dd-MM-yyyy")</FluentLabel>
+                        @if(Alumno.Aparato && Alumno.FechaProgramacion is DateOnly fechaProgramacion)
+                        {
+                            <FluentLabel>Fecha de Porgramacion: @fechaProgramacion.ToString("dd-MM-yyyy")</FluentLabel>
+                        }
+                    }
+                    <FluentLabel>El alumno tiene implante? @(Alumno.Implante ? "Si" : "No") </FluentLabel>
+                    @if (Alumno.Aparato && Alumno.FechaImplante is DateOnly fechaImplante)
+                    {
+                        <FluentLabel>Fecha de Aparato: @fechaImplante.ToString("dd-MM-yyyy")</FluentLabel>
+                        @if (Alumno.Aparato && Alumno.FechaConexion is DateOnly fechaConexion)
+                        {
+                            <FluentLabel>Fecha de Porgramacion: @fechaConexion.ToString("dd-MM-yyyy")</FluentLabel>
+                        }
+                    }
+                </FluentCard>
+            </FluentGridItem>
+        </FluentGrid>
+        <FluentFooter Style="margin-top: 20px;">
+            <FluentButton Style="margin: 5px;" Title="Go Back" OnClick="NavigateBack">🔙 Volver a la tabla</FluentButton>
+            <FluentButton Style="margin:5px;" Title="Edit" OnClick="EditAlumno">Editar</FluentButton>
+            @if (!Deleted)
             {
-                <button class="btn btn-danger" @onclick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</button>
+                @if (!ShowConfirmation)
+                {
+                    <FluentButton Style="margin:5px;" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</FluentButton>
+                }
+                else
+                {
+                    <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
+                }
             }
             else
             {
-                <br />
-                <br />
-                <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
+                <FluentButton Title="Deleted" Disabled="true">🚫 This item has been deleted.</FluentButton>
             }
-        }
-        else
-        {
-            <div class="btn btn-danger">🚫 This item has been deleted.</div>
-        }
+        </FluentFooter>
+    </FluentCard>
     }
 }
 

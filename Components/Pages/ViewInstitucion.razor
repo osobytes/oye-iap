@@ -3,10 +3,90 @@
 @using BlazorWebAppEFCore.Grid
 @using BlazorWebAppEFCore.Data
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.FluentUI.AspNetCore.Components
 @inject IDbContextFactory<OyeIapDbContext> DbFactory
 @inject IPageHelper PageHelper
 @inject EditSuccess EditSuccessState
+@inject NavigationManager NavigationManager;
 
+<!--@if (NotFound && !Loading)
+{
+    <FluentMessageBar Title="@Mensajes.InstitucionNotFoundTitle" Intent="@MessageIntent.Warning">
+        @Mensajes.InstitucionNotFoundMessage
+    </FluentMessageBar>
+}
+else
+{
+    @if (Institucion is null || Loading)
+    {
+        <FluentProgressRing></FluentProgressRing>
+    }
+    else
+    {
+    <FluentCard>
+        <FluenteHeader>
+            @Institucion.Nombre
+        </FluenteHeader>
+        <br />
+        @if (EditSuccess)
+        {
+                <FluentMessageBar Title="@Mensajes.EditMessageTitle" Intent="@MessageIntent.Success">
+                    @Mensajes.EditSuccessMessage
+                </FluentMessageBar>
+        }
+        <FluentGrid>
+            <FluentGridItem xs="6" sm="3">
+                <FluentCard>
+                    <FluentLabel Weight="FontWeight.Bold">Contacto</FluentLabel>
+                    <FluentLabel>Correo: @Institucion.Correo</FluentLabel>
+                    <FluentLabel>Telefono: @Institucion.Telefono</FluentLabel>
+                </FluentCard>
+            </FluentGridItem>
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Detalles de la empresa</FluentLabel>
+                        <FluentLabel>Direccion: @Institucion.Direccion</FluentLabel>
+                        <FluentLabel>Empresa: @Institucion.TipoEmpresas</FluentLabel>
+                        <FluentLabel>Descripcion: @Institucion.Descripcion</FluentLabel>
+                    </FluentCard>
+                </FluentGridItem>
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Patrocinio</FluentLabel>
+                        @if (Institucion.PatrocinioActivo && Institucion.Donacion is int donacion)
+                        {
+                            <FluentLabel>Donacion: @donacion.ToString("$xxxx")</FluentLabel>
+                            @if (Institucion.PatrocinioActivo && Institucion.DetallesAyuda is string detalles)
+                            {
+                                <FluentLabel>Detalles: @detalles</FluentLabel>
+                            }
+                        }
+                    </FluentCard>
+                </FluentGridItem>
+        </FluentGrid>
+        <FluentFooter Style="margin-top: 20px;">
+            <FluentButton Style="margin: 5px;" Title="Go Back" OnClick="NavigateBack">🔙 Volver a la tabla</FluentButton>
+            <FluentButton Style="margin:5px;" Title="Edit" OnClick="EditInstitucion">Editar</FluentButton>
+
+        @if (!Deleted)
+        {
+            @if (!ShowConfirmation)
+            {
+                <FluentButton Style="margin:5px;" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</FluentButton>
+            }
+            else
+            {
+                <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
+            }
+        }
+        else
+        {
+            <FluentButton Title="Deleted" Disabled="true">🚫 This item has been deleted.</FluentButton>
+        }
+        </FluentFooter>
+    </FluentCard>
+    }
+}-->
 @if (NotFound && !Loading)
 {
     <div class="alert alert-warning">A contact with that id doesn't exist.</div>
@@ -30,12 +110,11 @@ else
         <br />
         <h3>@Institucion.Correo, @Institucion.Telefono </h3>
         <br />
+        <h3>@Institucion.ApellidoPersona, @Institucion.NombrePersona</h3>
+        <br />
         <h2> Direccion </h2>
         <br />
         <h3>@Institucion.Direccion </h3>
-        <br />
-        <h2> Direccion </h2>
-        <h3>@Institucion.Direccion</h3>
         <br />
         <h2> Informacion </h2>
         <h3>@Institucion.TipoEmpresas, @Institucion.Descripcion</h3>
@@ -107,6 +186,16 @@ else
             await LoadContactAsync();
         }
         await base.OnParametersSetAsync();
+    }
+
+    private void NavigateBack()
+    {
+        NavigationManager.NavigateTo($"institucion/{PageHelper.Page}");
+    }
+
+    private void EditInstitucion()
+    {
+        NavigationManager.NavigateTo($"edit-institucion/{InstitucionId}");
     }
 
     // Confirm deletion.
@@ -193,4 +282,13 @@ else
             await LoadContactAsync();
         }
     }
+
+    private static class Mensajes
+    {
+        public const string InstitucionNotFoundTitle = "Institucion no encontrado.";
+        public const string InstitucionNotFoundMessage = "La institucion con ese Id no ha sido encontrado en la base de datos.";
+        public const string EditMessageTitle = "Institucion Actualizado";
+        public const string EditSuccessMessage = "El institucion se ha actualizado exitosamente.";
+    }
+
 }

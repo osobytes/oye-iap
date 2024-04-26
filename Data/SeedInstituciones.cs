@@ -14,6 +14,32 @@ internal class SeedInstituciones : Seed
         "Instituto de Diseño"
     ];
 
+    private readonly string[] _nombresPersona = [
+        "Juan",
+        "Jose",
+        "Maria",
+        "Paola",
+        "Raul",
+        "Suzie",
+        "Nicole",
+        "Samuel",
+        "Rick",
+        "Diana"
+    ];
+
+    private readonly string[] _apellidosPersona = [
+        "Hernandez",
+        "Gonzales",
+        "De la cruz",
+        "De luque",
+        "Leyva",
+        "Ruiz",
+        "Rivera",
+        "Osuna",
+        "Torres",
+        "Valenzuela"
+];
+
     private readonly string[] _telefonos = [
         "1234567890",
         "0987654321",
