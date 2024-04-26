@@ -1,5 +1,5 @@
-﻿@page "/Tutor"
-@page "/Tutor/{Page:int}"
+﻿@page "/Tutores"
+@page "/Tutores/{Page:int}"
 @rendermode InteractiveServer
 @using BlazorWebAppEFCore.Grid
 @using Microsoft.EntityFrameworkCore
@@ -35,14 +35,17 @@
                 </a>
             </div>
         </div>
+        <a title="Add" href="add-tutor" style="text-decoration:none">
+            &nbsp;➕&nbsp;
+        </a>
         <div class="row">&nbsp;</div>
         <div class="row contact-header">
-            <div class="col-1">&nbsp;</div>
-            <div class="col-2"
+            <div class="col-2">&nbsp;</div>
+            <div class="col-1"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.Nombre)))">
                 <ColSortIndicator Column="@(nameof(Tutor.Nombre))" />&nbsp;Nombre
             </div>
-            <div class="col-2"
+            <div class="col-1"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.ApellidoPaterno)))">
                 <ColSortIndicator Column="@(nameof(Tutor.ApellidoPaterno))" />&nbsp;Apellido Paterno
             </div>
@@ -50,33 +53,17 @@
                  @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.ApellidoMaterno)))">
                 <ColSortIndicator Column="@(nameof(Tutor.ApellidoMaterno))" />&nbsp;Apellido Materno
             </div>
-            <div class="col-1"
+            <div class="col-2"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.Direccion)))">
                 <ColSortIndicator Column="@(nameof(Tutor.Direccion))" />&nbsp;Direccion
             </div>
-            <div class="col-1"
+            <div class="col-2"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.Correo)))">
                 <ColSortIndicator Column="@(nameof(Tutor.Correo))" />&nbsp;Correo
             </div>
             <div class="col-1"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.Telefono)))">
                 <ColSortIndicator Column="@(nameof(Tutor.Telefono))" />&nbsp;;Telefono
-            </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.Pago)))">
-                <ColSortIndicator Column="@(nameof(Tutor.Pago))" />&nbsp;Pago
-            </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.PatrocinioActivo)))">
-                <ColSortIndicator Column="@(nameof(Tutor.PatrocinioActivo))" />&nbsp;Patrocinio Activo
-            </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.Donacion)))">
-                <ColSortIndicator Column="@(nameof(Tutor.Donacion))" />&nbsp;Donacion
-            </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.DetallesAyuda)))">
-                <ColSortIndicator Column="@(nameof(Tutor.DetallesAyuda))" />&nbsp;Detalles de ayuda
             </div>
         </div>
         @if (Filters.Loading || Tutores is null)

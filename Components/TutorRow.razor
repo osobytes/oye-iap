@@ -1,10 +1,9 @@
-﻿BlazorWebAppEFCore.Grid
-@inject IBaseGridControls Filters
+﻿@inject IBaseGridControls Filters
 
 @if (CurrentTutor is not null)
 {
     <div class="row contact-detail">
-        <div class="col-1 text-right">
+        <div class="col-2 text-right">
             <a title="Edit" href="edit-tutor/@CurrentTutor.Id" style="text-decoration:none">
                 &nbsp;📝&nbsp;
             </a>
@@ -19,7 +18,7 @@
             }
             &nbsp;
         </div>
-        <div class="col-2">
+        <div class="col-1">
             <a href="@ViewLink" alt="View Details"
                title="View Details">
                 @Name
@@ -27,16 +26,11 @@
         </div>
         @if (!DeleteConfirmation)
         {
-            <div class="col-1">@CurrentTutor.Nombre</div>
             <div class="col-1">@CurrentTutor.ApellidoPaterno</div>
             <div class="col-1">@CurrentTutor.ApellidoMaterno</div>
-            <div class="col-2">@CurrentTutor.Correo</div>
-            <div class="col-1">@CurrentTutor.Telefono</div>
             <div class="col-2">@CurrentTutor.Direccion</div>
-            <div class="col-2">@CurrentTutor.Pago</div>
-            <div class="col-2">@CurrentTutor.PatrocinioActivo</div>
-            <div class="col-2">@CurrentTutor.Donacion</div>
-            <div class="col-3">@CurrentTutor.DetallesAyuda</div>
+            <div class="col-2">@CurrentTutor.Correo</div>
+            <div class="col-2">@CurrentTutor.Telefono</div>
         }
         else
         {

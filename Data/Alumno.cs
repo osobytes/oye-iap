@@ -47,8 +47,15 @@ public class Alumno
     public DateOnly? FechaAparato { get; set; }
 
 
+    [DataType(DataType.Date, ErrorMessage = "El campo FechaProgramacion debe ser una fecha válida.")]
+    public DateOnly? FechaProgramacion { get; set; }
+
     [DataType(DataType.Date, ErrorMessage = "El campo FechaImplante debe ser una fecha válida.")]
     public DateOnly? FechaImplante { get; set; }
+
+
+    [DataType(DataType.Date, ErrorMessage = "El campo FechaConexion debe ser una fecha válida.")]
+    public DateOnly? FechaConexion { get; set; }
 
     [Required]
     public bool Activo { get; set; }

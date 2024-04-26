@@ -55,6 +55,8 @@ internal class SeedAlumnosTutores : Seed
             Implante = new Random().Next(2) == 0,
             FechaAparato = RandomDate(),
             FechaImplante = RandomDate(),
+            FechaConexion = RandomDate(),
+            FechaProgramacion = RandomDate(),
             Activo = true,
             FechaEgreso = RandomDate(),
             Comentarios = $"Comentarios para {RandomOne(_nombres)} {RandomOne(_apellidos)}",

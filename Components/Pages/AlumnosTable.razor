@@ -35,14 +35,17 @@
                 </a>
             </div>
         </div>
+        <a title="Add" href="add-alumno" style="text-decoration:none">
+            &nbsp;➕&nbsp;
+        </a>
         <div class="row">&nbsp;</div>
         <div class="row contact-header">
-            <div class="col-1">&nbsp;</div>
-            <div class="col-2"
+            <div class="col-2">&nbsp;</div>
+            <div class="col-1"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.Nombre)))">
                 <ColSortIndicator Column="@(nameof(Alumno.Nombre))" />&nbsp;Nombre
             </div>
-            <div class="col-2"
+            <div class="col-1"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.ApellidoPaterno)))">
                 <ColSortIndicator Column="@(nameof(Alumno.ApellidoPaterno))" />&nbsp;Apellido Paterno
             </div>
@@ -50,39 +53,15 @@
                  @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.ApellidoMaterno)))">
                 <ColSortIndicator Column="@(nameof(Alumno.ApellidoMaterno))" />&nbsp;Apellido Materno
             </div>
-            <div class="col-1"
+            <div class="col-2"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.Direccion)))">
                 <ColSortIndicator Column="@(nameof(Alumno.Direccion))" />&nbsp;Direccion
             </div>
-            <div class="col-1"
+            <div class="col-2"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.FechaIngreso)))">
                 <ColSortIndicator Column="@(nameof(Alumno.FechaIngreso))" />&nbsp;Fecha de Ingreso
             </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.Aparato)))">
-                <ColSortIndicator Column="@(nameof(Alumno.Aparato))" />&nbsp;Aparato
-            </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.Implante)))">
-                <ColSortIndicator Column="@(nameof(Alumno.Implante))" />&nbsp;Implante
-            </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.FechaAparato)))">
-                <ColSortIndicator Column="@(nameof(Alumno.FechaAparato))" />&nbsp;Fecha Aparato
-            </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.FechaImplante)))">
-                <ColSortIndicator Column="@(nameof(Alumno.FechaImplante))" />&nbsp;Fecha Implante
-            </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.Comentarios)))">
-                <ColSortIndicator Column="@(nameof(Alumno.Comentarios))" />&nbsp;Comentarios
-            </div>
-            <div class="col-1"
-                 @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.Activo)))">
-                <ColSortIndicator Column="@(nameof(Alumno.Activo))" />&nbsp;Activo
-            </div>
-            <div class="col-1"
+            <div class="col-2"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Alumno.FechaEgreso)))">
                 <ColSortIndicator Column="@(nameof(Alumno.FechaEgreso))" />&nbsp;Fecha de egreso
             </div>

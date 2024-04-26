@@ -9,6 +9,14 @@ namespace BlazorWebAppEFCore.Data
 
         [Required]
         [StringLength(100, ErrorMessage = "El campo Nombre debe tener como máximo 100 caracteres.")]
+        public string NombrePersona { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "El campo Nombre debe tener como máximo 100 caracteres.")]
+        public string ApellidoPersona { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "El campo Nombre debe tener como máximo 100 caracteres.")]
         public string Nombre { get; set; }
 
         [Required]

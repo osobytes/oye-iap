@@ -13,11 +13,25 @@
         <h2>🆔 Identificacion</h2>
         <p>
             <label>
-                Nombre:
+                Nombre de la empresa:
                 <InputText @bind-Value="Institucion.Nombre" />
                 <ConcurrencyField Model="Institucion"
                                   DbModel="DbInstitucion"
                                   Property="obj => obj?.Nombre" />
+            </label>
+            <label>
+                Nombre del encargado:
+                <InputText @bind-Value="Institucion.NombrePersona" />
+                <ConcurrencyField Model="Institucion"
+                                  DbModel="DbInstitucion"
+                                  Property="obj => obj?.NombrePersona" />
+            </label>
+            <label>
+                Apellido:
+                <InputText @bind-Value="Institucion.ApellidoPersona" />
+                <ConcurrencyField Model="Institucion"
+                                  DbModel="DbInstitucion"
+                                  Property="obj => obj?.ApellidoPersona" />
             </label>
         </p>
         <h2> Contacto </h2>

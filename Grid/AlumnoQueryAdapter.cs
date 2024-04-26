@@ -11,7 +11,7 @@ public class AlumnoQueryAdapter : BaseGridQueryAdapter<Alumno>
 
     protected override Expression<Func<Alumno, bool>> FilterByText(string text)
     {
-        return data => data.Nombre.Contains(text) || data.Correo.Contains(text) || data.Id.ToString().Contains(text);
+        return data => data.Nombre.Contains(text) || data.Correo.Contains(text) || data.Id.ToString().Contains(text) || data.ApellidoPaterno.Contains(text) || data.ApellidoMaterno.Contains(text) || data.Direccion.Contains(text);
     }
 }
 

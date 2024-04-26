@@ -66,11 +66,25 @@
                                   Property="obj => obj?.FechaImplante" />
             </label>
             <label>
+                Fecha de Conexion:
+                <InputDate @bind-Value="Alumno.FechaConexion" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.FechaConexion" />
+            </label>
+            <label>
                 Fecha de aparato:
                 <InputDate @bind-Value="Alumno.FechaAparato" />
                 <ConcurrencyField Model="Alumno"
                                   DbModel="DbAlumno"
                                   Property="obj => obj?.FechaAparato" />
+            </label>
+            <label>
+                Fecha de Programacion:
+                <InputDate @bind-Value="Alumno.FechaProgramacion" />
+                <ConcurrencyField Model="Alumno"
+                                  DbModel="DbAlumno"
+                                  Property="obj => obj?.FechaProgramacion" />
             </label>
         </p>
         <h2>Comentarios</h2>

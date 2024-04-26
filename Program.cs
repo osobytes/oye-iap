@@ -24,6 +24,8 @@ builder.Services.AddScoped<IContactFilters, GridControls>();
 
 builder.Services.AddScoped<IBaseGridControls, BaseGridControls>();
 builder.Services.AddScoped<InstitucionQueryAdapter>();
+builder.Services.AddScoped<AlumnoQueryAdapter>();
+builder.Services.AddScoped<TutorQueryAdapter>();
 
 // Query adapter (applies filter to contact request)
 builder.Services.AddScoped<GridQueryAdapter>();
