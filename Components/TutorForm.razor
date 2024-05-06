@@ -31,6 +31,27 @@
                                   Property="obj => obj?.ApellidoMaterno" />
             </label>
         </p>
+        <h2>🆔 Otra Persona </h2>
+        <p>
+            <label>
+                Nombre:
+                <InputText @bind-Value="Tutor.NombreP1" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.NombreP1" />
+            </label>
+            <label>
+                Apellido:
+                <InputText @bind-Value="Tutor.ApellidoPaternoP1" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.ApellidoPaternoP1" />
+                <InputText @bind-Value="Tutor.ApellidoMaternoP1" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.ApellidoMaternoP1" />
+            </label>
+        </p>
         <h2> Informacion de contacto </h2>
         <p>
             <label>
@@ -41,14 +62,18 @@
                                   Property="obj => obj?.Correo" />
             </label>
             <label>
-                Telefono:
+                Telefono de la empresa:
+                <InputText @bind-Value="Tutor.TelefonoEmpresa" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.TelefonoEmpresa" />
+            </label>
+            <label>
+                Telefono Personal u otro:
                 <InputText @bind-Value="Tutor.Telefono" />
                 <ConcurrencyField Model="Tutor"
                                   DbModel="DbTutor"
                                   Property="obj => obj?.Telefono" />
-            </label>
-            <label>
-                <input type="checkbox" name="Direccion" value="true"> Misma direccion del Alumno
             </label>
             <label>
                 Direccion:
@@ -57,22 +82,53 @@
                                   DbModel="DbTutor"
                                   Property="obj => obj?.Direccion" />
             </label>
-
         </p>
-        <h2>Pago y padrino</h2>
+        <h2> Datos Fiscales </h2>
         <p>
             <label>
-                Cuanto sera el pago:
-                <InputNumber @bind-Value="Tutor.Pago" />
+                Nombre Fiscal:
+                <InputText @bind-Value="Tutor.NombreFiscal" />
                 <ConcurrencyField Model="Tutor"
                                   DbModel="DbTutor"
-                                  Property="obj => obj?.Pago" />
+                                  Property="obj => obj?.NombreFiscal" />
             </label>
-            <br />
             <label>
-                <input type="checkbox" name="PatrocinioActivo" value="true"> PatrocinioActivo
+                RFC:
+                <InputText @bind-Value="Tutor.RFC" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.RFC" />
             </label>
-
+            <label>
+                <input type="checkbox" name="PersonaF" value="true"> Persona Fisica
+            </label>
+            <label>
+                Persona Fisica:
+                <InputSelect @bind-Value="Tutor.PersonaFisica">
+                    @foreach (var personaFisica in Enum.GetValues(typeof(PersonaFisicaUSOCFDI)))
+                    {
+                        <option value="@personaFisica">@personaFisica</option>
+                    }
+                </InputSelect>
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.PersonaFisica" />
+            </label>
+            <label>
+                <input type="checkbox" name="PersonaM" value="true"> Persona Moral
+            </label>
+            <label>
+                Persona Moral:
+                <InputSelect @bind-Value="Tutor.PersonaMoral">
+                    @foreach (var personaMoral in Enum.GetValues(typeof(PersonaMoralUSOCFDI)))
+                    {
+                        <option value="@personaMoral">@personaMoral</option>
+                    }
+                </InputSelect>
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.PersonaMoral" />
+            </label>
             <label>
                 Donacion:
                 <InputNumber @bind-Value="Tutor.Donacion" />
@@ -81,11 +137,40 @@
                                   Property="obj => obj?.Donacion" />
             </label>
             <label>
-                Detalles de la donacion:
+                Detalles de la Ayuda:
                 <InputText @bind-Value="Tutor.DetallesAyuda" />
                 <ConcurrencyField Model="Tutor"
                                   DbModel="DbTutor"
                                   Property="obj => obj?.DetallesAyuda" />
+            </label>
+        </p>
+        <h2>Empresa</h2>
+        <p>
+            <label>
+                Nombre de la Empresa:
+                <InputText @bind-Value="Tutor.EmpresaNombre" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.EmpresaNombre" />
+            </label>
+            <label>
+                Tipo de Empresa:
+                <InputSelect @bind-Value="Tutor.TipoEmp">
+                    @foreach (var tipoEmpresa in Enum.GetValues(typeof(TipoEmpresa)))
+                    {
+                        <option value="@tipoEmpresa">@tipoEmpresa</option>
+                    }
+                </InputSelect>
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.TipoEmp" />
+            </label>
+            <label>
+                Informacion extra:
+                <InputText @bind-Value="Tutor.InformacionExtra" />
+                <ConcurrencyField Model="Tutor"
+                                  DbModel="DbTutor"
+                                  Property="obj => obj?.InformacionExtra" />
             </label>
 
         </p>

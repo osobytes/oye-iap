@@ -11,13 +11,25 @@ namespace BlazorWebAppEFCore.Data
         [StringLength(100, ErrorMessage = "El campo Nombre debe tener como máximo 100 caracteres.")]
         public string Nombre { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "El campo ApellidoPaterno debe tener como máximo 100 caracteres.")]
+        [StringLength(100, ErrorMessage = "El campo Apellido Paterno debe tener como máximo 100 caracteres.")]
         public string ApellidoPaterno { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "El campo ApellidoMaterno debe tener como máximo 100 caracteres.")]
+        [StringLength(100, ErrorMessage = "El campo Apellido Materno debe tener como máximo 100 caracteres.")]
         public string ApellidoMaterno { get; set; }
+
+        [StringLength(100, ErrorMessage = "El campo Nombre debe tener como máximo 100 caracteres.")]
+        public string NombreP1 { get; set; }
+
+        [StringLength(100, ErrorMessage = "El campo Apellido Paterno debe tener como máximo 100 caracteres.")]
+        public string ApellidoPaternoP1 { get; set; }
+
+        [StringLength(100, ErrorMessage = "El campo Apellido Materno debe tener como máximo 100 caracteres.")]
+        public string ApellidoMaternoP1 { get; set; }
+
+        [Required]
+        [StringLength(150, ErrorMessage = "El campo Dirección debe tener como máximo 150 caracteres.")]
+        public string Direccion { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "El campo Correo debe tener como máximo 100 caracteres.")]
@@ -25,16 +37,40 @@ namespace BlazorWebAppEFCore.Data
         public string Correo { get; set; }
 
         [Required]
-        [StringLength(150, ErrorMessage = "El campo Dirección debe tener como máximo 150 caracteres.")]
-        public string Direccion { get; set; }
+        [StringLength(15, ErrorMessage = "El campo del Teléfono de empresa debe tener como máximo 15 caracteres.")]
+        public string TelefonoEmpresa { get; set; }
 
-        [Required]
         [StringLength(15, ErrorMessage = "El campo Teléfono debe tener como máximo 15 caracteres.")]
         public string Telefono { get; set; }
 
-        [Required(ErrorMessage = "El campo Pago es requerido.")]
-        [Range(0, int.MaxValue, ErrorMessage = "El campo Pago debe ser un valor numérico mayor o igual a 0.")]
-        public int Pago { get; set; }
+        //Datos Fiscales
+        [Required]
+        [StringLength(100, ErrorMessage = "El campo del Nombre fiscal de empresa debe tener como máximo 100 caracteres.")]
+        public string NombreFiscal { get; set; }
+
+        [Required]
+        [StringLength(13, ErrorMessage = "El campo del RFC de empresa debe tener como máximo 13 caracteres.")]
+        public string RFC { get; set; }
+
+        public bool PersonaF { get; set; }
+
+        public bool PersonaM { get; set; }
+
+        public PersonaFisicaUSOCFDI PersonaFisica { get; set; }
+
+        public PersonaMoralUSOCFDI PersonaMoral { get; set; }
+
+        //Empresa
+        [Required]
+        [StringLength(100, ErrorMessage = "El campo del Nombre de LA empresa debe tener como máximo 15 caracteres.")]
+        public string EmpresaNombre { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "El campo del Tipo de empresa debe tener como máximo 15 caracteres.")]
+        public TipoEmpresa TipoEmp { get; set; }
+
+        [StringLength(100, ErrorMessage = "El campo del Tipo de empresa debe tener como máximo 15 caracteres.")]
+        public string InformacionExtra { get; set; }
 
         public ICollection<AlumnoTutor> Alumnos { get; set; }
     }

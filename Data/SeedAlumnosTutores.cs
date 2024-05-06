@@ -42,6 +42,19 @@ internal class SeedAlumnosTutores : Seed
         "Autopista Treinta 000"
     };
 
+    private readonly string[] _nombresEmpresa = [
+    "Instituto Tecnológico",
+        "Universidad Nacional",
+        "Colegio de Ciencias",
+        "Escuela de Artes",
+        "Academia de Ingeniería",
+        "Centro de Estudios Avanzados",
+        "Facultad de Medicina",
+        "Escuela de Negocios",
+        "Universidad de Ciencias Aplicadas",
+        "Instituto de Diseño"
+];
+
     private Alumno MakeAlumno()
     {
         var alumno = new Alumno
@@ -62,6 +75,9 @@ internal class SeedAlumnosTutores : Seed
             Comentarios = $"Comentarios para {RandomOne(_nombres)} {RandomOne(_apellidos)}",
             Correo = $"{RandomOne(_nombres).Replace(" ", "").ToLower()}@example.com",
             Telefono = $"123456789{new Random().Next(10)}",
+            ApellidoMaternoTutor = RandomOne(_apellidos),
+            ApellidoPaternoTutor = RandomOne(_apellidos),
+            NombreTutor = RandomOne(_nombres),
         };
 
         return alumno;
@@ -107,15 +123,27 @@ internal class SeedAlumnosTutores : Seed
             var tutor = new Tutor
             {
                 Nombre = RandomOne(_nombres),
+                NombreFiscal = RandomOne(_nombres),
                 ApellidoPaterno = apellidoPaterno,
                 ApellidoMaterno = RandomOne(_apellidos),
+                NombreP1 = RandomOne(_nombres),
+                ApellidoPaternoP1 = apellidoPaterno,
+                ApellidoMaternoP1 = RandomOne(_apellidos),
                 Correo = $"{RandomOne(_nombres).Replace(" ", "").ToLower()}@example.com",
                 Direccion = sameAddress ? alumno.Direccion : RandomOne(_direcciones),
                 Telefono = $"123456789{i}",
-                Pago = random.Next(100, 1000),
+                TelefonoEmpresa = $"123456789{i}",
+                RFC = $"123456789{i}",
                 PatrocinioActivo = random.Next(2) == 0,
+                PersonaF = random.Next(2) == 0,
+                PersonaM = random.Next(2) == 0,
+                PersonaFisica = RandomEnumValue<PersonaFisicaUSOCFDI>(),
+                PersonaMoral = RandomEnumValue<PersonaMoralUSOCFDI>(),
+                EmpresaNombre = RandomOne(_nombresEmpresa),
+                TipoEmp = RandomEnumValue<TipoEmpresa>(),
                 DetallesAyuda = "Detalles de ayuda",
                 Donacion = random.Next(100, 1000),
+                InformacionExtra = "Informacion Extra"
             };
 
             context.Tutores?.Add(tutor);

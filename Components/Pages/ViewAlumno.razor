@@ -39,7 +39,7 @@ else
                 <FluentCard>
                     <FluentLabel Weight="FontWeight.Bold"> Detalles de alumno</FluentLabel>
                     <FluentLabel>Activo: @(Alumno.Activo ? "Si" : "No")</FluentLabel>
-                    <FluentLabel>Fecha Ingreso: @Alumno.FechaIngreso.ToString("dd-MM-yyyy")</FluentLabel>
+                    <FluentLabel>Fecha Ingreso: @Alumno.FechaIngreso</FluentLabel>
                     @if (Alumno.FechaEgreso.HasValue)
                     {
                     <FluentLabel>Fecha Egreso: @Alumno.FechaEgreso.Value.ToString("dd-MM-yyyy")</FluentLabel>
@@ -69,6 +69,17 @@ else
                     }
                 </FluentCard>
             </FluentGridItem>
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Datos sobre el Tutor</FluentLabel>
+                        <FluentLabel>Nombre: @(Alumno.NombreTutor)</FluentLabel>
+                        <FluentLabel>Apellido Paterno: @(Alumno.ApellidoPaternoTutor)</FluentLabel>
+                        <FluentLabel>Apellido Materno: @(Alumno.ApellidoMaternoTutor)</FluentLabel>
+                        <FluentLabel>Telefono: @(Alumno.Telefono)</FluentLabel>
+                        <FluentLabel>Direccion: @(Alumno.Direccion)</FluentLabel>
+                        <FluentLabel>Correo: @(Alumno.Correo)</FluentLabel>
+                    </FluentCard>
+                </FluentGridItem>
         </FluentGrid>
         <FluentFooter Style="margin-top: 20px;">
             <FluentButton Style="margin: 5px;" Title="Go Back" OnClick="NavigateBack">🔙 Volver a la tabla</FluentButton>
@@ -77,7 +88,7 @@ else
             {
                 @if (!ShowConfirmation)
                 {
-                    <FluentButton Style="margin:5px;" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</FluentButton>
+                        <FluentButton BackgroundColor="Red" Style="margin:5px;" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</FluentButton>
                 }
                 else
                 {

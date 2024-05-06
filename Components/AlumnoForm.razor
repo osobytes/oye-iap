@@ -10,115 +10,166 @@
               OnValidSubmit="(async () => await HandleSubmitAsync(true))">
         <DataAnnotationsValidator />
         <ValidationSummary />
-        <h2>🆔 Identificacion</h2>
-        <p>
-            <label>
-                Nombre:
-                <InputText @bind-Value="Alumno.Nombre" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.Nombre" />
-            </label>
-            <label>
-                Apellido:
-                <InputText @bind-Value="Alumno.ApellidoPaterno" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.ApellidoPaterno" />
-                <InputText @bind-Value="Alumno.ApellidoMaterno" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.ApellidoMaterno" />
-            </label>
-            <label>
-                Direccion:
-                <InputText @bind-Value="Alumno.Direccion" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.Direccion" />
-            </label>
-        </p>
-        <h2> Fecha </h2>
-        <p>
-            <label>
-                Fecha de ingreso:
-                <InputDate @bind-Value="Alumno.FechaIngreso" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.FechaIngreso" />
-            </label>
-        </p>
-        <h2>Uso Aparato o implante</h2>
-        <p>
-            <label>
-                <input type="checkbox" name="Aparato" value="false"> Aparato
-            </label>
+        <FluentCard>
+            <FluentBodyContent>
+                <FluentStack Orientation="Orientation.Vertical">
+                    <h2>Identificacion</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Nombre" @bind-Value="Alumno.Nombre" Label="Nombre del Alumno"  />
+                        <FluentValidationMessage For="@(() => Alumno.Nombre)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.Nombre" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="NombrePersona" @bind-Value="Alumno.ApellidoPaterno" Label="Apellidos"  />
+                        <FluentValidationMessage For="@(() => Alumno.ApellidoPaterno)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.ApellidoPaterno" />
+                        <FluentTextField Name="Apellido:" @bind-Value="Alumno.ApellidoMaterno" Label=""/>
+                        <FluentValidationMessage For="@(() => Alumno.ApellidoMaterno)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.ApellidoMaterno" />
+                    </div>
+                    <br />
+                    <h2>Ingreso</h2>
+                    <div style="margin-right: 10px;">
+                        <label>
+                            Fecha de ingreso:
+                            <InputDate @bind-Value="Alumno.FechaIngreso"/>
+                            <ConcurrencyField Model="Alumno"
+                                              DbModel="DbAlumno"
+                                              Property="obj => obj?.FechaIngreso" />
+                        </label>
+                    </div>
+                    <br />
+                    <h2>Aparato o Implante</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentCheckbox Name="Aparato" @bind-Value="Alumno.Aparato" Label="Aparato" />
+                        <FluentValidationMessage For="@(() => Alumno.Aparato)" />
+                        <br />
+                        <label>
+                            Fecha de aparato:
+                            <InputDate @bind-Value="Alumno.FechaAparato" />
+                            <ConcurrencyField Model="Alumno"
+                                              DbModel="DbAlumno"
+                                              Property="obj => obj?.FechaAparato" />
+                        </label>
+                        <br />
+                        <label>
+                            Fecha de Programacion:
+                            <InputDate @bind-Value="Alumno.FechaProgramacion" />
+                            <ConcurrencyField Model="Alumno"
+                                              DbModel="DbAlumno"
+                                              Property="obj => obj?.FechaProgramacion" />
+                        </label>
+                    </div>
+                    <br />
+                    <div style="margin-right: 10px;">
+                        <FluentCheckbox Name="Implante" @bind-Value="Alumno.Implante" Label="Implante" />
+                        <FluentValidationMessage For="@(() => Alumno.Implante)" />
+                         <br />
+                        <label>
+                            Fecha de implante:
+                            <InputDate @bind-Value="Alumno.FechaImplante" />
+                            <ConcurrencyField Model="Alumno"
+                                              DbModel="DbAlumno"
+                                              Property="obj => obj?.FechaImplante" />
+                        </label>
+                        <br />
+                        <label>
+                            Fecha de Conexion:
+                            <InputDate @bind-Value="Alumno.FechaConexion" />
+                            <ConcurrencyField Model="Alumno"
+                                              DbModel="DbAlumno"
+                                              Property="obj => obj?.FechaConexion" />
+                        </label>
+                    </div>
+                    <h2>Datos del Tutor</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="NombreTutor" @bind-Value="Alumno.NombreTutor" Label="Nombre del Tutor" />
+                        <FluentValidationMessage For="@(() => Alumno.NombreTutor)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.NombreTutor" />
+                    </div>
+                    <div>
+                        <FluentTextField Name="ApellidoPaternoTutor" @bind-Value="Alumno.ApellidoPaternoTutor" Label="Apellidos del Tutor"  />
+                        <FluentValidationMessage For="@(() => Alumno.ApellidoPaternoTutor)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.ApellidoPaternoTutor" />
+                        <FluentTextField Name="ApellidoMaternoTutor" @bind-Value="Alumno.ApellidoMaternoTutor" Label="Apelldio Materno" />
+                        <FluentValidationMessage For="@(() => Alumno.ApellidoMaternoTutor)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.ApellidoMaternoTutor" />
 
-            <label>
-                <input type="checkbox" name="Implante" value="false"> Implante
-            </label>
-            <br/>
-            <label>
-                Fecha de implante:
-                <InputDate @bind-Value="Alumno.FechaImplante" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.FechaImplante" />
-            </label>
-            <label>
-                Fecha de Conexion:
-                <InputDate @bind-Value="Alumno.FechaConexion" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.FechaConexion" />
-            </label>
-            <label>
-                Fecha de aparato:
-                <InputDate @bind-Value="Alumno.FechaAparato" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.FechaAparato" />
-            </label>
-            <label>
-                Fecha de Programacion:
-                <InputDate @bind-Value="Alumno.FechaProgramacion" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.FechaProgramacion" />
-            </label>
-        </p>
-        <h2>Comentarios</h2>
-        <p>
-            <label>
-                Comentarios:
-                <InputText @bind-Value="Alumno.Comentarios" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.Comentarios" />
-            </label>
-        </p>
-        <h2> Activo/Fecha de egreso </h2>
-        <p>
-            <label>
-                <input type="checkbox" name="Activo" value="false"> Activo
-            </label>
-            <label>
-                Fecha de egreso:
-                <InputDate @bind-Value="Alumno.FechaEgreso" />
-                <ConcurrencyField Model="Alumno"
-                                  DbModel="DbAlumno"
-                                  Property="obj => obj?.FechaEgreso" />
-            </label>
-        </p>
-        <br />
-        <button disabled="@Busy" class="btn btn-warning"
+                    </div>
+                    <div>
+                        <FluentTextField Name="Telefono" Rows=5 Cols=60 @bind-Value="Alumno.Telefono" Label="Telefono"  />
+                        <FluentValidationMessage For="@(() => Alumno.Telefono)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.Telefono" />
+                    </div>                    
+                    <div>
+                        <FluentTextField Name="Correo" Rows=5 Cols=60 @bind-Value="Alumno.Correo" Label="Correo"  />
+                        <FluentValidationMessage For="@(() => Alumno.Correo)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.Correo" />
+                    </div>                    
+                    <div>
+                        <FluentTextArea Name="Direccion" Rows=5 Cols=60 @bind-Value="Alumno.Direccion" Label="Direccion"  />
+                        <FluentValidationMessage For="@(() => Alumno.Direccion)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.Direccion" />
+                    </div>
+                    <br />
+                    <h2>Comentarios</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentTextArea Name="Comentarios" Rows=5 Cols=60 @bind-Value="Alumno.Comentarios" Label="Comentarios" />
+                        <FluentValidationMessage For="@(() => Alumno.Comentarios)" />
+                        <ConcurrencyField Model="Alumno"
+                                          DbModel="DbAlumno"
+                                          Property="obj => obj?.Comentarios" />
+                    </div>
+                    <br />
+                    <h2>Activo/Fecha de egreso</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentCheckbox Name="Activo" @bind-Value="Alumno.Activo" Label="Activo"  />
+                        <FluentValidationMessage For="@(() => Alumno.Activo)" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <label>
+                            Fecha de egreso:
+                            <InputDate @bind-Value="Alumno.FechaEgreso" />
+                            <ConcurrencyField Model="Alumno"
+                                              DbModel="DbAlumno"
+                                              Property="obj => obj?.FechaEgreso" />
+                        </label>
+                    </div>
+                    <br />
+                </FluentStack>
+                <FluentButton disabled="@Busy" BackgroundColor="Red"
+                              @onclick="CancelAsync" Type="ButtonType.Button" Appearance="Appearance.Accent">Cancel</FluentButton>
+
+                <FluentButton disabled="@Busy" Type="ButtonType.Submit" Appearance="Appearance.Accent">Submit</FluentButton>
+
+            </FluentBodyContent>
+        </FluentCard>
+        <!--<button disabled="@Busy" class="btn btn-warning"
                 @onclick="CancelAsync">
             Cancel
         </button>&nbsp;
         <button disabled="@Busy" type="submit"
                 class="btn btn-primary">
             Submit
-        </button>
+        </button>-->
     </EditForm>
 }
 

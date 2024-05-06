@@ -9,7 +9,7 @@
 @inject EditSuccess EditSuccessState
 @inject NavigationManager NavigationManager;
 
-<!--@if (NotFound && !Loading)
+@if (NotFound && !Loading)
 {
     <FluentMessageBar Title="@Mensajes.InstitucionNotFoundTitle" Intent="@MessageIntent.Warning">
         @Mensajes.InstitucionNotFoundMessage
@@ -24,7 +24,7 @@ else
     else
     {
     <FluentCard>
-        <FluenteHeader>
+        <FluenteHeader style="background-color: white; font-size: 25px; height: 100px; margin: 5px; margin-bottom: 20px; font-weight: bolder;" >
             @Institucion.Nombre
         </FluenteHeader>
         <br />
@@ -35,11 +35,14 @@ else
                 </FluentMessageBar>
         }
         <FluentGrid>
-            <FluentGridItem xs="6" sm="3">
+            <FluentGridItem xs="6" sm="4">
                 <FluentCard>
                     <FluentLabel Weight="FontWeight.Bold">Contacto</FluentLabel>
                     <FluentLabel>Correo: @Institucion.Correo</FluentLabel>
                     <FluentLabel>Telefono: @Institucion.Telefono</FluentLabel>
+                    <FluentLabel Weight="FontWeight.Bold">Persona</FluentLabel>
+                    <FluentLabel>Nombre: @Institucion.NombrePersona</FluentLabel>
+                    <FluentLabel>Apellido: @Institucion.ApellidoPersona</FluentLabel>
                 </FluentCard>
             </FluentGridItem>
                 <FluentGridItem xs="6" sm="3">
@@ -55,7 +58,7 @@ else
                         <FluentLabel Weight="FontWeight.Bold">Patrocinio</FluentLabel>
                         @if (Institucion.PatrocinioActivo && Institucion.Donacion is int donacion)
                         {
-                            <FluentLabel>Donacion: @donacion.ToString("$xxxx")</FluentLabel>
+                            <FluentLabel>Donacion: @donacion.ToString("")</FluentLabel>
                             @if (Institucion.PatrocinioActivo && Institucion.DetallesAyuda is string detalles)
                             {
                                 <FluentLabel>Detalles: @detalles</FluentLabel>
@@ -65,14 +68,15 @@ else
                 </FluentGridItem>
         </FluentGrid>
         <FluentFooter Style="margin-top: 20px;">
-            <FluentButton Style="margin: 5px;" Title="Go Back" OnClick="NavigateBack">🔙 Volver a la tabla</FluentButton>
+                <FluentButton Style="margin: 5px;" Title="Go Back" OnClick="NavigateBack" >🔙 Volver a la tabla</FluentButton>
             <FluentButton Style="margin:5px;" Title="Edit" OnClick="EditInstitucion">Editar</FluentButton>
 
         @if (!Deleted)
         {
             @if (!ShowConfirmation)
             {
-                <FluentButton Style="margin:5px;" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</FluentButton>
+                        <FluentButton BackgroundColor="Red" Style="margin:5px;"
+                                      Type="ButtonType.Button" Appearance="Appearance.Accent" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</FluentButton>
             }
             else
             {
@@ -85,66 +89,6 @@ else
         }
         </FluentFooter>
     </FluentCard>
-    }
-}-->
-@if (NotFound && !Loading)
-{
-    <div class="alert alert-warning">A contact with that id doesn't exist.</div>
-}
-else
-{
-    @if (Institucion is null || Loading)
-    {
-        <div class="alert alert-info">Loading...</div>
-    }
-    else
-    {
-        <h1>@Institucion.Nombre</h1>
-        <br />
-        @if (EditSuccess)
-        {
-            <div class="alert alert-success">Successfully updated the contact.</div>
-        }
-        <hr />
-        <h2> Contacto </h2>
-        <br />
-        <h3>@Institucion.Correo, @Institucion.Telefono </h3>
-        <br />
-        <h3>@Institucion.ApellidoPersona, @Institucion.NombrePersona</h3>
-        <br />
-        <h2> Direccion </h2>
-        <br />
-        <h3>@Institucion.Direccion </h3>
-        <br />
-        <h2> Informacion </h2>
-        <h3>@Institucion.TipoEmpresas, @Institucion.Descripcion</h3>
-        <br />
-        <h2> Patrocinador </h2>
-        <h3>@Institucion.Donacion, @Institucion.DetallesAyuda, @Institucion.PatrocinioActivo</h3>
-        <br />
-        <a class="btn btn-primary" title="Go Back" href="@PageHelper.Page">
-            🔙 Back to Grid
-        </a>
-        @if (!Deleted)
-        {
-            <a class="btn btn-primary" href="edit-institucion/@Institucion.Id" title="Edit">Edit</a>
-
-            <span>&nbsp;</span>
-            @if (!ShowConfirmation)
-            {
-                <button class="btn btn-danger" @onclick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</button>
-            }
-            else
-            {
-                <br />
-                <br />
-                <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
-            }
-        }
-        else
-        {
-            <div class="btn btn-danger">🚫 This item has been deleted.</div>
-        }
     }
 }
 
@@ -190,7 +134,7 @@ else
 
     private void NavigateBack()
     {
-        NavigationManager.NavigateTo($"institucion/{PageHelper.Page}");
+        NavigationManager.NavigateTo($"instituciones/{PageHelper.Page}");
     }
 
     private void EditInstitucion()

@@ -71,8 +71,8 @@ internal class SeedInstituciones : Seed
         var institucion = new Institucion
         {
             Nombre = RandomOne(_nombres),
-            NombrePersona = RandomOne(_nombres),
-            ApellidoPersona = RandomOne(_nombres),
+            NombrePersona = RandomOne(_nombresPersona),
+            ApellidoPersona = RandomOne(_apellidosPersona),
             Telefono = RandomOne(_telefonos),
             Descripcion = $"{RandomOne(_nombres)} Descripción",
             Correo = $"{RandomOne(_nombres).Replace(" ", "").ToLower()}@example.com",
