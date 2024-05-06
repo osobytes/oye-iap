@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlazorWebAppEFCore.Data
 {
@@ -56,8 +57,10 @@ namespace BlazorWebAppEFCore.Data
 
         public bool PersonaM { get; set; }
 
+        [Column(TypeName = "varchar(50)")]
         public PersonaFisicaUSOCFDI PersonaFisica { get; set; }
 
+        [Column(TypeName = "varchar(50)")]
         public PersonaMoralUSOCFDI PersonaMoral { get; set; }
 
         //Empresa
@@ -66,7 +69,7 @@ namespace BlazorWebAppEFCore.Data
         public string EmpresaNombre { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "El campo del Tipo de empresa debe tener como máximo 15 caracteres.")]
+        [Column(TypeName = "varchar(50)")]
         public TipoEmpresa TipoEmp { get; set; }
 
         [StringLength(100, ErrorMessage = "El campo del Tipo de empresa debe tener como máximo 15 caracteres.")]
