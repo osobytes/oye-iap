@@ -10,179 +10,188 @@
               OnValidSubmit="(async () => await HandleSubmitAsync(true))">
         <DataAnnotationsValidator />
         <ValidationSummary />
-        <h2>🆔 Identificacion </h2>
-        <p>
-            <label>
-                Nombre:
-                <InputText @bind-Value="Tutor.Nombre" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.Nombre" />
-            </label>
-            <label>
-                Apellido:
-                <InputText @bind-Value="Tutor.ApellidoPaterno" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.ApellidoPaterno" />
-                <InputText @bind-Value="Tutor.ApellidoMaterno" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.ApellidoMaterno" />
-            </label>
-        </p>
-        <h2>🆔 Otra Persona </h2>
-        <p>
-            <label>
-                Nombre:
-                <InputText @bind-Value="Tutor.NombreP1" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.NombreP1" />
-            </label>
-            <label>
-                Apellido:
-                <InputText @bind-Value="Tutor.ApellidoPaternoP1" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.ApellidoPaternoP1" />
-                <InputText @bind-Value="Tutor.ApellidoMaternoP1" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.ApellidoMaternoP1" />
-            </label>
-        </p>
-        <h2> Informacion de contacto </h2>
-        <p>
-            <label>
-                Correo:
-                <InputText @bind-Value="Tutor.Correo" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.Correo" />
-            </label>
-            <label>
-                Telefono de la empresa:
-                <InputText @bind-Value="Tutor.TelefonoEmpresa" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.TelefonoEmpresa" />
-            </label>
-            <label>
-                Telefono Personal u otro:
-                <InputText @bind-Value="Tutor.Telefono" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.Telefono" />
-            </label>
-            <label>
-                Direccion:
-                <InputText @bind-Value="Tutor.Direccion" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.Direccion" />
-            </label>
-        </p>
-        <h2> Datos Fiscales </h2>
-        <p>
-            <label>
-                Nombre Fiscal:
-                <InputText @bind-Value="Tutor.NombreFiscal" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.NombreFiscal" />
-            </label>
-            <label>
-                RFC:
-                <InputText @bind-Value="Tutor.RFC" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.RFC" />
-            </label>
-            <label>
-                <input type="checkbox" name="PersonaF" value="true"> Persona Fisica
-            </label>
-            <label>
-                Persona Fisica:
-                <InputSelect @bind-Value="Tutor.PersonaFisica">
-                    @foreach (var personaFisica in Enum.GetValues(typeof(PersonaFisicaUSOCFDI)))
-                    {
-                        <option value="@personaFisica">@personaFisica</option>
-                    }
-                </InputSelect>
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.PersonaFisica" />
-            </label>
-            <label>
-                <input type="checkbox" name="PersonaM" value="true"> Persona Moral
-            </label>
-            <label>
-                Persona Moral:
-                <InputSelect @bind-Value="Tutor.PersonaMoral">
-                    @foreach (var personaMoral in Enum.GetValues(typeof(PersonaMoralUSOCFDI)))
-                    {
-                        <option value="@personaMoral">@personaMoral</option>
-                    }
-                </InputSelect>
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.PersonaMoral" />
-            </label>
-            <label>
-                Donacion:
-                <InputNumber @bind-Value="Tutor.Donacion" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.Donacion" />
-            </label>
-            <label>
-                Detalles de la Ayuda:
-                <InputText @bind-Value="Tutor.DetallesAyuda" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.DetallesAyuda" />
-            </label>
-        </p>
-        <h2>Empresa</h2>
-        <p>
-            <label>
-                Nombre de la Empresa:
-                <InputText @bind-Value="Tutor.EmpresaNombre" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.EmpresaNombre" />
-            </label>
-            <label>
-                Tipo de Empresa:
-                <InputSelect @bind-Value="Tutor.TipoEmp">
-                    @foreach (var tipoEmpresa in Enum.GetValues(typeof(TipoEmpresa)))
-                    {
-                        <option value="@tipoEmpresa">@tipoEmpresa</option>
-                    }
-                </InputSelect>
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.TipoEmp" />
-            </label>
-            <label>
-                Informacion extra:
-                <InputText @bind-Value="Tutor.InformacionExtra" />
-                <ConcurrencyField Model="Tutor"
-                                  DbModel="DbTutor"
-                                  Property="obj => obj?.InformacionExtra" />
-            </label>
+        <FluentCard>
+            <FluentBodyContent>
+                <FluentStack Orientation="Orientation.Vertical">
+                    <h2>Identificacion</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Nombre" @bind-Value="Tutor.Nombre" Label="Nombre del Padrino" />
+                        <FluentValidationMessage For="@(() => Tutor.Nombre)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.Nombre" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Apellido" @bind-Value="Tutor.ApellidoPaterno" Label="Apellidos" />
+                        <FluentValidationMessage For="@(() => Tutor.ApellidoPaterno)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.ApellidoPaterno" />
+                        <FluentTextField Name="Apellido:" @bind-Value="Tutor.ApellidoMaterno" Label="" />
+                        <FluentValidationMessage For="@(() => Tutor.ApellidoMaterno)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.ApellidoMaterno" />
+                    </div>
+                    <br />
+                    <h2>Otra Persona por contactar</h2>
+                    <br />
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Nombre" @bind-Value="Tutor.NombreP1" Label="Nombre" />
+                        <FluentValidationMessage For="@(() => Tutor.NombreP1)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.NombreP1" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Apellido" @bind-Value="Tutor.ApellidoPaternoP1" Label="Apellidos" />
+                        <FluentValidationMessage For="@(() => Tutor.ApellidoPaternoP1)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.ApellidoPaternoP1" />
+                        <FluentTextField Name="Apellido:" @bind-Value="Tutor.ApellidoMaternoP1" Label="" />
+                        <FluentValidationMessage For="@(() => Tutor.ApellidoMaternoP1)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.ApellidoMaternoP1" />
+                    </div>
+                    <br />                    
+                    <h2>Informacion de Contacto</h2>
+                    <br />
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Correo" @bind-Value="Tutor.Correo" Label="Correo" />
+                        <FluentValidationMessage For="@(() => Tutor.Correo)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.Correo" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="TelefonoEmpresa" @bind-Value="Tutor.TelefonoEmpresa" Label="Telefono de la Empresa" />
+                        <FluentValidationMessage For="@(() => Tutor.TelefonoEmpresa)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.TelefonoEmpresa" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Telefono" @bind-Value="Tutor.Telefono" Label="Telefono" />
+                        <FluentValidationMessage For="@(() => Tutor.Telefono)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.Telefono" />
+                    </div>                    
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Direccion" @bind-Value="Tutor.Direccion" Label="Direccion" />
+                        <FluentValidationMessage For="@(() => Tutor.Direccion)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.Direccion" />
+                    </div>
+                    <br />
+                    <h2>Datos Fiscales</h2>
+                    <br />
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Nombre Fiscal" @bind-Value="Tutor.NombreFiscal" Label="Nombre Fiscal" />
+                        <FluentValidationMessage For="@(() => Tutor.NombreFiscal)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.NombreFiscal" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="RFC" @bind-Value="Tutor.RFC" Label="RFC" />
+                        <FluentValidationMessage For="@(() => Tutor.RFC)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.RFC" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentCheckbox Name="PersonaF" @bind-Value="Tutor.PersonaF" Label="PersonaF" />
+                        <FluentValidationMessage For="@(() => Tutor.PersonaF)" />
+                        <br />
+                        <label>
+                            Persona Fisica:
+                            <InputSelect @bind-Value="Tutor.PersonaFisica">
+                                @foreach (var personaFisica in Enum.GetValues(typeof(PersonaFisicaUSOCFDI)))
+                                {
+                                    <option value="@personaFisica">@personaFisica</option>
+                                }
+                            </InputSelect>
+                            <ConcurrencyField Model="Tutor"
+                                              DbModel="DbTutor"
+                                              Property="obj => obj?.PersonaFisica" />
+                        </label>
+                        <br />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentCheckbox Name="PersonaM" @bind-Value="Tutor.PersonaM" Label="PersonaM" />
+                        <FluentValidationMessage For="@(() => Tutor.PersonaM)" />
+                        <br />
+                        <label>
+                            Persona Moral:
+                            <InputSelect @bind-Value="Tutor.PersonaMoral">
+                                @foreach (var personaMoral in Enum.GetValues(typeof(PersonaMoralUSOCFDI)))
+                                {
+                                    <option value="@personaMoral">@personaMoral</option>
+                                }
+                            </InputSelect>
+                            <ConcurrencyField Model="Tutor"
+                                              DbModel="DbTutor"
+                                              Property="obj => obj?.PersonaMoral" />
+                        </label>
+                        <br />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentNumberField Name="Donacion" @bind-Value="Tutor.Donacion" Label="Donacion" />
+                        <FluentValidationMessage For="@(() => Tutor.Donacion)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.Donacion" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextArea Name="DetallesAyuda" Rows=5 Cols=60 @bind-Value="Tutor.DetallesAyuda" Label="Detalles de Ayuda" />
+                        <FluentValidationMessage For="@(() => Tutor.DetallesAyuda)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.DetallesAyuda" />
+                    </div>
+                    <br />
+                    <h2>Empresa</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="EmpresaNombre" @bind-Value="Tutor.EmpresaNombre" Label="Nombre de la Empresa" />
+                        <FluentValidationMessage For="@(() => Tutor.EmpresaNombre)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.EmpresaNombre" />
+                    </div>
+                    <div>
+                        <label>
+                            Tipo de Empresa:
+                            <InputSelect @bind-Value="Tutor.TipoEmp">
+                                @foreach (var tipoEmpresa in Enum.GetValues(typeof(TipoEmpresa)))
+                                {
+                                    <option value="@tipoEmpresa">@tipoEmpresa</option>
+                                }
+                            </InputSelect>
+                            <ConcurrencyField Model="Tutor"
+                                              DbModel="DbTutor"
+                                              Property="obj => obj?.TipoEmp" />
+                        </label>
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextArea Name="InformacionExtra" Rows=5 Cols=60 @bind-Value="Tutor.InformacionExtra" Label="Informacion extra" />
+                        <FluentValidationMessage For="@(() => Tutor.InformacionExtra)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.InformacionExtra" />
+                    </div>
+                    <br />
+                </FluentStack>
+                <FluentButton disabled="@Busy" BackgroundColor="Red"
+                              @onclick="CancelAsync" Type="ButtonType.Button" Appearance="Appearance.Accent">Cancel</FluentButton>
 
-        </p>
-        <br />
-        <button disabled="@Busy" class="btn btn-warning"
-                @onclick="CancelAsync">
-            Cancel
-        </button>&nbsp;
-        <button disabled="@Busy" type="submit"
-                class="btn btn-primary">
-            Submit
-        </button>
+                <FluentButton disabled="@Busy" Type="ButtonType.Submit" Appearance="Appearance.Accent">Submit</FluentButton>
+
+            </FluentBodyContent>
+        </FluentCard>
     </EditForm>
 }
 
