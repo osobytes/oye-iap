@@ -24,9 +24,9 @@ else
     else
     {
     <FluentCard>
-        <FluenteHeader style="background-color: white; font-size: 25px; height: 100px; margin: 5px; margin-bottom: 20px; font-weight: bolder;" >
+        <FluentHeader>
                 @Tutor.ApellidoPaterno, @Tutor.ApellidoMaterno, @Tutor.Nombre
-        </FluenteHeader>
+        </FluentHeader>
         <br />
         @if (EditSuccess)
         {
@@ -78,7 +78,7 @@ else
             @if (!ShowConfirmation)
             {
                     <FluentButton BackgroundColor="Red" Style="margin:5px;"
-                                  Type="ButtonType.Button" Appearance="Appearance.Accent" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</FluentButton>
+                                  Type="ButtonType.Button" Appearance="Appearance.Accent" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Borrar</FluentButton>
             }
             else
             {

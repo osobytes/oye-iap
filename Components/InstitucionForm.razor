@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms;
+@inject NavigationManager NavigationManager;
+@inject IPageHelper PageHelper
 
 <h1>@Mode Institucion</h1>
 
@@ -106,9 +108,9 @@
                     <br />
             </FluentStack>
                 <FluentButton disabled="@Busy" BackgroundColor="Red"
-                              @onclick="CancelAsync" Type="ButtonType.Button" Appearance="Appearance.Accent">Cancel</FluentButton>
+                              @onclick="NavigateBack" Type="ButtonType.Button" Appearance="Appearance.Accent">Cancelar</FluentButton>
 
-                <FluentButton disabled="@Busy" Type="ButtonType.Submit" Appearance="Appearance.Accent">Submit</FluentButton>
+                <FluentButton disabled="@Busy" Type="ButtonType.Submit" Appearance="Appearance.Accent">Guardar</FluentButton>
 
         </FluentBodyContent>
     </FluentCard>
@@ -144,9 +146,9 @@
     private string Mode => IsAdd ? "Add" : "Edit";
 
     // Ask to cancel.
-    private Task CancelAsync()
+    private void NavigateBack()
     {
-        return CancelRequest.InvokeAsync(null);
+        NavigationManager.NavigateTo($"instituciones/{PageHelper.Page}");
     }
 
     // Handle form submission request.
