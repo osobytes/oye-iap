@@ -8,6 +8,8 @@
         Laboral,
         Cientifica,
         Educativa,
-        Artistica         
+        Artistica,
+        Gobierno,
+        Salud,
     }
 }

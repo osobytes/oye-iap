@@ -14,6 +14,32 @@ internal class SeedInstituciones : Seed
         "Instituto de Diseño"
     ];
 
+    private readonly string[] _nombresPersona = [
+        "Juan",
+        "Jose",
+        "Maria",
+        "Paola",
+        "Raul",
+        "Suzie",
+        "Nicole",
+        "Samuel",
+        "Rick",
+        "Diana"
+    ];
+
+    private readonly string[] _apellidosPersona = [
+        "Hernandez",
+        "Gonzales",
+        "De la cruz",
+        "De luque",
+        "Leyva",
+        "Ruiz",
+        "Rivera",
+        "Osuna",
+        "Torres",
+        "Valenzuela"
+];
+
     private readonly string[] _telefonos = [
         "1234567890",
         "0987654321",
@@ -45,6 +71,8 @@ internal class SeedInstituciones : Seed
         var institucion = new Institucion
         {
             Nombre = RandomOne(_nombres),
+            NombrePersona = RandomOne(_nombresPersona),
+            ApellidoPersona = RandomOne(_apellidosPersona),
             Telefono = RandomOne(_telefonos),
             Descripcion = $"{RandomOne(_nombres)} Descripción",
             Correo = $"{RandomOne(_nombres).Replace(" ", "").ToLower()}@example.com",

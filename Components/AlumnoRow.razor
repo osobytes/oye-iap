@@ -1,11 +1,10 @@
-﻿@using BlazorWebAppEFCore.Grid
-@inject IBaseGridControls Filters
+﻿@inject IBaseGridControls Filters
 
-@if (CurrentInstitucion is not null)
+@if (CurrentAlumno is not null)
 {
     <div class="row contact-detail">
         <div class="col-2 text-right">
-            <a title="Edit" href="edit-institucion/@CurrentInstitucion.Id" style="text-decoration:none">
+            <a title="Edit" href="edit-alumno/@CurrentAlumno.Id" style="text-decoration:none">
                 &nbsp;📝&nbsp;
             </a>
             @if (CanDelete)
@@ -19,7 +18,7 @@
             }
             &nbsp;
         </div>
-        <div class="col-2">
+        <div class="col-1">
             <a href="@ViewLink" alt="View Details"
                title="View Details">
                 @Name
@@ -27,9 +26,11 @@
         </div>
         @if (!DeleteConfirmation)
         {
-            <div class="col-2">@CurrentInstitucion.Descripcion</div>
-            <div class="col-1">@CurrentInstitucion.TipoEmpresas</div>
-            <div class="col-1">@(CurrentInstitucion.PatrocinioActivo ? "Si" : "No")</div>
+            <div class="col-1">@CurrentAlumno.ApellidoPaterno</div>
+            <div class="col-1">@CurrentAlumno.ApellidoMaterno</div>
+            <div class="col-2">@CurrentAlumno.Direccion</div>
+            <div class="col-2">@CurrentAlumno.FechaIngreso</div>
+            <div class="col-2">@CurrentAlumno.FechaEgreso</div>
         }
         else
         {
@@ -41,18 +42,18 @@
 }
 
 @code {
-    private Institucion _currentInstitucion = new Institucion();
+    private Alumno _currentAlumno = new Alumno();
 
     // Contact being rendered.
     [Parameter]
-    public Institucion CurrentInstitucion
+    public Alumno CurrentAlumno
     {
-        get => _currentInstitucion;
+        get => _currentAlumno;
         set
         {
-            if (value is not null && !value.Equals(_currentInstitucion))
+            if (value is not null && !value.Equals(_currentAlumno))
             {
-                _currentInstitucion = value;
+                _currentAlumno = value;
                 DeleteConfirmation = false;
             }
         }
@@ -60,7 +61,7 @@
 
     // Event to raise when a contact delete is requested.
     [Parameter]
-    public EventCallback DeleteInstitucion { get; set; }
+    public EventCallback DeleteAlumno { get; set; }
 
     // Overall wrapper of functionality.
     [CascadingParameter]
@@ -69,10 +70,10 @@
     // Returns True if conditions for delete are met.
     private bool CanDelete => !DeleteConfirmation &&
     (Wrapper?.DeleteRequestId == 0 ||
-    Wrapper?.DeleteRequestId == CurrentInstitucion?.Id);
+    Wrapper?.DeleteRequestId == _currentAlumno?.Id);
 
     // Navigate to view.
-    private string ViewLink => $"view-institucion/{CurrentInstitucion?.Id}";
+    private string ViewLink => $"view-alumno/{CurrentAlumno?.Id}";
 
     // Confirm the delete.
     private bool DeleteConfirmation { get; set; }
@@ -102,16 +103,16 @@
         if (Wrapper?.DeleteRequestId == 0)
         {
             DeleteConfirmation = true;
-            await Wrapper.DeleteRequested.InvokeAsync(CurrentInstitucion.Id);
+            await Wrapper.DeleteRequested.InvokeAsync(CurrentAlumno.Id);
         }
     }
 
     // Deletes the Institucion.
     private Task DeleteAsync()
     {
-        return DeleteInstitucion.InvokeAsync(this);
+        return DeleteAlumno.InvokeAsync(this);
     }
 
     /// Correctly formatted name.
-    private string Name => CurrentInstitucion.Nombre;
+    private string Name => CurrentAlumno.Nombre;
 }

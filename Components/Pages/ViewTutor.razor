@@ -6,58 +6,91 @@
 @inject IDbContextFactory<OyeIapDbContext> DbFactory
 @inject IPageHelper PageHelper
 @inject EditSuccess EditSuccessState
+@inject NavigationManager NavigationManager;
+
 
 @if (NotFound && !Loading)
 {
-    <div class="alert alert-warning">A contact with that id doesn't exist.</div>
+    <FluentMessageBar Title="@Mensajes.TutorNotFoundMessage" Intent="@MessageIntent.Warning">
+        @Mensajes.TutorNotFoundMessage
+    </FluentMessageBar>
 }
 else
 {
     @if (Tutor is null || Loading)
     {
-        <div class="alert alert-info">Loading...</div>
+        <FluentProgressRing></FluentProgressRing>
     }
     else
     {
-        <h1>@Tutor.ApellidoPaterno, @Tutor.ApellidoMaterno, @Tutor.Nombre</h1>
+    <FluentCard>
+        <FluentHeader>
+                @Tutor.ApellidoPaterno, @Tutor.ApellidoMaterno, @Tutor.Nombre
+        </FluentHeader>
         <br />
         @if (EditSuccess)
         {
-            <div class="alert alert-success">Successfully updated the contact.</div>
+                <FluentMessageBar Title="@Mensajes.EditMessageTitle" Intent="@MessageIntent.Success">
+                    @Mensajes.EditSuccessMessage
+                </FluentMessageBar>
         }
-        <hr />
-        <h2> Informacion de contacto </h2>
-        <br />
-        <h3>@Tutor.Correo, @Tutor.Telefono, @Tutor.Direccion</h3>
-        <br />
-        <h2>Pago y padrino</h2>
-        <br />
-        <h3>@Tutor.Pago, @Tutor.Donacion</h3>
-        <h3>@Tutor.DetallesAyuda</h3>
-        <br />
-        <a class="btn btn-primary" title="Go Back" href="@PageHelper.Page">
-            🔙 Back to Grid
-        </a>
+            <FluentGrid>
+                <FluentGridItem xs="6" sm="4">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Otra persona</FluentLabel>
+                        <FluentLabel>Nombre: @Tutor.NombreP1</FluentLabel>
+                        <FluentLabel>Apellidos: @Tutor.ApellidoPaternoP1, @Tutor.ApellidoMaternoP1</FluentLabel>
+                        <br />
+                        <FluentLabel Weight="FontWeight.Bold">Infomacion de Contacto</FluentLabel>
+                        <FluentLabel>Correo: @Tutor.Correo</FluentLabel>
+                        <FluentLabel>Telefono de la Empresa: @Tutor.TelefonoEmpresa</FluentLabel>
+                        <FluentLabel>Telefono 2: @Tutor.Telefono</FluentLabel>
+                        <FluentLabel>Direccion: @Tutor.Direccion</FluentLabel>
+                    </FluentCard>
+                </FluentGridItem>
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Datos Fiscales</FluentLabel>
+                        <FluentLabel>Nombre Fiscal: @Tutor.NombreFiscal</FluentLabel>
+                        <FluentLabel>RFC: @Tutor.RFC</FluentLabel>
+                        <FluentLabel>Persona Fiscal: @Tutor.PersonaF</FluentLabel>
+                        <FluentLabel>@Tutor.PersonaFisica</FluentLabel>
+                        <FluentLabel>Persona Moral: @Tutor.PersonaM</FluentLabel>
+                        <FluentLabel>@Tutor.PersonaMoral</FluentLabel>
+                        <FluentLabel>Donacion: @Tutor.Donacion</FluentLabel>
+                    </FluentCard>
+                </FluentGridItem>                
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Empresa</FluentLabel>
+                        <FluentLabel>Nombre de la Empresa: @Tutor.EmpresaNombre</FluentLabel>
+                        <FluentLabel>Tipo de Empresa: @Tutor.TipoEmp</FluentLabel>
+                        <FluentLabel>Persona Fiscal: @Tutor.InformacionExtra</FluentLabel>
+                    </FluentCard>
+                </FluentGridItem>
+            </FluentGrid>
+        <FluentFooter Style="margin-top: 20px;">
+                <FluentButton Style="margin: 5px;" Title="Go Back" OnClick="NavigateBack">🔙 Volver a la tabla</FluentButton>
+                <FluentButton Style="margin:5px;" Title="Edit" OnClick="EditTutor">Editar</FluentButton>
+
         @if (!Deleted)
         {
-            <a class="btn btn-primary" href="edit-tutor/@Tutor.Id" title="Edit">Edit</a>
-
-            <span>&nbsp;</span>
             @if (!ShowConfirmation)
             {
-                <button class="btn btn-danger" @onclick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Delete</button>
+                    <FluentButton BackgroundColor="Red" Style="margin:5px;"
+                                  Type="ButtonType.Button" Appearance="Appearance.Accent" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Borrar</FluentButton>
             }
             else
             {
-                <br />
-                <br />
-                <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
+                    <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
             }
         }
         else
         {
-            <div class="btn btn-danger">🚫 This item has been deleted.</div>
+                    <FluentButton Title="Deleted" Disabled="true">🚫 This item has been deleted.</FluentButton>
         }
+        </FluentFooter>
+    </FluentCard>
     }
 }
 
@@ -99,6 +132,16 @@ else
             await LoadContactAsync();
         }
         await base.OnParametersSetAsync();
+    }
+
+    private void NavigateBack()
+    {
+        NavigationManager.NavigateTo($"tutores/{PageHelper.Page}");
+    }
+
+    private void EditTutor()
+    {
+        NavigationManager.NavigateTo($"edit-tutor/{TutorId}");
     }
 
     // Confirm deletion.
@@ -185,4 +228,13 @@ else
             await LoadContactAsync();
         }
     }
+
+    private static class Mensajes
+    {
+        public const string TutorNotFoundTitle = "Padrino no encontrado.";
+        public const string TutorNotFoundMessage = "El padrino con ese Id no ha sido encontrado en la base de datos.";
+        public const string EditMessageTitle = "Padrino Actualizado";
+        public const string EditSuccessMessage = "El padrino se ha actualizado exitosamente.";
+    }
+
 }

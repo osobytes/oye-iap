@@ -1,104 +1,119 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms;
+@inject NavigationManager NavigationManager;
+@inject IPageHelper PageHelper
 
 <h1>@Mode Institucion</h1>
 
 <hr />
 @if (Institucion is not null)
 {
-    <EditForm Model="Institucion"
-              OnInvalidSubmit="(async () => await HandleSubmitAsync(false))"
-              OnValidSubmit="(async () => await HandleSubmitAsync(true))">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <h2>🆔 Identificacion</h2>
-        <p>
-            <label>
-                Nombre:
-                <InputText @bind-Value="Institucion.Nombre" />
-                <ConcurrencyField Model="Institucion"
-                                  DbModel="DbInstitucion"
-                                  Property="obj => obj?.Nombre" />
-            </label>
-        </p>
-        <h2> Contacto </h2>
-        <p>
-            <label>
-                Telefono:
-                <InputText @bind-Value="Institucion.Telefono" />
-                <ConcurrencyField Model="Institucion"
-                                  DbModel="DbInstitucion"
-                                  Property="obj => obj?.Telefono" />
-            </label>
-            <label>
-                Correo:
-                <InputText @bind-Value="Institucion.Correo" />
-                <ConcurrencyField Model="Institucion"
-                                  DbModel="DbInstitucion"
-                                  Property="obj => obj?.Correo" />
-            </label>
-        </p>
-        <h2>Direccion</h2>
-        <p>
-            <label>
-                .
-                <InputText @bind-Value="Institucion.Direccion" />
-                <ConcurrencyField Model="Institucion"
-                                  DbModel="DbInstitucion"
-                                  Property="obj => obj?.Direccion" />
-            </label>
-        </p>
-        <h2>Informacion</h2>
-        <p>
-            <label>
-                Tipo de empresa:
-                <InputSelect @bind-Value="Institucion.TipoEmpresas">
-                    @foreach (var tipoEmpresa in Enum.GetValues(typeof(TipoEmpresa)))
-                    {
-                        <option value="@tipoEmpresa">@tipoEmpresa</option>
-                    }
-                </InputSelect>
-                <ConcurrencyField Model="Institucion"
-                                  DbModel="DbInstitucion"
-                                  Property="obj => obj?.TipoEmpresas" />
-            </label>
 
-            <label>
-                Descripcion:
-                <InputText @bind-Value="Institucion.Descripcion" />
-                <ConcurrencyField Model="Institucion"
-                                  DbModel="DbInstitucion"
-                                  Property="obj => obj?.Descripcion" />
-            </label>
-        </p>
-        <h2> Patrocinador </h2>
-        <p>
-            <label>
-                <input type="checkbox" name="PatrocinioActivo" value="true"> PatrocinioActivo
-            </label>
-            <label>
-                Donacion:
-                <InputNumber @bind-Value="Institucion.Donacion" />
-                <ConcurrencyField Model="Institucion"
+    <EditForm Model="Institucion"
+          OnInvalidSubmit="(async () => await HandleSubmitAsync(false))"
+          OnValidSubmit="(async () => await HandleSubmitAsync(true))">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <FluentCard>
+        <FluentBodyContent>
+            <FluentStack Orientation="Orientation.Vertical">
+                <h2>Identificacion</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Nombre" @bind-Value="Institucion.Nombre" Label="Nombre de la Empresa" Required />
+                        <FluentValidationMessage For="@(() => Institucion.Nombre)" />
+                        <ConcurrencyField Model="Institucion"
+                                          DbModel="DbInstitucion"
+                                          Property="obj => obj?.Nombre" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="NombrePersona" @bind-Value="Institucion.NombrePersona" Label="Nombre del encargado" Required />
+                        <FluentValidationMessage For="@(() => Institucion.NombrePersona)" />
+                        <ConcurrencyField Model="Institucion"
+                                          DbModel="DbInstitucion"
+                                          Property="obj => obj?.NombrePersona" />
+                    </div>
+                    <div>
+                        <FluentTextField Name="Apellido:" @bind-Value="Institucion.ApellidoPersona" Label="Apellido Paterno" Required />
+                        <FluentValidationMessage For="@(() => Institucion.ApellidoPersona)" />
+                        <ConcurrencyField Model="Institucion"
+                                          DbModel="DbInstitucion"
+                                          Property="obj => obj?.ApellidoPersona" />
+                    </div>
+                    <br />
+                    <h2>Contacto</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Telefono" @bind-Value="Institucion.Telefono" Label="Telefono" Required />
+                        <FluentValidationMessage For="@(() => Institucion.Telefono)" />
+                        <ConcurrencyField Model="Institucion"
+                                          DbModel="DbInstitucion"
+                                          Property="obj => obj?.Telefono" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="Correo" @bind-Value="Institucion.Correo" Label="Correo" Required />
+                        <FluentValidationMessage For="@(() => Institucion.Correo)" />
+                        <ConcurrencyField Model="Institucion"
+                                          DbModel="DbInstitucion"
+                                          Property="obj => obj?.Correo" />
+                    </div>
+                     <br />
+                    <h2>Direccion</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentTextArea Name="Direccion" Rows=5 Cols=60 @bind-Value="Institucion.Direccion" Label="Direccion" Required />
+                        <FluentValidationMessage For="@(() => Institucion.Direccion)" />
+                        <ConcurrencyField Model="Institucion"
+                                          DbModel="DbInstitucion"
+                                          Property="obj => obj?.Direccion" />
+                    </div>
+                    <br />
+                    <h2>Informacion</h2>
+                   <div>
+                        <label>
+                            Tipo de empresa:
+                            <InputSelect @bind-Value="Institucion.TipoEmpresas">
+                                @foreach (var tipoEmpresa in Enum.GetValues(typeof(TipoEmpresa)))
+                                {
+                                    <option value="@tipoEmpresa">@tipoEmpresa</option>
+                                }
+                            </InputSelect>
+                            <ConcurrencyField Model="Institucion"
+                                              DbModel="DbInstitucion"
+                                              Property="obj => obj?.TipoEmpresas" />
+                        </label>
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextArea Name="Descripcion" Rows=5 Cols=60 @bind-Value="Institucion.Descripcion" Label="Descripcion" />
+                        <FluentValidationMessage For="@(() => Institucion.Descripcion)" />
+                        <ConcurrencyField Model="Institucion"
+                                          DbModel="DbInstitucion"
+                                          Property="obj => obj?.Descripcion" />
+                    </div>
+                    <h2>Patrocinador</h2>
+                    <div style="margin-right: 10px;">
+                        <FluentCheckbox Name="PatrocinioActivo" @bind-Value="Institucion.PatrocinioActivo"  Label="Patrocinio Activo" />
+                        <FluentValidationMessage For="@(() => Institucion.PatrocinioActivo)" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentNumberField Name="Donacion" Rows=5 Cols=60 @bind-Value="Institucion.Donacion" Label="Donacion" />
+                        <FluentValidationMessage For="@(() => Institucion.Donacion)" />
+                        <ConcurrencyField Model="Institucion"
                                   DbModel="DbInstitucion"
                                   Property="obj => obj?.Donacion" />
-            </label>
-            <label>
-                Detalles:
-                <InputText @bind-Value="Institucion.DetallesAyuda" />
-                <ConcurrencyField Model="Institucion"
-                                  DbModel="DbInstitucion"
-                                  Property="obj => obj?.DetallesAyuda" />
-            </label>
-        </p>
-        <br />
-        <button disabled="@Busy" class="btn btn-warning"
-                @onclick="CancelAsync">
-            Cancel
-        </button>&nbsp;
-        <button disabled="@Busy" type="submit"
-                class="btn btn-primary">
-            Submit
-        </button>
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextArea Name="Detalles de Ayuda" Rows=5 Cols=60 @bind-Value="Institucion.DetallesAyuda" Label="Detalles de la Ayuda" />
+                        <FluentValidationMessage For="@(() => Institucion.DetallesAyuda)" />
+                        <ConcurrencyField Model="Institucion"
+                                          DbModel="DbInstitucion"
+                                          Property="obj => obj?.DetallesAyuda" />
+                    </div>
+                    <br />
+            </FluentStack>
+                <FluentButton disabled="@Busy" BackgroundColor="Red"
+                              @onclick="NavigateBack" Type="ButtonType.Button" Appearance="Appearance.Accent">Cancelar</FluentButton>
+
+                <FluentButton disabled="@Busy" Type="ButtonType.Submit" Appearance="Appearance.Accent">Guardar</FluentButton>
+
+        </FluentBodyContent>
+    </FluentCard>
     </EditForm>
 }
 
@@ -131,9 +146,9 @@
     private string Mode => IsAdd ? "Add" : "Edit";
 
     // Ask to cancel.
-    private Task CancelAsync()
+    private void NavigateBack()
     {
-        return CancelRequest.InvokeAsync(null);
+        NavigationManager.NavigateTo($"instituciones/{PageHelper.Page}");
     }
 
     // Handle form submission request.
