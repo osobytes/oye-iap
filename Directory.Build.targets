@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <GlobalDotNetPackageVersion>8.0.5</GlobalDotNetPackageVersion>
+    <GlobalFluentUIPackageVersion>4.7.2</GlobalFluentUIPackageVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="$(GlobalDotNetPackageVersion)" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(GlobalDotNetPackageVersion)" />
+    <PackageReference Update="Microsoft.AspNetCore.Identity.UI" Version="$(GlobalDotNetPackageVersion)" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Tools" Version="$(GlobalDotNetPackageVersion)" />
+    <PackageReference Update="Microsoft.EntityFrameworkCore.Sqlite" Version="$(GlobalDotNetPackageVersion)" />
+    <PackageReference Update="Microsoft.FluentUI.AspNetCore.Components" Version="$(GlobalFluentUIPackageVersion)" />
+    <PackageReference Update="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="$(GlobalFluentUIPackageVersion)" />
+    <PackageReference Update="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="$(GlobalFluentUIPackageVersion)" />
+  </ItemGroup>
+</Project>

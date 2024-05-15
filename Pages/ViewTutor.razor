@@ -1,0 +1,237 @@
+﻿@page "/Tutor/View/{TutorId:int}"
+@attribute [Authorize(Roles = "Admin, User")]
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject IPageHelper PageHelper
+@inject EditSuccess EditSuccessState
+@inject NavigationManager NavigationManager;
+
+
+@if (NotFound && !Loading)
+{
+    <FluentMessageBar Title="@Mensajes.TutorNotFoundMessage" Intent="@MessageIntent.Warning">
+        @Mensajes.TutorNotFoundMessage
+    </FluentMessageBar>
+}
+else
+{
+    @if (Tutor is null || Loading)
+    {
+        <FluentProgressRing></FluentProgressRing>
+    }
+    else
+    {
+    <FluentCard>
+        <FluentHeader>
+                @Tutor.ApellidoPaterno, @Tutor.ApellidoMaterno, @Tutor.Nombre
+        </FluentHeader>
+        <br />
+        @if (EditSuccess)
+        {
+                <FluentMessageBar Title="@Mensajes.EditMessageTitle" Intent="@MessageIntent.Success">
+                    @Mensajes.EditSuccessMessage
+                </FluentMessageBar>
+        }
+            <FluentGrid>
+                <FluentGridItem xs="6" sm="4">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Otra persona</FluentLabel>
+                        <FluentLabel>Nombre: @Tutor.NombreP1</FluentLabel>
+                        <FluentLabel>Apellidos: @Tutor.ApellidoPaternoP1, @Tutor.ApellidoMaternoP1</FluentLabel>
+                        <br />
+                        <FluentLabel Weight="FontWeight.Bold">Infomacion de Contacto</FluentLabel>
+                        <FluentLabel>Correo: @Tutor.Correo</FluentLabel>
+                        <FluentLabel>Telefono de la Empresa: @Tutor.TelefonoEmpresa</FluentLabel>
+                        <FluentLabel>Telefono 2: @Tutor.Telefono</FluentLabel>
+                        <FluentLabel>Direccion: @Tutor.Direccion</FluentLabel>
+                    </FluentCard>
+                </FluentGridItem>
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Datos Fiscales</FluentLabel>
+                        <FluentLabel>Nombre Fiscal: @Tutor.NombreFiscal</FluentLabel>
+                        <FluentLabel>RFC: @Tutor.RFC</FluentLabel>
+                        <FluentLabel>Persona Fiscal: @Tutor.PersonaF</FluentLabel>
+                        <FluentLabel>@Tutor.PersonaFisica</FluentLabel>
+                        <FluentLabel>Persona Moral: @Tutor.PersonaM</FluentLabel>
+                        <FluentLabel>@Tutor.PersonaMoral</FluentLabel>
+                        <FluentLabel>Donacion: @Tutor.Donacion</FluentLabel>
+                    </FluentCard>
+                </FluentGridItem>                
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold">Empresa</FluentLabel>
+                        <FluentLabel>Nombre de la Empresa: @Tutor.EmpresaNombre</FluentLabel>
+                        <FluentLabel>Tipo de Empresa: @Tutor.TipoEmp</FluentLabel>
+                        <FluentLabel>Persona Fiscal: @Tutor.InformacionExtra</FluentLabel>
+                    </FluentCard>
+                </FluentGridItem>
+            </FluentGrid>
+        <FluentFooter Style="margin-top: 20px;">
+                <FluentButton Style="margin: 5px;" Title="Go Back" OnClick="NavigateBack">🔙 Volver a la tabla</FluentButton>
+                <FluentButton Style="margin:5px;" Title="Edit" OnClick="EditTutor">Editar</FluentButton>
+
+        @if (!Deleted)
+        {
+            @if (!ShowConfirmation)
+            {
+                    <FluentButton BackgroundColor="Red" Style="margin:5px;"
+                                  Type="ButtonType.Button" Appearance="Appearance.Accent" Title="Delete" OnClick="@(() => { ShowConfirmation = true; EditSuccess = false; })">Borrar</FluentButton>
+            }
+            else
+            {
+                    <DeletePrompt Confirmation="@(async result => await ConfirmAsync(result))" />
+            }
+        }
+        else
+        {
+                    <FluentButton Title="Deleted" Disabled="true">🚫 This item has been deleted.</FluentButton>
+        }
+        </FluentFooter>
+    </FluentCard>
+    }
+}
+
+@code {
+    // Tracking of asynchronous calls.
+    private bool Loading;
+
+    // Id from route of contact.
+    [Parameter]
+    public int TutorId { get; set; }
+
+    // Navigation check.
+    private int _lastTutorId;
+
+    // True with redirect from successful edit.
+    [Parameter]
+    public bool EditSuccess { get; set; }
+
+    // Contact entity.
+    private Tutor? Tutor { get; set; }
+
+    // Set to true when not found.
+    private bool NotFound = false;
+
+    // Set to true when delete is requested.
+    private bool ShowConfirmation = false;
+
+    // Set to true when delete is successful.
+    private bool Deleted = false;
+
+    // Navigated
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_lastTutorId != TutorId)
+        {
+            EditSuccess = EditSuccessState.Success;
+            EditSuccessState.Success = false;
+            _lastTutorId = TutorId;
+            await LoadContactAsync();
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    private void NavigateBack()
+    {
+        NavigationManager.NavigateTo($"tutores/{PageHelper.Page}");
+    }
+
+    private void EditTutor()
+    {
+        NavigationManager.NavigateTo($"edit-tutor/{TutorId}");
+    }
+
+    // Confirm deletion.
+    // result is True when user confirmed.
+    private async Task ConfirmAsync(bool result)
+    {
+        if (result)
+        {
+            await DeleteAsync();
+        }
+        else
+        {
+            ShowConfirmation = false;
+            EditSuccess = false;
+        }
+    }
+
+    // Loads the contact.
+    private async Task LoadContactAsync()
+    {
+        if (Loading)
+        {
+            return; //avoid concurrent requests.
+        }
+
+        NotFound = false;
+        Tutor = null;
+
+        Loading = true;
+
+        using var context = DbFactory.CreateDbContext();
+
+        if (context.Tutores is not null)
+        {
+            Tutor = await context.Tutores
+                .AsNoTracking()
+                .SingleOrDefaultAsync(
+                    c => c.Id == TutorId);
+
+            if (Tutor is null)
+            {
+                NotFound = true;
+            }
+        }
+
+        Loading = false;
+    }
+
+    // Deletes the contact.
+    private async Task DeleteAsync()
+    {
+        if (Loading)
+        {
+            // Avoid concurrent requests.
+            return;
+        }
+
+        Loading = true;
+        using var context = DbFactory?.CreateDbContext();
+
+        if (context?.Tutores is not null)
+        {
+            var tutor = await context.Tutores
+                .SingleOrDefaultAsync(c => c.Id == TutorId);
+
+            if (tutor is not null)
+            {
+                context.Tutores?.Remove(tutor);
+                await context.SaveChangesAsync();
+                Loading = false;
+                Deleted = true;
+            }
+            else
+            {
+                Loading = false;
+                // Show not found.
+                await LoadContactAsync();
+            }
+        }
+        else
+        {
+            Loading = false;
+            // Show not found.
+            await LoadContactAsync();
+        }
+    }
+
+    private static class Mensajes
+    {
+        public const string TutorNotFoundTitle = "Padrino no encontrado.";
+        public const string TutorNotFoundMessage = "El padrino con ese Id no ha sido encontrado en la base de datos.";
+        public const string EditMessageTitle = "Padrino Actualizado";
+        public const string EditSuccessMessage = "El padrino se ha actualizado exitosamente.";
+    }
+
+}

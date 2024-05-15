@@ -1,4 +1,4 @@
-﻿namespace BlazorWebAppEFCore.Grid;
+﻿namespace OyeIap.Server.Grid;
 
 // Holds the state for paging.
 public class PageHelper : IPageHelper

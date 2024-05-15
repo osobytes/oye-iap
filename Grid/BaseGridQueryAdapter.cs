@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace BlazorWebAppEFCore.Grid;
+namespace OyeIap.Server.Grid;
 
 public abstract class BaseGridQueryAdapter<TData>
     where TData : class

@@ -1,0 +1,35 @@
+﻿@inject IBaseGridControls Filters
+
+@if (Column == Filters.SortColumn)
+{
+    <span>@SortSymbol</span>
+}
+else
+{
+    <span>&nbsp;</span>
+}
+
+@code {
+    // Sets which Column this indicator is for.
+    [Parameter]
+    public string Column { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Filters.OnSortChanged += HandleSortChanged;
+    }
+
+    private void HandleSortChanged()
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        Filters.OnSortChanged -= HandleSortChanged;
+    }
+
+    // The symbol to render.
+    private string SortSymbol => Filters.SortAscending ? "🔼" : "🔽";
+}

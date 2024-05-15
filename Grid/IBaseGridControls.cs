@@ -1,4 +1,4 @@
-﻿namespace BlazorWebAppEFCore.Grid;
+﻿namespace OyeIap.Server.Grid;
 
 public interface IBaseGridControls
 {
