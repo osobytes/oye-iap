@@ -1,7 +1,7 @@
-﻿using BlazorWebAppEFCore.Data;
+﻿using OyeIap.Server.Data;
 using System.Linq.Expressions;
 
-namespace BlazorWebAppEFCore.Grid;
+namespace OyeIap.Server.Grid;
 
 public class AlumnoQueryAdapter : BaseGridQueryAdapter<Alumno>
 {

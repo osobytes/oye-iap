@@ -1,0 +1,116 @@
+﻿@inject IBaseGridControls Filters
+
+@if (CurrentInstitucion is not null)
+{
+    <div class="row contact-detail">
+        <div class="col-2 text-right">
+            <a title="Edit" href="edit-institucion/@CurrentInstitucion.Id" style="text-decoration:none">
+                &nbsp;📝&nbsp;
+            </a>
+            @if (CanDelete)
+            {
+                <span @onclick="DeleteRequestAsync"
+                      title="Delete" class="clickable red btn">❌</span>
+            }
+            else
+            {
+                <span>&nbsp;</span>
+            }
+            &nbsp;
+        </div>
+        <div class="col-2">
+            <a href="@ViewLink" alt="View Details"
+               title="View Details">
+                @Name
+            </a>
+        </div>
+        @if (!DeleteConfirmation)
+        {
+            <div class="col-2">@CurrentInstitucion.Descripcion</div>
+            <div class="col-1">@CurrentInstitucion.TipoEmpresas</div>
+            <div class="col-1">@(CurrentInstitucion.PatrocinioActivo ? "Si" : "No")</div>
+        }
+        else
+        {
+            <div class="col-9">
+                <DeletePrompt Confirmation="ConfirmAsync" />
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private Institucion _currentInstitucion = new Institucion();
+
+    // Contact being rendered.
+    [Parameter]
+    public Institucion CurrentInstitucion
+    {
+        get => _currentInstitucion;
+        set
+        {
+            if (value is not null && !value.Equals(_currentInstitucion))
+            {
+                _currentInstitucion = value;
+                DeleteConfirmation = false;
+            }
+        }
+    }
+
+    // Event to raise when a contact delete is requested.
+    [Parameter]
+    public EventCallback DeleteInstitucion { get; set; }
+
+    // Overall wrapper of functionality.
+    [CascadingParameter]
+    public GridWrapper? Wrapper { get; set; }
+
+    // Returns True if conditions for delete are met.
+    private bool CanDelete => !DeleteConfirmation &&
+    (Wrapper?.DeleteRequestId == 0 ||
+    Wrapper?.DeleteRequestId == CurrentInstitucion?.Id);
+
+    // Navigate to view.
+    private string ViewLink => $"view-institucion/{CurrentInstitucion?.Id}";
+
+    // Confirm the delete.
+    private bool DeleteConfirmation { get; set; }
+
+    // Called based on confirmation.
+    // confirmed: True when confirmed.
+    private async Task ConfirmAsync(bool confirmed)
+    {
+        if (confirmed)
+        {
+            await DeleteAsync();
+        }
+        else
+        {
+            DeleteConfirmation = false;
+
+            if (Wrapper is not null)
+            {
+                await Wrapper.DeleteRequested.InvokeAsync(0);
+            }
+        }
+    }
+
+    /// Set delete to true.
+    private async Task DeleteRequestAsync()
+    {
+        if (Wrapper?.DeleteRequestId == 0)
+        {
+            DeleteConfirmation = true;
+            await Wrapper.DeleteRequested.InvokeAsync(CurrentInstitucion.Id);
+        }
+    }
+
+    // Deletes the Institucion.
+    private Task DeleteAsync()
+    {
+        return DeleteInstitucion.InvokeAsync(this);
+    }
+
+    /// Correctly formatted name.
+    private string Name => CurrentInstitucion.Nombre;
+}
