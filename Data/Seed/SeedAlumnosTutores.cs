@@ -137,13 +137,16 @@ internal class SeedAlumnosTutores : Seed
                 PatrocinioActivo = random.Next(2) == 0,
                 PersonaF = random.Next(2) == 0,
                 PersonaM = random.Next(2) == 0,
-                PersonaFisica = RandomEnumValue<PersonaFisicaUSOCFDI>(),
-                PersonaMoral = RandomEnumValue<PersonaMoralUSOCFDI>(),
+                PersonaFisica = "Pago",
+                PersonaMoral = "Pago",
                 EmpresaNombre = RandomOne(_nombresEmpresa),
                 TipoEmp = RandomEnumValue<TipoEmpresa>(),
                 DetallesAyuda = "Detalles de ayuda",
                 Donacion = random.Next(100, 1000),
-                InformacionExtra = "Informacion Extra"
+                InformacionExtra = "Informacion Extra",
+                comentarios = "comentarios",
+                RegimenFiscal = "Demás ingresos",
+                CorreoEmpresa = $"{RandomOne(_nombres).Replace(" ", "").ToLower()}@example.com"
             };
 
             context.Tutores?.Add(tutor);

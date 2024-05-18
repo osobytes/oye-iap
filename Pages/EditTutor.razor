@@ -1,4 +1,4 @@
-﻿@page "/Tutor/Edit/{TutorId:int}"
+﻿@page "/tutor/edit/{TutorId:int}"
 @attribute [Authorize(Roles = "Admin, User")]
 @implements IDisposable
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
@@ -141,7 +141,7 @@ else
 
             EditSuccessState.Success = true;
             // go to view to see the record
-            Navigation.NavigateTo($"/view-tutor/{Tutor.Id}");
+            Navigation.NavigateTo($"/tutor/view/{Tutor.Id}");
         }
         catch (DbUpdateConcurrencyException dbex)
         {
@@ -156,7 +156,7 @@ else
             if (dbValues is null)
             {
                 // deleted - show Tutor not found
-                Navigation.NavigateTo($"/view-tutor/{Tutor.Id}");
+                Navigation.NavigateTo($"/tutor/view/{Tutor.Id}");
                 return;
             }
 

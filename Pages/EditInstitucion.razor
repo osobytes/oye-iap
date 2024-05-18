@@ -1,4 +1,4 @@
-﻿@page "/Institucion/Edit/{InstitucionId:int}"
+﻿@page "/institucion/edit/{InstitucionId:int}"
 @attribute [Authorize(Roles = "Admin, User")]
 @implements IDisposable
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
@@ -141,7 +141,7 @@ else
 
             EditSuccessState.Success = true;
             // go to view to see the record
-            Navigation.NavigateTo($"/view-institucion/{Institucion.Id}");
+            Navigation.NavigateTo($"/institucion/view/{Institucion.Id}");
         }
         catch (DbUpdateConcurrencyException dbex)
         {
@@ -156,7 +156,7 @@ else
             if (dbValues is null)
             {
                 // deleted - show Institucion not found
-                Navigation.NavigateTo($"/view-institucion/{Institucion.Id}");
+                Navigation.NavigateTo($"/institucion/view/{Institucion.Id}");
                 return;
             }
 

@@ -57,11 +57,20 @@ public class Tutor : Patrocinador
 
     public bool PersonaM { get; set; }
 
-    [Column(TypeName = "varchar(50)")]
-    public PersonaFisicaUSOCFDI PersonaFisica { get; set; }
+    public string PersonaFisica { get; set; }
 
-    [Column(TypeName = "varchar(50)")]
-    public PersonaMoralUSOCFDI PersonaMoral { get; set; }
+    public string PersonaMoral { get; set; }
+
+    [Required]
+    public string RegimenFiscal { get; set; }
+
+    [Required]
+    [StringLength(100, ErrorMessage = "El campo Correo debe tener como máximo 100 caracteres.")]
+    [EmailAddress(ErrorMessage = "El campo Correo debe ser una dirección de correo válida.")]
+    public string CorreoEmpresa { get; set; }
+
+    [StringLength(300, ErrorMessage = "")]
+    public string comentarios { get; set; }
 
     //Empresa
     [Required]
@@ -72,7 +81,7 @@ public class Tutor : Patrocinador
     [Column(TypeName = "varchar(50)")]
     public TipoEmpresa TipoEmp { get; set; }
 
-    [StringLength(100, ErrorMessage = "El campo del Tipo de empresa debe tener como máximo 15 caracteres.")]
+    [StringLength(300, ErrorMessage = "")]
     public string InformacionExtra { get; set; }
 
     public ICollection<AlumnoTutor> Alumnos { get; set; }

@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager;
 
 
-<h1>@Mode Tutor</h1>
+<h1>@Mode Padrino</h1>
 
 <hr />
 @if (Tutor is not null)
@@ -58,7 +58,7 @@
                                           DbModel="DbTutor"
                                           Property="obj => obj?.ApellidoMaternoP1" />
                     </div>
-                    <br />                    
+                    <br />
                     <h2>Informacion de Contacto</h2>
                     <br />
                     <div style="margin-right: 10px;">
@@ -81,7 +81,7 @@
                         <ConcurrencyField Model="Tutor"
                                           DbModel="DbTutor"
                                           Property="obj => obj?.Telefono" />
-                    </div>                    
+                    </div>
                     <div style="margin-right: 10px;">
                         <FluentTextField Name="Direccion" @bind-Value="Tutor.Direccion" Label="Direccion" />
                         <FluentValidationMessage For="@(() => Tutor.Direccion)" />
@@ -109,38 +109,94 @@
                     <div style="margin-right: 10px;">
                         <FluentCheckbox Name="PersonaF" @bind-Value="Tutor.PersonaF" Label="PersonaF" />
                         <FluentValidationMessage For="@(() => Tutor.PersonaF)" />
-                        <br />
-                        <label>
-                            Persona Fisica:
-                            <InputSelect @bind-Value="Tutor.PersonaFisica">
-                                @foreach (var personaFisica in Enum.GetValues(typeof(PersonaFisicaUSOCFDI)))
-                                {
-                                    <option value="@personaFisica">@personaFisica</option>
-                                }
-                            </InputSelect>
-                            <ConcurrencyField Model="Tutor"
-                                              DbModel="DbTutor"
-                                              Property="obj => obj?.PersonaFisica" />
-                        </label>
-                        <br />
                     </div>
+                    <br />
+                    <div>
+                        <FluentSelect Id="PersonFisica" @bind-Value="Tutor.PersonaFisica" TOption="string" Required Label="Persona Fisica">
+                            <FluentOption Value="">Selecciona CFDI ...</FluentOption>
+                            <FluentOption Value="Aquisicion de mercancias">Aquisicion de mercancias</FluentOption>
+                            <FluentOption Value="Devoluciones, Descuentos o bonificaciones">Devoluciones, Descuentos o bonificaciones</FluentOption>
+                            <FluentOption Value="Gastos en general">Gastos en general</FluentOption>
+                            <FluentOption Value="Construcciones">Construcciones</FluentOption>
+                            <FluentOption Value="Mobiliarios y equipo de oficina por inversiones"> Mobiliarios y equipo de oficina por inversiones</FluentOption>
+                            <FluentOption Value="Equipo de transporte">Equipo de transporte</FluentOption>
+                            <FluentOption Value="Equipo de computo y accesorios">Equipo de computo y accesorios</FluentOption>
+                            <FluentOption Value="Dados, troqueles, moldes, matrices y herramental">Dados, troqueles, moldes, matrices y herramental</FluentOption>
+                            <FluentOption Value="Comunicacion telefonicas">Comunicacion telefonicas</FluentOption>
+                            <FluentOption Value="Comunicacion satelitales">Comunicacion satelitales</FluentOption>
+                            <FluentOption Value="Otro maquinaria y equipo">Otro maquinaria y equipo</FluentOption>
+                            <FluentOption Value="Honorarios medicos, dentales y gastos hospitalarios">Honorarios medicos, dentales y gastos hospitalarios</FluentOption>
+                            <FluentOption Value="Gastos medicos por incapacidad o discapacidad">Gastos medicos por incapacidad o discapacidad</FluentOption>
+                            <FluentOption Value="Gastos funerales">Gastos funerales</FluentOption>
+                            <FluentOption Value="Donativas">Donativas</FluentOption>
+                            <FluentOption Value="Intereses reales efectivamente pagados por creditos hipotecarios (casa habitacion">Intereses reales efectivamente pagados por creditos hipotecarios (casa habitacion</FluentOption>
+                            <FluentOption Value="Aportaciones voluntarias al SAR">Aportaciones voluntarias al SAR</FluentOption>
+                            <FluentOption Value="Primas por seguros de gastos medicos">Primas por seguros de gastos medicos</FluentOption>
+                            <FluentOption Value="Gastos de transportacion escolar obligatoria">Gastos de transportacion escolar obligatoria</FluentOption>
+                            <FluentOption Value="Depositos en cuentas para el ahorro, primas que tengan como base de planes de pensiones">Depositos en cuentas para el ahorro, primas que tengan como base de planes de pensiones</FluentOption>
+                            <FluentOption Value="Pagos por servicios educativos (Colegiaturas">Pagos por servicios educativos (Colegiaturas</FluentOption>
+                            <FluentOption Value="Sin efectos fiscales">Sin efectos fiscales</FluentOption>
+                            <FluentOption Value="Pagos">Pagos</FluentOption>
+                            <FluentOption Value="Nomica">Nomica</FluentOption>
+                        </FluentSelect>
+                        <FluentValidationMessage For="@(() => Tutor.PersonaFisica)" />
+                    </div>
+                    <br />
+                    <br />
                     <div style="margin-right: 10px;">
                         <FluentCheckbox Name="PersonaM" @bind-Value="Tutor.PersonaM" Label="PersonaM" />
                         <FluentValidationMessage For="@(() => Tutor.PersonaM)" />
-                        <br />
-                        <label>
-                            Persona Moral:
-                            <InputSelect @bind-Value="Tutor.PersonaMoral">
-                                @foreach (var personaMoral in Enum.GetValues(typeof(PersonaMoralUSOCFDI)))
-                                {
-                                    <option value="@personaMoral">@personaMoral</option>
-                                }
-                            </InputSelect>
-                            <ConcurrencyField Model="Tutor"
-                                              DbModel="DbTutor"
-                                              Property="obj => obj?.PersonaMoral" />
-                        </label>
-                        <br />
+                    </div>
+                    <br />
+                    <div>
+                        <FluentSelect Id="PersonMoral" @bind-Value="Tutor.PersonaMoral" TOption="string" Required Label="Persona Moral">
+                            <FluentOption Value="">Selecciona CFDI ...</FluentOption>
+                            <FluentOption Value="Aquisicion de mercancias">Aquisicion de mercancias</FluentOption>
+                            <FluentOption Value="Devoluciones, Descuentos o bonificaciones">Devoluciones, Descuentos o bonificaciones</FluentOption>
+                            <FluentOption Value="Gastos en general">Gastos en general</FluentOption>
+                            <FluentOption Value="Construcciones">Construcciones</FluentOption>
+                            <FluentOption Value="Mobiliarios y equipo de oficina por inversiones"> Mobiliarios y equipo de oficina por inversiones</FluentOption>
+                            <FluentOption Value="Equipo de transporte">Equipo de transporte</FluentOption>
+                            <FluentOption Value="Equipo de computo y accesorios">Equipo de computo y accesorios</FluentOption>
+                            <FluentOption Value="Dados, troqueles, moldes, matrices y herramental">Dados, troqueles, moldes, matrices y herramental</FluentOption>
+                            <FluentOption Value="Comunicacion telefonicas">Comunicacion telefonicas</FluentOption>
+                            <FluentOption Value="Comunicacion satelitales">Comunicacion satelitales</FluentOption>
+                            <FluentOption Value="Otro maquinaria y equipo">Otro maquinaria y equipo</FluentOption>
+                            <FluentOption Value="Sin efectos fiscales">Sin efectos fiscales</FluentOption>
+                            <FluentOption Value="Pagos">Pagos</FluentOption>
+                        </FluentSelect>
+                        <FluentValidationMessage For="@(() => Tutor.PersonaMoral)" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextField Name="CorreoEmpresa" @bind-Value="Tutor.CorreoEmpresa" Label="Correo de Empresa" />
+                        <FluentValidationMessage For="@(() => Tutor.Correo)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.CorreoEmpresa" />
+                    </div>
+                    <div>
+                        <FluentSelect Id="RegimenFiscal" @bind-Value="Tutor.RegimenFiscal" TOption="string" Required Label="Regimen FIscal">
+                            <FluentOption Value="">Selecciona Regimen ...</FluentOption>
+                            <FluentOption Value="Incorporacion Fiscal">Incorporacion Fiscal</FluentOption>
+                            <FluentOption Value="Actividades empresariales y profesionales">Actividades empresariales y profesionales</FluentOption>
+                            <FluentOption Value="Arrendamiento de Inmuebles">Arrendamiento de Inmuebles</FluentOption>
+                            <FluentOption Value="Servicios Profesionaless">Servicios Profesionales</FluentOption>
+                            <FluentOption Value="Régimen simplificado de confianza">Régimen simplificado de confianza</FluentOption>
+                            <FluentOption Value="Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas">Régimen de Actividades Empresariales con ingresos a través de Plataformas Tecnológicas</FluentOption>
+                            <FluentOption Value="Régimen de sueldos y salarios">Régimen de sueldos y salarios</FluentOption>
+                            <FluentOption Value="Enagenación de bienes">Enagenación de bienes</FluentOption>
+                            <FluentOption Value="Ingresos por intereses">Ingresos por intereses</FluentOption>
+                            <FluentOption Value="Ingresos por intereses">Ingresos por dividendos</FluentOption>
+                            <FluentOption Value="Demás ingresos">Demás ingresos</FluentOption>
+                        </FluentSelect>
+                        <FluentValidationMessage For="@(() => Tutor.RegimenFiscal)" />
+                    </div>
+                    <div style="margin-right: 10px;">
+                        <FluentTextArea Name="comentarios" Rows=5 Cols=60 @bind-Value="Tutor.comentarios" Label="Comentarios" />
+                        <FluentValidationMessage For="@(() => Tutor.comentarios)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.comentarios" />
                     </div>
                     <div style="margin-right: 10px;">
                         <FluentNumberField Name="Donacion" @bind-Value="Tutor.Donacion" Label="Donacion" />
@@ -224,7 +280,7 @@
     public bool Busy { get; set; }
 
     // Mode.
-    private string Mode => IsAdd ? "Add" : "Edit";
+    private string Mode => IsAdd ? "add" : "edit";
 
     // Ask to cancel.
     private void NavigateBack()

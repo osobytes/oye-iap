@@ -1,12 +1,12 @@
-﻿@page "/Tutores"
-@page "/Tutores/{Page:int}"
+﻿@page "/tutores"
+@page "/tutores/{Page:int}"
 @attribute [Authorize(Roles = "Admin, User")]
 @inject IBaseGridControls Filters
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager Navigation
 @inject TutorQueryAdapter QueryAdapter
 
-<h3>Tutor</h3>
+<h3>Padrinos</h3>
 
 <GridWrapper @ref="Wrapper"
              FilterChanged="ReloadAsync"
@@ -33,7 +33,7 @@
                 </a>
             </div>
         </div>
-        <a title="Add" href="add-tutor" style="text-decoration:none">
+        <a title="Add" href="tutor/add" style="text-decoration:none">
             &nbsp;➕&nbsp;
         </a>
         <div class="row">&nbsp;</div>

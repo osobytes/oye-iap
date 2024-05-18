@@ -1,4 +1,4 @@
-﻿@page "/Alumno/View/{AlumnoId:int}"
+﻿@page "/alumno/view/{AlumnoId:int}"
 @attribute [Authorize(Roles = "Admin, User")]
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject IPageHelper PageHelper

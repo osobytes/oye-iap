@@ -1,4 +1,4 @@
-﻿@page "/Tutor/View/{TutorId:int}"
+﻿@page "/tutor/view/{TutorId:int}"
 @attribute [Authorize(Roles = "Admin, User")]
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject IPageHelper PageHelper
@@ -45,18 +45,28 @@ else
                         <FluentLabel>Direccion: @Tutor.Direccion</FluentLabel>
                     </FluentCard>
                 </FluentGridItem>
-                <FluentGridItem xs="6" sm="3">
+                <FluentGridItem xs="8" sm="4">
                     <FluentCard>
                         <FluentLabel Weight="FontWeight.Bold">Datos Fiscales</FluentLabel>
                         <FluentLabel>Nombre Fiscal: @Tutor.NombreFiscal</FluentLabel>
                         <FluentLabel>RFC: @Tutor.RFC</FluentLabel>
                         <FluentLabel>Persona Fiscal: @Tutor.PersonaF</FluentLabel>
-                        <FluentLabel>@Tutor.PersonaFisica</FluentLabel>
+                        @if (Tutor.PersonaF == true)
+                        {
+                            <FluentLabel>@Tutor.PersonaFisica</FluentLabel>
+                        }
                         <FluentLabel>Persona Moral: @Tutor.PersonaM</FluentLabel>
-                        <FluentLabel>@Tutor.PersonaMoral</FluentLabel>
+                        @if (Tutor.PersonaM == true)
+                        {
+                            <FluentLabel>@Tutor.PersonaMoral</FluentLabel>
+                        }
+                        <FluentLabel>Correo de Empresa: @Tutor.CorreoEmpresa</FluentLabel>
+                        <FluentLabel>Regimen Fiscal: @Tutor.RegimenFiscal</FluentLabel>
+                        <FluentLabel>Comentarios: @Tutor.comentarios</FluentLabel>
                         <FluentLabel>Donacion: @Tutor.Donacion</FluentLabel>
+                        <FluentLabel>Detalles de la Ayuda: @Tutor.DetallesAyuda</FluentLabel>
                     </FluentCard>
-                </FluentGridItem>                
+                </FluentGridItem>
                 <FluentGridItem xs="6" sm="3">
                     <FluentCard>
                         <FluentLabel Weight="FontWeight.Bold">Empresa</FluentLabel>
@@ -138,7 +148,7 @@ else
 
     private void EditTutor()
     {
-        NavigationManager.NavigateTo($"edit-tutor/{TutorId}");
+        NavigationManager.NavigateTo($"/tutor/edit/{TutorId}");
     }
 
     // Confirm deletion.

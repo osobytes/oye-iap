@@ -1,5 +1,5 @@
-﻿@page "/Alumnos"
-@page "/Alumnos/{Page:int}"
+﻿@page "/alumnos"
+@page "/alumnos/{Page:int}"
 @attribute [Authorize(Roles = "Admin, User")]
 @inject IBaseGridControls Filters
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
@@ -33,7 +33,7 @@
                 </a>
             </div>
         </div>
-        <a title="Add" href="add-alumno" style="text-decoration:none">
+        <a title="Add" href="alumno/add" style="text-decoration:none">
             &nbsp;➕&nbsp;
         </a>
         <div class="row">&nbsp;</div>
