@@ -83,11 +83,48 @@
                                           Property="obj => obj?.Telefono" />
                     </div>
                     <div style="margin-right: 10px;">
-                        <FluentTextField Name="Direccion" @bind-Value="Tutor.Direccion" Label="Direccion" />
+                        <FluentTextArea Name="Direccion" Rows=5 Cols=60 @bind-Value="Tutor.Direccion" Label="Direccion" />
                         <FluentValidationMessage For="@(() => Tutor.Direccion)" />
                         <ConcurrencyField Model="Tutor"
                                           DbModel="DbTutor"
                                           Property="obj => obj?.Direccion" />
+                    </div>
+                    <br />
+                    <h2>Donacion</h2>
+                    <br />
+                    <div style="margin-right: 10px;">
+                        <FluentNumberField Name="Donacion" @bind-Value="Tutor.Donacion" Label="Donacion" />
+                        <FluentValidationMessage For="@(() => Tutor.Donacion)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.Donacion" />
+                    </div>
+                    <div>
+                        <FluentSelect Id="MetodoPago" @bind-Value="Tutor.MetodoPago" TOption="string" Required Label="Metodo de Pago">
+                            <FluentOption Value="">Seleccione Metodo de Pago ...</FluentOption>
+                            <FluentOption Value="Efectivo">Efectivo</FluentOption>
+                            <FluentOption Value="Tarjeta de Debito">Tarjeta de Debito</FluentOption>
+                            <FluentOption Value="Tarjeta de Credito">Tarjeta de Credito</FluentOption>
+                            <FluentOption Value="Transferencia">Transferencia</FluentOption>
+                        </FluentSelect>
+                        <FluentValidationMessage For="@(() => Tutor.MetodoPago)" />
+                    </div>
+                    <br />
+                    <div>
+                        <FluentSelect Id="PeriocidadPago" @bind-Value="Tutor.PeriocidadPago" TOption="string" Required Label="Periocidad de Pago">
+                            <FluentOption Value="">Selecciona la periocidad ...</FluentOption>
+                            <FluentOption Value="Mensual">Mensual</FluentOption>
+                            <FluentOption Value="Anual">Anual</FluentOption>
+                        </FluentSelect>
+                        <FluentValidationMessage For="@(() => Tutor.PeriocidadPago)" />
+                    </div>
+                    <br />
+                    <div style="margin-right: 10px;">
+                        <FluentTextArea Name="DetallesAyuda" Rows=5 Cols=60 @bind-Value="Tutor.DetallesAyuda" Label="Detalles de Ayuda" />
+                        <FluentValidationMessage For="@(() => Tutor.DetallesAyuda)" />
+                        <ConcurrencyField Model="Tutor"
+                                          DbModel="DbTutor"
+                                          Property="obj => obj?.DetallesAyuda" />
                     </div>
                     <br />
                     <h2>Datos Fiscales</h2>
@@ -197,20 +234,6 @@
                         <ConcurrencyField Model="Tutor"
                                           DbModel="DbTutor"
                                           Property="obj => obj?.comentarios" />
-                    </div>
-                    <div style="margin-right: 10px;">
-                        <FluentNumberField Name="Donacion" @bind-Value="Tutor.Donacion" Label="Donacion" />
-                        <FluentValidationMessage For="@(() => Tutor.Donacion)" />
-                        <ConcurrencyField Model="Tutor"
-                                          DbModel="DbTutor"
-                                          Property="obj => obj?.Donacion" />
-                    </div>
-                    <div style="margin-right: 10px;">
-                        <FluentTextArea Name="DetallesAyuda" Rows=5 Cols=60 @bind-Value="Tutor.DetallesAyuda" Label="Detalles de Ayuda" />
-                        <FluentValidationMessage For="@(() => Tutor.DetallesAyuda)" />
-                        <ConcurrencyField Model="Tutor"
-                                          DbModel="DbTutor"
-                                          Property="obj => obj?.DetallesAyuda" />
                     </div>
                     <br />
                     <h2>Empresa</h2>

@@ -28,6 +28,7 @@ public class Tutor : Patrocinador
     [StringLength(100, ErrorMessage = "El campo Apellido Materno debe tener como máximo 100 caracteres.")]
     public string ApellidoMaternoP1 { get; set; }
 
+    //Datos de contacto
     [Required]
     [StringLength(150, ErrorMessage = "El campo Dirección debe tener como máximo 150 caracteres.")]
     public string Direccion { get; set; }

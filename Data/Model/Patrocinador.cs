@@ -15,4 +15,9 @@ public class Patrocinador
     [Required]
     [StringLength(200, ErrorMessage = "El campo Detalles Ayuda debe tener una longitud máxima de 200 caracteres.")]
     public string DetallesAyuda { get; set; }
+
+    public string MetodoPago { get; set; }
+
+    public string PeriocidadPago { get; set; }
+
 }
