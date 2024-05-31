@@ -1,0 +1,24 @@
+﻿@page "/upload"
+@inject IBaseGridControls Filters
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject IWebHostEnvironment WebHostEnvironment
+@inject NavigationManager Navigation
+@inject InstitucionQueryAdapter QueryAdapter
+
+<div class="text-center">
+    <h1 class="display-4">Subir Archivos</h1>
+    <form method="post" enctype="multipart/form-data" asp-controller="CSVReader" asp-action="ProcessCsv">
+        <div class="form-group">
+            <input type="file" name="file" class="form-control" />
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Cargar" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+@code {
+
+}
