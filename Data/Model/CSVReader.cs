@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace OyeIap.Server.Data.Model
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    [Route("CSVReader")]
     public class CSVReader : Controller
     {
 
@@ -22,21 +21,12 @@ namespace OyeIap.Server.Data.Model
             _context = context;
         }
 
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var tutor = _context.Tutores.ToList();
-            return View(tutor);
-        }
-
-        [HttpPost]
+        [HttpPost("Upload")]
         public async Task<IActionResult> Upload(IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
-                ViewBag.Message = "Por favor seleccione un archivo CSV.";
-                return View("Tutores");
+                return BadRequest("Por favor seleccione un archivo CSV.");
             }
 
             using (var stream = new MemoryStream())
@@ -53,7 +43,7 @@ namespace OyeIap.Server.Data.Model
                 }
             }
 
-            return RedirectToAction("Tutores");
+            return Ok();
         }
     }
 }

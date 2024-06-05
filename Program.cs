@@ -24,6 +24,12 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+
+builder.Services.AddRazorPages();
+
+// Register IHttpClientFactory
+builder.Services.AddHttpClient();
+
 // builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IPageHelper, PageHelper>();
 builder.Services.AddScoped<IBaseGridControls, BaseGridControls>();

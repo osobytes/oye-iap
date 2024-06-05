@@ -3,22 +3,53 @@
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject IWebHostEnvironment WebHostEnvironment
 @inject NavigationManager Navigation
-@inject InstitucionQueryAdapter QueryAdapter
+@inject TutorQueryAdapter QueryAdapter
+@inject HttpClient HttpClient
 
 <div class="text-center">
     <h1 class="display-4">Subir Archivos</h1>
-    <form method="post" enctype="multipart/form-data" asp-controller="CSVReader" asp-action="ProcessCsv">
-        <div class="form-group">
-            <input type="file" name="file" class="form-control" />
-        </div>
-        <br />
-        <div class="form-group">
-            <input type="submit" value="Cargar" class="btn btn-primary" />
-        </div>
-    </form>
+    <InputFile OnChange="UploadFile" />
+    <br />
+</div>
+<br/>
+<div class="text-center">
+    <button @onclick="UploadFile" class="btn btn-primary">Cargar</button>
 </div>
 
+@code {
+    private IBrowserFile file;
 
-@code{
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        file = e.File;
+    }
 
+    private async Task UploadFile()
+    {
+        if (file == null)
+        {
+            return;
+        }
+
+        using (var content = new MultipartFormDataContent())
+        {
+            using (var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024)) // 10 MB
+            {
+                content.Add(new StreamContent(stream), "file", file.Name);
+
+                var response = await HttpClient.PostAsync("/CSVReader/Upload", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Redirigir a una página específica después de una carga exitosa
+                    Navigation.NavigateTo("/success-page");
+                }
+                else
+                {
+                    // Manejar error de carga
+                    Console.WriteLine("Error al subir el archivo");
+                }
+            }
+        }
+    }
 }
