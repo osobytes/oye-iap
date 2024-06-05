@@ -1,4 +1,7 @@
 ﻿@page "/upload"
+@using CsvHelper
+@using System.Globalization
+@using CsvHelper.Configuration
 @inject IBaseGridControls Filters
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject IWebHostEnvironment WebHostEnvironment
@@ -8,7 +11,7 @@
 
 <div class="text-center">
     <h1 class="display-4">Subir Archivos</h1>
-    <InputFile OnChange="UploadFile" />
+    <InputFile OnChange="OnInputFileChange" />
     <br />
 </div>
 <br/>
@@ -16,8 +19,62 @@
     <button @onclick="UploadFile" class="btn btn-primary">Cargar</button>
 </div>
 
+@if (tutoresAgregados.Count > 0)
+{
+    <div class="text-center">
+        <h2>Tutores Agregados</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tutor in tutoresAgregados)
+                {
+                    <tr>
+                        <td>@tutor.Nombre</td>
+                        <td>@tutor.ApellidoPaterno</td>
+                        <td>@tutor.Correo</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@if (tutoresSaltados.Count > 0)
+{
+    <div class="text-center">
+        <h2>Tutores Saltados (Ya existian)</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tutor in tutoresSaltados)
+                {
+                    <tr>
+                        <td>@tutor.Nombre</td>
+                        <td>@tutor.ApellidoPaterno</td>
+                        <td>@tutor.Correo</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
 @code {
     private IBrowserFile file;
+    private List<Tutor> tutoresAgregados = new();
+    private List<Tutor> tutoresSaltados = new();
 
     private void OnInputFileChange(InputFileChangeEventArgs e)
     {
@@ -31,23 +88,60 @@
             return;
         }
 
-        using (var content = new MultipartFormDataContent())
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
-            using (var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024)) // 10 MB
+            HeaderValidated = null,
+            MissingFieldFound = (missingFieldFoundArgs) =>
             {
-                content.Add(new StreamContent(stream), "file", file.Name);
+                Console.WriteLine($"Los campos '{string.Join(",", missingFieldFoundArgs.HeaderNames)}' no existen en el archivo CSV.");
+            },
+        };
 
-                var response = await HttpClient.PostAsync("/CSVReader/Upload", content);
+        using (var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024)) // 10 MB
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                using (var csv = new CsvReader(reader, config))
+                {
+                    var records = csv.GetRecordsAsync<Tutor>();
 
-                if (response.IsSuccessStatusCode)
-                {
-                    // Redirigir a una página específica después de una carga exitosa
-                    Navigation.NavigateTo("/success-page");
-                }
-                else
-                {
-                    // Manejar error de carga
-                    Console.WriteLine("Error al subir el archivo");
+                    using (var context = DbFactory.CreateDbContext())
+                    {
+                        ArgumentNullException.ThrowIfNull(context?.Tutores, nameof(context));
+                        await foreach (var record in records)
+                        {
+                            if (!string.IsNullOrEmpty(record.Correo))
+                            {
+                                if (context.Tutores
+                                .Where(tutor => tutor.Correo == record.Correo)
+                                .Any())
+                                {
+                                    this.tutoresSaltados.Add(record);
+                                    continue;
+                                }
+                            }
+                            else
+                            {
+                                // Checar por nombre y apellido
+                                if (context.Tutores
+                                    .Where(tutor => EF.Functions.Like(tutor.Nombre, record.Nombre)
+                                    && EF.Functions.Like(tutor.ApellidoPaterno, record.ApellidoPaterno))
+                                    .Any())
+                                {
+                                    this.tutoresSaltados.Add(record);
+                                    continue;
+                                }
+                            }
+
+                            this.tutoresAgregados.Add(record);
+                        }
+
+                        if (tutoresAgregados.Count > 0)
+                        {
+                            context.Tutores.AddRange(tutoresAgregados);
+                            await context.SaveChangesAsync();
+                        }
+                    }
                 }
             }
         }

@@ -2,6 +2,7 @@
 
 public enum TipoEmpresa
 {
+    Desconocido,
     Politica,
     Economica,
     Juridica,

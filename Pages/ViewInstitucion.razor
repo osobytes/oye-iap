@@ -52,7 +52,7 @@ else
                 <FluentGridItem xs="6" sm="3">
                     <FluentCard>
                         <FluentLabel Weight="FontWeight.Bold">Patrocinio</FluentLabel>
-                        @if (Institucion.PatrocinioActivo && Institucion.Donacion is int donacion)
+                        @if (Institucion.PatrocinioActivo && Institucion.Donacion is decimal donacion)
                         {
                             <FluentLabel>Donacion: @donacion.ToString("")</FluentLabel>
                             @if (Institucion.PatrocinioActivo && Institucion.DetallesAyuda is string detalles)
