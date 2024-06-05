@@ -29,16 +29,16 @@ public class Tutor : Patrocinador
     public string ApellidoMaternoP1 { get; set; }
 
     //Datos de contacto
-    [Required]
+    //[Required]
     [StringLength(150, ErrorMessage = "El campo Dirección debe tener como máximo 150 caracteres.")]
     public string Direccion { get; set; }
 
-    [Required]
+    //[Required]
     [StringLength(100, ErrorMessage = "El campo Correo debe tener como máximo 100 caracteres.")]
     [EmailAddress(ErrorMessage = "El campo Correo debe ser una dirección de correo válida.")]
     public string Correo { get; set; }
 
-    [Required]
+    //[Required]
     [StringLength(15, ErrorMessage = "El campo del Teléfono de empresa debe tener como máximo 15 caracteres.")]
     public string TelefonoEmpresa { get; set; }
 
@@ -46,11 +46,11 @@ public class Tutor : Patrocinador
     public string Telefono { get; set; }
 
     //Datos Fiscales
-    [Required]
+    //[Required]
     [StringLength(100, ErrorMessage = "El campo del Nombre fiscal de empresa debe tener como máximo 100 caracteres.")]
     public string NombreFiscal { get; set; }
 
-    [Required]
+    //[Required]
     [StringLength(13, ErrorMessage = "El campo del RFC de empresa debe tener como máximo 13 caracteres.")]
     public string RFC { get; set; }
 
@@ -62,10 +62,10 @@ public class Tutor : Patrocinador
 
     public string PersonaMoral { get; set; }
 
-    [Required]
+    //[Required]
     public string RegimenFiscal { get; set; }
 
-    [Required]
+    //[Required]
     [StringLength(100, ErrorMessage = "El campo Correo debe tener como máximo 100 caracteres.")]
     [EmailAddress(ErrorMessage = "El campo Correo debe ser una dirección de correo válida.")]
     public string CorreoEmpresa { get; set; }
@@ -74,15 +74,15 @@ public class Tutor : Patrocinador
     public string comentarios { get; set; }
 
     //Empresa
-    [Required]
+    //[Required]
     [StringLength(100, ErrorMessage = "El campo del Nombre de LA empresa debe tener como máximo 15 caracteres.")]
     public string EmpresaNombre { get; set; }
 
-    [Required]
+    //[Required]
     [Column(TypeName = "varchar(50)")]
     public TipoEmpresa TipoEmp { get; set; }
 
-    [StringLength(300, ErrorMessage = "")]
+    [StringLength(300, ErrorMessage = "El campo Informacion Extra no puede sobrepasar los 300 caracteres")]
     public string InformacionExtra { get; set; }
 
     public ICollection<AlumnoTutor> Alumnos { get; set; }

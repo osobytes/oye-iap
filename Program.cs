@@ -7,6 +7,7 @@ using OyeIap.Server.Areas.Identity;
 using OyeIap.Server.Data;
 using OyeIap.Server.Data.ViewModel;
 using OyeIap.Server.Grid;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,3 +65,4 @@ app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
