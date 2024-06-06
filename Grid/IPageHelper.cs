@@ -9,10 +9,14 @@ public interface IPageHelper
     int Page { get; set; }
 
     // Previous page, 1-based.
-    int PrevPage { get; }
+    string PrevPageTut { get; }
+    string PrevPageAlum { get; }
+    string PrevPageInst { get; }
 
     // Next page, 1-based.
-    int NextPage { get; }
+    string NextPageTut { get; }
+    string NextPageAlum { get; }
+    string NextPageInst { get; }
 
     // True when a previous page exists.
     bool HasPrev { get; }
