@@ -10,18 +10,18 @@ public class Alumno
 
     //[Required]
     [StringLength(100, ErrorMessage = "El campo Nombre debe tener como máximo 100 caracteres.")]
-    public string Nombre { get; set; }
+    public string Nombre { get; set; } = string.Empty;
 
-    [Required]
+    //[Required]
     [StringLength(100, ErrorMessage = "El campo ApellidoPaterno debe tener como máximo 100 caracteres.")]
-    public string ApellidoPaterno { get; set; }
+    public string ApellidoPaterno { get; set; } = string.Empty;
 
     [StringLength(100, ErrorMessage = "El campo ApellidoMaterno debe tener como máximo 100 caracteres.")]
-    public string ApellidoMaterno { get; set; }
+    public string ApellidoMaterno { get; set; } = string.Empty;
 
     //[Required]
     [DataType(DataType.Date, ErrorMessage = "El campo FechaIngreso debe ser una fecha válida.")]
-    public DateOnly? FechaIngreso { get; set; }
+    public DateOnly? FechaIngreso { get; set; } 
 
     //[Required]
     public bool Aparato { get; set; }
@@ -50,32 +50,32 @@ public class Alumno
     public DateOnly? FechaEgreso { get; set; }
 
     [StringLength(200, ErrorMessage = "El campo Comentarios debe tener como máximo 200 caracteres.")]
-    public string? Comentarios { get; set; }
+    public string? Comentarios { get; set; } = string.Empty;
 
     //Datos de los tutores
     //[Required]
     [StringLength(200, ErrorMessage = "El campo Nombre del tutor debe tener como máximo 200 caracteres.")]
-    public string NombreTutor { get; set; }
-    
+    public string NombreTutor { get; set; } = string.Empty;
+
     //[Required]
     [StringLength(200, ErrorMessage = "El campo apellido del tutor debe tener como máximo 200 caracteres.")]
-    public string ApellidoPaternoTutor { get; set; }
+    public string ApellidoPaternoTutor { get; set; } = string.Empty;
 
     [StringLength(200, ErrorMessage = "El campo apellido del tutor debe tener como máximo 200 caracteres.")]
-    public string? ApellidoMaternoTutor { get; set; }
+    public string? ApellidoMaternoTutor { get; set; } = string.Empty;
 
     //[Required]
     [StringLength(100, ErrorMessage = "El campo Correo debe tener como máximo 100 caracteres.")]
     [EmailAddress(ErrorMessage = "El campo Correo debe ser una dirección de correo válida.")]
-    public string Correo { get; set; }
+    public string Correo { get; set; } = string.Empty;
 
     //[Required]
     [StringLength(150, ErrorMessage = "El campo Dirección debe tener como máximo 150 caracteres.")]
-    public string Direccion { get; set; }
+    public string Direccion { get; set; } = string.Empty;
 
     //[Required]
     [StringLength(15, ErrorMessage = "El campo Teléfono debe tener como máximo 15 caracteres.")]
-    public string Telefono { get; set; }
+    public string Telefono { get; set; } = string.Empty;
 
     /*[Required]
     [StringLength(200, ErrorMessage = "El campo direccion del tutor debe tener como máximo 200 caracteres.")]

@@ -57,10 +57,10 @@ else
                     <FluentLabel>El alumno tiene implante? @(Alumno.Implante ? "Si" : "No") </FluentLabel>
                     @if (Alumno.Aparato && Alumno.FechaImplante is DateOnly fechaImplante)
                     {
-                        <FluentLabel>Fecha de Aparato: @fechaImplante.ToString("dd-MM-yyyy")</FluentLabel>
+                        <FluentLabel>Fecha de Implante: @fechaImplante.ToString("dd-MM-yyyy")</FluentLabel>
                         @if (Alumno.Aparato && Alumno.FechaConexion is DateOnly fechaConexion)
                         {
-                            <FluentLabel>Fecha de Porgramacion: @fechaConexion.ToString("dd-MM-yyyy")</FluentLabel>
+                            <FluentLabel>Fecha de Conexion: @fechaConexion.ToString("dd-MM-yyyy")</FluentLabel>
                         }
                     }
                 </FluentCard>
@@ -74,6 +74,12 @@ else
                         <FluentLabel>Telefono: @(Alumno.Telefono)</FluentLabel>
                         <FluentLabel>Direccion: @(Alumno.Direccion)</FluentLabel>
                         <FluentLabel>Correo: @(Alumno.Correo)</FluentLabel>
+                    </FluentCard>
+                </FluentGridItem>
+                <FluentGridItem xs="6" sm="3">
+                    <FluentCard>
+                        <FluentLabel Weight="FontWeight.Bold"> Comentarios</FluentLabel>
+                        <FluentLabel> @(Alumno.Comentarios)</FluentLabel>
                     </FluentCard>
                 </FluentGridItem>
         </FluentGrid>
