@@ -1,13 +1,14 @@
-﻿@page "/Tutores"
-@page "/Tutores/{Page:int}"
+﻿@page "/tutores"
+@page "/tutores/{Page:int}"
 @attribute [Authorize(Roles = "Admin, User")]
 @inject IBaseGridControls Filters
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
 @inject NavigationManager Navigation
 @inject TutorQueryAdapter QueryAdapter
+@inject IPageHelper PageHelper
 
-<h3>Tutor</h3>
 
+<h3>Padrinos</h3>
 <GridWrapper @ref="Wrapper"
              FilterChanged="ReloadAsync"
              DeleteRequested="id => Wrapper.DeleteRequestId = id">
@@ -23,18 +24,22 @@
                 @Filters.PageHelper.TotalItemCount items.
                 <a disabled="@(Filters.Loading || !Filters.PageHelper.HasPrev)"
                    class="btn btn-primary @IsDisabled(Filters.PageHelper.HasPrev)"
-                   href="@Filters.PageHelper.PrevPage">
+                   href="@Filters.PageHelper.PrevPageTut">
                     Previous
                 </a>
                 <a disabled="@(Filters.Loading || !Filters.PageHelper.HasNext)"
                    class="btn btn-primary @IsDisabled(Filters.PageHelper.HasNext)"
-                   href="@Filters.PageHelper.NextPage">
+                   href="@Filters.PageHelper.NextPageTut">
                     Next
                 </a>
             </div>
         </div>
-        <a title="Add" href="add-tutor" style="text-decoration:none">
+        <br/>
+        <a title="Add" href="tutor/add" style="text-decoration:none">
             &nbsp;➕&nbsp;
+        </a>
+        <a title="Importar" href="Upload/Padrino" style="text-decoration:none">
+            &nbsp; <img src="/Importar.png" alt="Importar" style="width: 30px; height: 30px;" /> &nbsp;
         </a>
         <div class="row">&nbsp;</div>
         <div class="row contact-header">
@@ -55,7 +60,7 @@
                  @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.Direccion)))">
                 <ColSortIndicator Column="@(nameof(Tutor.Direccion))" />&nbsp;Direccion
             </div>
-            <div class="col-2"
+            <div class="col-3"
                  @onclick="@(async ()=>await ToggleAsync(nameof(Tutor.Correo)))">
                 <ColSortIndicator Column="@(nameof(Tutor.Correo))" />&nbsp;Correo
             </div>
@@ -76,7 +81,7 @@
         {
             <div class="row">
                 <div class="col-12 alert alert-warning">
-                    No se encontraron tutores.
+                    No se encontraron padrinos.
                 </div>
             </div>
         }
@@ -97,7 +102,7 @@
     [Parameter]
     public int Page
     {
-        get => Filters.PageHelper.Page;
+        get => PageHelper.Page;
         set
         {
             Filters.PageHelper.Page = value;
@@ -125,7 +130,7 @@
         // Ensure we're on the same (correct) page.
         if (_lastPage < 1)
         {
-            Navigation.NavigateTo("tutores/1");
+            Navigation.NavigateTo($"tutores/1");
             return;
         }
 
@@ -134,7 +139,7 @@
         {
             if (Page < 1)
             {
-                Navigation.NavigateTo("tutores/1");
+                Navigation.NavigateTo($"tutores/1");
                 return;
             }
             if (Page > Filters.PageHelper.PageCount)

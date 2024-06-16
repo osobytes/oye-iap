@@ -12,5 +12,5 @@ public class AlumnoTutor
     [Column(TypeName = "nvarchar(50)")]
     public Parentesco Parentesco { get; set; }
 
-    public string? Comentarios { get; set; }
+    public string? Comentarios { get; set; } = string.Empty;
 }

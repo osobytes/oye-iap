@@ -1,5 +1,5 @@
-﻿@page "/Alumnos"
-@page "/Alumnos/{Page:int}"
+﻿@page "/alumnos"
+@page "/alumnos/{Page:int}"
 @attribute [Authorize(Roles = "Admin, User")]
 @inject IBaseGridControls Filters
 @inject IDbContextFactory<ApplicationDbContext> DbFactory
@@ -23,18 +23,22 @@
                 @Filters.PageHelper.TotalItemCount items.
                 <a disabled="@(Filters.Loading || !Filters.PageHelper.HasPrev)"
                    class="btn btn-primary @IsDisabled(Filters.PageHelper.HasPrev)"
-                   href="@Filters.PageHelper.PrevPage">
+                   href="@Filters.PageHelper.PrevPageAlum">
                     Previous
                 </a>
                 <a disabled="@(Filters.Loading || !Filters.PageHelper.HasNext)"
                    class="btn btn-primary @IsDisabled(Filters.PageHelper.HasNext)"
-                   href="@Filters.PageHelper.NextPage">
+                   href="@Filters.PageHelper.NextPageAlum">
                     Next
                 </a>
             </div>
         </div>
-        <a title="Add" href="add-alumno" style="text-decoration:none">
+        <br />
+        <a title="Add" href="alumno/add" style="text-decoration:none">
             &nbsp;➕&nbsp;
+        </a>
+        <a title="Importar" href="Upload/Alumno" style="text-decoration:none">
+            &nbsp; <img src="/Importar.png" alt="Importar" style="width: 30px; height: 30px;" /> &nbsp;
         </a>
         <div class="row">&nbsp;</div>
         <div class="row contact-header">

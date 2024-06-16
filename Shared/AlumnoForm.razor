@@ -103,7 +103,7 @@
                         <ConcurrencyField Model="Alumno"
                                           DbModel="DbAlumno"
                                           Property="obj => obj?.ApellidoPaternoTutor" />
-                        <FluentTextField Name="ApellidoMaternoTutor" @bind-Value="Alumno.ApellidoMaternoTutor" Label="Apelldio Materno" />
+                        <FluentTextField Name="ApellidoMaternoTutor" @bind-Value="Alumno.ApellidoMaternoTutor" Label="" />
                         <FluentValidationMessage For="@(() => Alumno.ApellidoMaternoTutor)" />
                         <ConcurrencyField Model="Alumno"
                                           DbModel="DbAlumno"
@@ -192,7 +192,7 @@
     public bool Busy { get; set; }
 
     // Mode.
-    private string Mode => IsAdd ? "Add" : "Edit";
+    private string Mode => IsAdd ? "add" : "edit";
 
     // Ask to cancel.
     private void NavigateBack()

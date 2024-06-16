@@ -1,0 +1,145 @@
+﻿@page "/Upload/Alumno"
+@using CsvHelper
+@using System.Globalization
+@using CsvHelper.Configuration
+@inject IBaseGridControls Filters
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject IWebHostEnvironment WebHostEnvironment
+@inject NavigationManager Navigation
+@inject AlumnoQueryAdapter QueryAdapter
+@inject HttpClient HttpClient
+
+<div class="text-center">
+    <h1 class="display-4">Subir Archivos</h1>
+    <InputFile OnChange="OnInputFileChange" />
+    <br />
+</div>
+<br />
+<div class="text-center">
+    <button @onclick="UploadFile" class="btn btn-primary">Cargar</button>
+</div>
+
+@if (alumnosAgregados.Count > 0)
+{
+    <div class="text-center">
+        <h2>Alumnos Agregados</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var alumno in alumnosAgregados)
+                {
+                    <tr>
+                        <td>@alumno.Nombre</td>
+                        <td>@alumno.ApellidoPaterno</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@if (alumnosSaltados.Count > 0)
+{
+    <div class="text-center">
+        <h2>Alumnos Saltados (Ya existian)</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var alumno in alumnosSaltados)
+                {
+                    <tr>
+                        <td>@alumno.Nombre</td>
+                        <td>@alumno.ApellidoPaterno</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private IBrowserFile file;
+    private List<Alumno> alumnosAgregados = new();
+    private List<Alumno> alumnosSaltados = new();
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        file = e.File;
+    }
+
+    private async Task UploadFile()
+    {
+        if (file == null)
+        {
+            return;
+        }
+
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HeaderValidated = null,
+                MissingFieldFound = (missingFieldFoundArgs) =>
+                {
+                    Console.WriteLine($"Los campos '{string.Join(",", missingFieldFoundArgs.HeaderNames)}' no existen en el archivo CSV.");
+                },
+            };
+
+        using (var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024)) // 10 MB
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                using (var csv = new CsvReader(reader, config))
+                {
+                    var records = csv.GetRecordsAsync<Alumno>();
+
+                    using (var context = DbFactory.CreateDbContext())
+                    {
+                        ArgumentNullException.ThrowIfNull(context?.Alumnos, nameof(context));
+                        await foreach (var record in records)
+                        {
+                            if (!string.IsNullOrEmpty(record.Correo))
+                            {
+                                if (context.Alumnos
+                                .Where(alumno => alumno.Correo == record.Correo)
+                                .Any())
+                                {
+                                    this.alumnosSaltados.Add(record);
+                                    continue;
+                                }
+                            }
+                            else
+                            {
+                                // Checar por nombre y apellido
+                                if (context.Alumnos
+                                    .Where(alumno => EF.Functions.Like(alumno.Nombre, record.Nombre)
+                                    && EF.Functions.Like(alumno.ApellidoPaterno, record.ApellidoPaterno))
+                                    .Any())
+                                {
+                                    this.alumnosSaltados.Add(record);
+                                    continue;
+                                }
+                            }
+
+                            this.alumnosAgregados.Add(record);
+                        }
+
+                        if (alumnosAgregados.Count > 0)
+                        {
+                            context.Alumnos.AddRange(alumnosAgregados);
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

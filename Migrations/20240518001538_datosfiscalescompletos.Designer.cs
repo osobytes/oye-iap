@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OyeIap.Server.Data;
 
@@ -10,9 +11,11 @@ using OyeIap.Server.Data;
 namespace OyeIap.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240518001538_datosfiscalescompletos")]
+    partial class datosfiscalescompletos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
@@ -351,12 +354,8 @@ namespace OyeIap.Server.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Donacion")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MetodoPago")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Donacion")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -370,10 +369,6 @@ namespace OyeIap.Server.Migrations
 
                     b.Property<bool>("PatrocinioActivo")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("PeriocidadPago")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Relacion")
                         .IsRequired()
@@ -439,8 +434,8 @@ namespace OyeIap.Server.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Donacion")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Donacion")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("EmpresaNombre")
                         .IsRequired()
@@ -450,10 +445,6 @@ namespace OyeIap.Server.Migrations
                     b.Property<string>("InformacionExtra")
                         .IsRequired()
                         .HasMaxLength(300)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MetodoPago")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nombre")
@@ -473,10 +464,6 @@ namespace OyeIap.Server.Migrations
 
                     b.Property<bool>("PatrocinioActivo")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("PeriocidadPago")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<bool>("PersonaF")
                         .HasColumnType("INTEGER");

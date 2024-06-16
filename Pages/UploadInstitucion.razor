@@ -1,0 +1,152 @@
+﻿@page "/Upload/Institucion"
+@using CsvHelper
+@using System.Globalization
+@using CsvHelper.Configuration
+@inject IBaseGridControls Filters
+@inject IDbContextFactory<ApplicationDbContext> DbFactory
+@inject IWebHostEnvironment WebHostEnvironment
+@inject NavigationManager Navigation
+@inject InstitucionQueryAdapter QueryAdapter
+@inject HttpClient HttpClient
+
+<div class="text-center">
+    <h1 class="display-4">Subir Archivos</h1>
+    <InputFile OnChange="OnInputFileChange" />
+    <br />
+</div>
+<br />
+<div class="text-center">
+    <button @onclick="UploadFile" class="btn btn-primary">Cargar</button>
+</div>
+
+@if (institucionAgregados.Count > 0)
+{
+    <div class="text-center">
+        <h2>Instituciones Agregadas</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre de la Empresa</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var institucion in institucionAgregados)
+                {
+                    <tr>
+                        <td>@institucion.Nombre</td>
+                        <td>@institucion.NombrePersona</td>
+                        <td>@institucion.ApellidoPersona</td>
+                        <td>@institucion.Correo</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@if (institucionSaltados.Count > 0)
+{
+    <div class="text-center">
+        <h2>Tutores Saltados (Ya existian)</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var institucion in institucionSaltados)
+                {
+                    <tr>
+                        <td>@institucion.Nombre</td>
+                        <td>@institucion.NombrePersona</td>
+                        <td>@institucion.ApellidoPersona</td>
+                        <td>@institucion.Correo</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private IBrowserFile file;
+    private List<Institucion> institucionAgregados = new();
+    private List<Institucion> institucionSaltados = new();
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        file = e.File;
+    }
+
+    private async Task UploadFile()
+    {
+        if (file == null)
+        {
+            return;
+        }
+
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HeaderValidated = null,
+                MissingFieldFound = (missingFieldFoundArgs) =>
+                {
+                    Console.WriteLine($"Los campos '{string.Join(",", missingFieldFoundArgs.HeaderNames)}' no existen en el archivo CSV.");
+                },
+            };
+
+        using (var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024)) // 10 MB
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                using (var csv = new CsvReader(reader, config))
+                {
+                    var records = csv.GetRecordsAsync<Institucion>();
+
+                    using (var context = DbFactory.CreateDbContext())
+                    {
+                        ArgumentNullException.ThrowIfNull(context?.Instituciones, nameof(context));
+                        await foreach (var record in records)
+                        {
+                            if (!string.IsNullOrEmpty(record.Correo))
+                            {
+                                if (context.Instituciones
+                                .Where(institucion => institucion.Correo == record.Correo)
+                                .Any())
+                                {
+                                    this.institucionSaltados.Add(record);
+                                    continue;
+                                }
+                            }
+                            else
+                            {
+                                // Checar por nombre y apellido
+                                if (context.Instituciones
+                                    .Where(institucion => EF.Functions.Like(institucion.NombrePersona, record.NombrePersona)
+                                    && EF.Functions.Like(institucion.ApellidoPersona, record.ApellidoPersona))
+                                    .Any())
+                                {
+                                    this.institucionSaltados.Add(record);
+                                    continue;
+                                }
+                            }
+
+                            this.institucionAgregados.Add(record);
+                        }
+
+                        if (institucionAgregados.Count > 0)
+                        {
+                            context.Instituciones.AddRange(institucionAgregados);
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
