@@ -1,4 +1,4 @@
-namespace OyeIap.Server.Data.Seed;
+/*namespace OyeIap.Server.Data.Seed;
 internal class SeedAlumnosTutores : Seed
 {
     private readonly string[] _nombres = new[] {
@@ -203,3 +203,4 @@ internal class SeedAlumnosTutores : Seed
     private static bool IsParent(Parentesco parentesco) =>
         parentesco == Parentesco.Padre || parentesco == Parentesco.Madre;
 }
+*/

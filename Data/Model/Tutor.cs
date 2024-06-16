@@ -85,5 +85,5 @@ public class Tutor : Patrocinador
     [StringLength(300, ErrorMessage = "El campo Informacion Extra no puede sobrepasar los 300 caracteres")]
     public string InformacionExtra { get; set; } = string.Empty;
 
-    public ICollection<AlumnoTutor> Alumnos { get; set; }
+    public ICollection<AlumnoTutor>? Alumnos { get; set; }
 }
