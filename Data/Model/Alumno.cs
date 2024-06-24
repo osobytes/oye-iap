@@ -65,7 +65,7 @@ public class Alumno
 
     [StringLength(100, ErrorMessage = "El campo Correo debe tener como máximo 100 caracteres.")]
     [EmailAddress(ErrorMessage = "El campo Correo debe ser una dirección de correo válida.")]
-    public string Correo { get; set; } = string.Empty;
+    public string? Correo { get; set; } = string.Empty;
 
     [StringLength(150, ErrorMessage = "El campo Dirección debe tener como máximo 150 caracteres.")]
     public string Direccion { get; set; } = string.Empty;

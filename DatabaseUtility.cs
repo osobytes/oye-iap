@@ -25,8 +25,8 @@ public static class DatabaseUtility
             {
                 var seedInstituciones = new SeedInstituciones();
                 var seedAlumnos = new SeedAlumnosTutores();
-                await seedInstituciones.SeedDatabaseWithInstitucionCountOfAsync(context, 10);
-                await seedAlumnos.SeedDatabaseWithAlumnoCountOfAsync(context, 10);
+                await seedInstituciones.SeedDatabaseWithInstitucionCountOfAsync(context, 0);
+                await seedAlumnos.SeedDatabaseWithAlumnoCountOfAsync(context, 0);
 
                 await transaction.CommitAsync();
             }
