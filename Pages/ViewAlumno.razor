@@ -35,10 +35,13 @@ else
                 <FluentCard>
                     <FluentLabel Weight="FontWeight.Bold"> Detalles de alumno</FluentLabel>
                     <FluentLabel>Activo: @(Alumno.Activo ? "Si" : "No")</FluentLabel>
-                    <FluentLabel>Fecha Ingreso: @Alumno.FechaIngreso</FluentLabel>
-                    @if (Alumno.FechaEgreso.HasValue)
+                    @if (Alumno.FechaIngreso != DateOnly.MinValue)
                     {
-                    <FluentLabel>Fecha Egreso: @Alumno.FechaEgreso.Value.ToString("dd-MM-yyyy")</FluentLabel>
+                        <FluentLabel>Fecha Ingreso: @Alumno.FechaIngreso.ToString("dd-MM-yyyy")</FluentLabel>
+                    }
+                    @if (Alumno.Activo == false && Alumno.FechaEgreso != DateOnly.MinValue)
+                    {
+                    <FluentLabel>Fecha Egreso: @Alumno.FechaEgreso.ToString("dd-MM-yyyy")</FluentLabel>
                     }
                 </FluentCard>
             </FluentGridItem>
@@ -46,19 +49,19 @@ else
                 <FluentCard>
                     <FluentLabel Weight="FontWeight.Bold">Datos sobre el Alumno</FluentLabel>
                     <FluentLabel>El alumno usa aparato? @(Alumno.Aparato ? "Si" : "No") </FluentLabel>
-                    @if (Alumno.Aparato && Alumno.FechaAparato is DateOnly fechaAparato)
+                    @if (Alumno.Aparato && Alumno.FechaAparato is DateOnly fechaAparato && fechaAparato != DateOnly.MinValue)
                     {
                         <FluentLabel>Fecha de Aparato: @fechaAparato.ToString("dd-MM-yyyy")</FluentLabel>
-                        @if(Alumno.Aparato && Alumno.FechaProgramacion is DateOnly fechaProgramacion)
+                        @if (Alumno.Aparato && Alumno.FechaProgramacion is DateOnly fechaProgramacion && fechaProgramacion != DateOnly.MinValue)
                         {
                             <FluentLabel>Fecha de Porgramacion: @fechaProgramacion.ToString("dd-MM-yyyy")</FluentLabel>
                         }
                     }
                     <FluentLabel>El alumno tiene implante? @(Alumno.Implante ? "Si" : "No") </FluentLabel>
-                    @if (Alumno.Aparato && Alumno.FechaImplante is DateOnly fechaImplante)
-                    {
+                        @if (Alumno.Implante && Alumno.FechaImplante is DateOnly fechaImplante && fechaImplante != DateOnly.MinValue)
+                        {
                         <FluentLabel>Fecha de Implante: @fechaImplante.ToString("dd-MM-yyyy")</FluentLabel>
-                        @if (Alumno.Aparato && Alumno.FechaConexion is DateOnly fechaConexion)
+                            @if (Alumno.Implante && Alumno.FechaConexion is DateOnly fechaConexion && fechaConexion != DateOnly.MinValue)
                         {
                             <FluentLabel>Fecha de Conexion: @fechaConexion.ToString("dd-MM-yyyy")</FluentLabel>
                         }

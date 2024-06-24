@@ -1,4 +1,4 @@
-/*namespace OyeIap.Server.Data.Seed;
+namespace OyeIap.Server.Data.Seed;
 internal class SeedInstituciones : Seed
 {
     private readonly string[] _nombres = [
@@ -107,4 +107,3 @@ internal class SeedInstituciones : Seed
         }
     }
 }
-*/
